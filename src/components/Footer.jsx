@@ -17,10 +17,45 @@ function Footer() {
         </div>
         <div>
           <p className="text-sm font-semibold text-white">{t('footerSocial')}</p>
-          <div className="mt-2 flex flex-col gap-2 text-sm text-primary-300 sm:flex-row sm:flex-wrap sm:gap-3">
-            <a className="transition-all duration-300 md:hover:text-secondary-500" href="https://facebook.com" target="_blank" rel="noreferrer">Facebook</a>
-            <a className="transition-all duration-300 md:hover:text-secondary-500" href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a>
-            <a className="transition-all duration-300 md:hover:text-secondary-500" href="https://linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a>
+          <div className="mt-3 flex items-center gap-3 text-primary-300">
+            <a
+              className="rounded-full border border-primary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
+              href="https://www.linkedin.com/company/association-nord-sud-action/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Facebook"
+              title="Facebook"
+            >
+              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.26c-1.25 0-1.64.78-1.64 1.57V12h2.79l-.45 2.89h-2.34v6.99A10 10 0 0 0 22 12Z" />
+              </svg>
+            </a>
+
+            <a
+              className="rounded-full border border-primary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
+              href="https://instagram.com"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+              title="Instagram"
+            >
+              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm8.32 1.73a1.08 1.08 0 1 0 1.08 1.08a1.08 1.08 0 0 0-1.08-1.08ZM12 7a5 5 0 1 0 5 5a5 5 0 0 0-5-5Zm0 1.8A3.2 3.2 0 1 1 8.8 12A3.2 3.2 0 0 1 12 8.8Z" />
+              </svg>
+            </a>
+
+            <a
+              className="rounded-full border border-primary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
+              href="https://www.linkedin.com/company/association-nord-sud-action/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+              title="LinkedIn"
+            >
+              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M6.94 8.5A1.56 1.56 0 1 1 5.38 6.94A1.56 1.56 0 0 1 6.94 8.5ZM5.5 10h2.88V19H5.5Zm4.5 0h2.76v1.23h.04a3 3 0 0 1 2.7-1.48c2.88 0 3.41 1.89 3.41 4.35V19h-2.88v-4.12c0-.98-.02-2.24-1.36-2.24s-1.57 1.06-1.57 2.17V19H10Z" />
+              </svg>
+            </a>
           </div>
         </div>
       </div>

@@ -94,7 +94,6 @@ function HomePage() {
             <h2 className="text-3xl font-bold text-primary-500">{t('introTitle')}</h2>
             <p className="mt-4 text-base leading-7 text-primary-400">{t('introText')}</p>
             <p className="mt-4 text-sm leading-6 text-primary-300">{t('aboutDetail')}</p>
-            <p className="mt-4 text-sm leading-6 text-primary-300">{t('aboutBelief')}</p>
           </div>
         </div>
       </SectionContainer>
