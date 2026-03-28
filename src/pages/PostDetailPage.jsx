@@ -1,6 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
 import { useEffect, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
 import SectionContainer from '../components/SectionContainer'
@@ -15,8 +14,6 @@ const typeBadge = {
   communique: 'bg-secondary-500 text-white',
   media: 'bg-emerald-100 text-emerald-700',
 }
-
-const partners = ['Amazon', 'NVIDIA', 'Ford', 'Coinbase', 'Google', 'Shopify', 'Mindbody']
 
 function SidebarWidget({ title, children }) {
   return (
@@ -51,7 +48,6 @@ function SidebarPost({ post }) {
 }
 
 function PostDetailPage() {
-  const { t } = useTranslation()
   const { slug } = useParams()
   const { data, isLoading, isError, error } = usePost(slug)
 
@@ -60,8 +56,6 @@ function PostDetailPage() {
 
   const { data: latestData } = usePosts(useMemo(() => ({ page: 1, per_page: 7, type: post?.type }), [post?.type]))
   const sidebarPosts = (latestData?.data || []).filter((p) => p.slug !== slug)
-  const shouldAnimatePartners = partners.length > 5
-  const partnerItems = shouldAnimatePartners ? [...partners, ...partners] : partners
 
   useEffect(() => {
     if (!post) return
@@ -203,26 +197,6 @@ function PostDetailPage() {
 
           </aside>
         </div>
-
-        <section className="mt-8 overflow-hidden rounded-2xl border border-primary-100 bg-white p-5 shadow-sm sm:p-6">
-          <div className="mb-4 flex items-center gap-2">
-            <span className="h-6 w-1 rounded-full bg-secondary-500" />
-            <h3 className="text-lg font-extrabold uppercase tracking-wide text-primary-500">{t('partnersTitle')}</h3>
-          </div>
-
-          <div className={shouldAnimatePartners ? 'partners-marquee' : 'flex flex-wrap gap-3'}>
-            <div className={shouldAnimatePartners ? 'partners-track' : 'contents'}>
-              {partnerItems.map((name, index) => (
-                <div
-                  key={`${name}-${index}`}
-                  className="inline-flex h-14 min-w-[160px] items-center justify-center rounded-xl border border-primary-100 bg-primary-50 px-6 text-base font-bold text-primary-500"
-                >
-                  {name}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
       </div>
     </SectionContainer>
   )
