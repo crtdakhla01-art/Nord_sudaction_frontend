@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
 import SectionContainer from '../components/SectionContainer'
@@ -50,6 +51,7 @@ function SidebarPost({ post }) {
 }
 
 function PostDetailPage() {
+  const { t } = useTranslation()
   const { slug } = useParams()
   const { data, isLoading, isError, error } = usePost(slug)
 
@@ -205,7 +207,7 @@ function PostDetailPage() {
         <section className="mt-8 overflow-hidden rounded-2xl border border-primary-100 bg-white p-5 shadow-sm sm:p-6">
           <div className="mb-4 flex items-center gap-2">
             <span className="h-6 w-1 rounded-full bg-secondary-500" />
-            <h3 className="text-lg font-extrabold uppercase tracking-wide text-primary-500">Nos partenaires</h3>
+            <h3 className="text-lg font-extrabold uppercase tracking-wide text-primary-500">{t('partnersTitle')}</h3>
           </div>
 
           <div className={shouldAnimatePartners ? 'partners-marquee' : 'flex flex-wrap gap-3'}>

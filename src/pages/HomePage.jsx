@@ -12,26 +12,29 @@ import AdvertisementsTable from '../components/AdvertisementsTable'
 import { useAdvertisements } from '../hooks/useAdvertisements'
 
 const partners = [
-  { name: 'Louisiana Baptists Convention', mark: 'LB', bg: 'bg-[#14293d]', fg: 'text-white' },
-  { name: 'Jefferson Baptist', mark: 'JB', bg: 'bg-white', fg: 'text-[#175a8f]' },
-  { name: 'Mount Bethel', mark: 'MB', bg: 'bg-[#3f93a5]', fg: 'text-white' },
-  { name: 'First Baptist Atlanta', mark: 'FBA', bg: 'bg-[#f7f7f7]', fg: 'text-[#4d7685]' },
-  { name: 'Graves Overhead Doors', mark: 'GO', bg: 'bg-black', fg: 'text-white' },
-  { name: 'Graves Fireplaces', mark: 'GF', bg: 'bg-[#0f0f0f]', fg: 'text-white' },
-  { name: 'First Baptist Church of Woodstock', mark: 'W', bg: 'bg-white', fg: 'text-[#1f1f1f]' },
-  { name: 'Haggai International', mark: 'HI', bg: 'bg-[#4f8bc0]', fg: 'text-white' },
-  { name: 'Mercy Bridge Alliance', mark: 'MBA', bg: 'bg-[#17324d]', fg: 'text-white' },
-  { name: 'Hopewell Ministries', mark: 'HM', bg: 'bg-[#f3f7fb]', fg: 'text-[#2f5f86]' },
-  { name: 'Global Relief Network', mark: 'GRN', bg: 'bg-[#2f8aa0]', fg: 'text-white' },
-  { name: 'Faith & Works Coalition', mark: 'FW', bg: 'bg-[#ececec]', fg: 'text-[#254455]' },
-  { name: 'Northgate Outreach', mark: 'NO', bg: 'bg-[#0f1720]', fg: 'text-white' },
-  { name: 'Open Hands Foundation', mark: 'OH', bg: 'bg-[#1f2937]', fg: 'text-white' },
-  { name: 'Woodland Fellowship Center', mark: 'WFC', bg: 'bg-white', fg: 'text-[#202020]' },
-  { name: 'Covenant Impact Group', mark: 'CI', bg: 'bg-[#4d87b8]', fg: 'text-white' },
-  { name: 'Bridgepoint Mission', mark: 'BM', bg: 'bg-[#1f4c6b]', fg: 'text-white' },
-  { name: 'Kingdom Builders Initiative', mark: 'KBI', bg: 'bg-[#f6f6f6]', fg: 'text-[#274d68]' },
-  { name: 'Community Care Hub', mark: 'CCH', bg: 'bg-[#2f7e95]', fg: 'text-white' },
-  { name: 'Harvest Partners', mark: 'HP', bg: 'bg-[#f9f9f9]', fg: 'text-[#3e6374]' },
+  '/partner_1.jpg',
+  '/partner_2.jpg',
+  '/partner_3.jpg',
+  '/partner_4.jpeg',
+  '/partner_5.jpeg',
+  '/partner_6.jpeg',
+  '/partner_7.jpeg',
+  '/partner_8.jpeg',
+  '/partner_9.jpeg',
+  '/partner_10.jpeg',
+  '/partner_11.jpeg',
+  '/partner_12.jpeg',
+  '/partner_13.jpeg',
+  '/partner_14.jpeg',
+  '/partner_15.jpeg',
+  '/partner_16.jpeg',
+  '/partner_18.jpeg',
+  '/partner_19.jpeg',
+  '/partner_20.jpeg',
+  '/partner_21.jpeg',
+  '/partner_22.jpeg',
+  '/partner_23.jpeg',
+  '/partner_24.jpeg',
 ]
 
 function HomePage() {
@@ -47,13 +50,13 @@ function HomePage() {
   const secondRowItems = shouldSlidePartners ? [...secondRowPartners, ...secondRowPartners] : secondRowPartners
   return (
     <div>
-      <SectionContainer className="pb-8 pt-8 lg:pt-10">
+      <SectionContainer className="pb-6 pt-0 lg:pt-0">
         <div className="mx-auto w-full max-w-6xl">
           <AdvertisementsTable advertisements={advertisements || []} />
         </div>
       </SectionContainer>
 
-      <SectionContainer className="pb-10 pt-8 lg:pt-12">
+      <SectionContainer className="-mt-4 pb-10 pt-0 lg:-mt-6 lg:pt-0">
         <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-2">
           <img
             className="order-1 hidden h-[320px] w-full rounded-3xl object-cover shadow-xl md:block md:h-[420px] lg:order-2"
@@ -61,11 +64,13 @@ function HomePage() {
             alt="Humanitarian work"
           />
           <div className="order-2 lg:order-1">
-            <p className="mb-4 inline-block rounded-full bg-secondary-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-secondary-600">
+            {/* <p className="mb-4 inline-block rounded-full bg-secondary-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-secondary-600">
               NGO Platform
-            </p>
+            </p> */}
             <h1 className="text-4xl font-extrabold leading-tight text-primary-500 md:text-5xl">{t('heroTitle')}</h1>
-            <p className="mt-5 max-w-xl text-base leading-7 text-primary-400">{t('heroSubtitle')}</p>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-primary-400">{t('heroSubtitle')}</p>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-primary-400">{t('heroSubtitle2')}</p>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-primary-400">{t('heroSubtitle3')}</p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Button as={Link} to="/opportunities">
                 {t('heroCtaPrimary')}
@@ -89,6 +94,7 @@ function HomePage() {
             <h2 className="text-3xl font-bold text-primary-500">{t('introTitle')}</h2>
             <p className="mt-4 text-base leading-7 text-primary-400">{t('introText')}</p>
             <p className="mt-4 text-sm leading-6 text-primary-300">{t('aboutDetail')}</p>
+            <p className="mt-4 text-sm leading-6 text-primary-300">{t('aboutBelief')}</p>
           </div>
         </div>
       </SectionContainer>
@@ -132,7 +138,7 @@ function HomePage() {
         <div className="mx-auto w-full max-w-6xl rounded-2xl border border-primary-100 bg-white px-4 py-6 shadow-sm sm:px-6">
           <div className="mb-6 flex items-center gap-2">
             <span className="h-5 w-1 rounded-full bg-secondary-500" />
-            <h3 className="text-sm font-extrabold uppercase tracking-wide text-primary-500">Nos partenaires</h3>
+            <h3 className="text-sm font-extrabold uppercase tracking-wide text-primary-500">{t('partnersTitle')}</h3>
           </div>
 
           {shouldSlidePartners ? (
@@ -140,9 +146,14 @@ function HomePage() {
               <div className="partners-marquee">
                 <div className="partners-track gap-4">
                   {firstRowItems.map((partner, index) => (
-                    <div key={`r1-${partner.name}-${index}`} className="flex min-w-[100px] flex-col items-center text-center sm:min-w-[180px]">
-                      <div className={`flex h-16 w-16 items-center justify-center rounded-2xl border border-primary-100 text-lg font-black shadow-sm sm:h-28 sm:w-28 sm:rounded-3xl sm:text-2xl ${partner.bg} ${partner.fg}`}>
-                        {partner.mark}
+                    <div key={`r1-${partner}-${index}`} className="flex min-w-[120px] flex-col items-center text-center sm:min-w-[180px]">
+                      <div className="flex h-16 w-24 items-center justify-center rounded-2xl border border-primary-100 bg-white p-2 shadow-sm sm:h-28 sm:w-36 sm:rounded-3xl">
+                        <img
+                          src={partner}
+                          alt={`Partenaire ${(index % firstRowPartners.length) + 1}`}
+                          className="max-h-full max-w-full object-contain"
+                          loading="lazy"
+                        />
                       </div>
                     </div>
                   ))}
@@ -152,9 +163,14 @@ function HomePage() {
               <div className="partners-marquee">
                 <div className="partners-track partners-track-reverse gap-4">
                   {secondRowItems.map((partner, index) => (
-                    <div key={`r2-${partner.name}-${index}`} className="flex min-w-[100px] flex-col items-center text-center sm:min-w-[180px]">
-                      <div className={`flex h-16 w-16 items-center justify-center rounded-2xl border border-primary-100 text-lg font-black shadow-sm sm:h-28 sm:w-28 sm:rounded-3xl sm:text-2xl ${partner.bg} ${partner.fg}`}>
-                        {partner.mark}
+                    <div key={`r2-${partner}-${index}`} className="flex min-w-[120px] flex-col items-center text-center sm:min-w-[180px]">
+                      <div className="flex h-16 w-24 items-center justify-center rounded-2xl border border-primary-100 bg-white p-2 shadow-sm sm:h-28 sm:w-36 sm:rounded-3xl">
+                        <img
+                          src={partner}
+                          alt={`Partenaire ${(index % secondRowPartners.length) + 1}`}
+                          className="max-h-full max-w-full object-contain"
+                          loading="lazy"
+                        />
                       </div>
                     </div>
                   ))}
@@ -163,10 +179,15 @@ function HomePage() {
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-4">
-              {partners.map((partner) => (
-                <div key={partner.name} className="flex flex-col items-center text-center">
-                  <div className={`flex h-16 w-16 items-center justify-center rounded-2xl border border-primary-100 text-lg font-black shadow-sm sm:h-28 sm:w-28 sm:rounded-3xl sm:text-2xl ${partner.bg} ${partner.fg}`}>
-                    {partner.mark}
+              {partners.map((partner, index) => (
+                <div key={partner} className="flex flex-col items-center text-center">
+                  <div className="flex h-16 w-24 items-center justify-center rounded-2xl border border-primary-100 bg-white p-2 shadow-sm sm:h-28 sm:w-36 sm:rounded-3xl">
+                    <img
+                      src={partner}
+                      alt={`Partenaire ${index + 1}`}
+                      className="max-h-full max-w-full object-contain"
+                      loading="lazy"
+                    />
                   </div>
                 </div>
               ))}

@@ -10,20 +10,27 @@ const resources = {
       navAdvertisements: 'Publicites',
       navOpportunities: 'Opportunites',
       navContact: 'Contact',
-      heroTitle: 'Agir ensemble pour des communities plus dignes',
+      heroTitle: 'Là où les projets deviennent des investissements',
       heroSubtitle:
-        'Nous connectons les personnes, les ressources et les idees pour soutenir des projets humanitaires concrets.',
+        'NORD SUD ACTION « Association marocaine pour la communication, le developpement socio-economique et l incitation a l investissement » oeuvre pour le renforcement des dynamiques territoriales en mettant en relation les acteurs publics, prives et associatifs autour de projets a fort impact.',
+      heroSubtitle2:
+        'Notre mission est de promouvoir l investissement, accompagner les initiatives locales et organiser des evenements structurants (forums, raids, festivals, competitions sportives, week-ends de prospection...) contribuant au rayonnement economique et touristique du Maroc, et particulierement les provinces du sud.',
+      heroSubtitle3:
+        'Nous croyons en une cooperation Nord-Sud basee sur l echange, l innovation et la creation de valeur partagee.',
       heroCtaPrimary: 'Voir les opportunites',
       heroCtaSecondary: 'Decouvrir les evenements',
       introTitle: 'Notre mission',
       introText:
-        'Nous accompagnons les associations locales avec une approche humaine, transparente et orientee impact.',
+        'NORD SUD ACTION « Association marocaine pour la communication, le developpement socio-economique et l incitation a l investissement » oeuvre pour le renforcement des dynamiques territoriales en mettant en relation les acteurs publics, prives et associatifs autour de projets a fort impact.',
       aboutDetail:
-        'A travers l education, les partenariats locaux et la solidarite d urgence, nous construisons un impact durable centre sur les personnes.',
+        'Notre mission est de promouvoir l investissement, accompagner les initiatives locales et organiser des evenements structurants (forums, raids, festivals, competitions sportives, week-ends de prospection...) contribuant au rayonnement economique et touristique du Maroc, et particulierement les provinces du sud.',
+      aboutBelief:
+        'Nous croyons en une cooperation Nord-Sud basee sur l echange, l innovation et la creation de valeur partagee.',
       featuredEventsTitle: 'Evenements a la une',
       viewAllEvents: 'Voir tous les evenements',
       adsSectionTitle: 'Publicites actives',
       adsSectionSubtitle: 'Contenus promotionnels visibles selon les dates de diffusion.',
+      partnersTitle: 'Nos partenaires',
       homeCtaTitle: 'Partagez une opportunite avec la communaute',
       homeCtaText:
         'Aidez les personnes a acceder au volontariat, a l emploi et aux initiatives solidaires en publiant des opportunites verifiees.',
@@ -177,20 +184,27 @@ const resources = {
       navAdvertisements: 'Advertisements',
       navOpportunities: 'Opportunities',
       navContact: 'Contact',
-      heroTitle: 'Working together for more dignified communities',
+      heroTitle: 'Where projects become investments',
       heroSubtitle:
-        'We connect people, resources, and ideas to support concrete humanitarian projects.',
+        'NORD SUD ACTION, a Moroccan association for communication, socio-economic development, and investment promotion, works to strengthen territorial dynamics by connecting public, private, and civil society stakeholders around high-impact projects.',
+      heroSubtitle2:
+        'Our mission is to promote investment, support local initiatives, and organize structuring events (forums, raids, festivals, sports competitions, prospecting weekends...) that contribute to Morocco s economic and tourism influence, especially in the southern provinces.',
+      heroSubtitle3:
+        'We believe in North-South cooperation based on exchange, innovation, and the creation of shared value.',
       heroCtaPrimary: 'View opportunities',
       heroCtaSecondary: 'Explore events',
       introTitle: 'Our mission',
       introText:
-        'We support local associations through a human, transparent, and impact-focused approach.',
+        'NORD SUD ACTION, a Moroccan association for communication, socio-economic development, and investment promotion, works to strengthen territorial dynamics by connecting public, private, and civil society stakeholders around high-impact projects.',
       aboutDetail:
-        'Through education support, local partnerships, and emergency solidarity, we build long-term impact centered on people.',
+        'Our mission is to promote investment, support local initiatives, and organize structuring events (forums, raids, festivals, sports competitions, prospecting weekends...) that contribute to Morocco s economic and tourism influence, especially in the southern provinces.',
+      aboutBelief:
+        'We believe in North-South cooperation based on exchange, innovation, and the creation of shared value.',
       featuredEventsTitle: 'Featured events',
       viewAllEvents: 'View all events',
       adsSectionTitle: 'Active advertisements',
       adsSectionSubtitle: 'Promotional content visible only during active date ranges.',
+      partnersTitle: 'Our partners',
       homeCtaTitle: 'Share an opportunity with the community',
       homeCtaText:
         'Help people access volunteering, jobs, and support opportunities by publishing verified initiatives.',
@@ -343,20 +357,27 @@ const resources = {
       navAdvertisements: 'Publicidad',
       navOpportunities: 'Oportunidades',
       navContact: 'Contacto',
-      heroTitle: 'Actuamos juntos por comunidades mas dignas',
+      heroTitle: 'Donde los proyectos se convierten en inversiones',
       heroSubtitle:
-        'Conectamos personas, recursos e ideas para apoyar proyectos humanitarios concretos.',
+        'NORD SUD ACTION, asociacion marroqui para la comunicacion, el desarrollo socioeconomico y el fomento de la inversion, trabaja para fortalecer las dinamicas territoriales conectando a actores publicos, privados y asociativos en torno a proyectos de alto impacto.',
+      heroSubtitle2:
+        'Nuestra mision es promover la inversion, acompanar las iniciativas locales y organizar eventos estructurantes (foros, raids, festivales, competiciones deportivas, fines de semana de prospeccion...) que contribuyen al posicionamiento economico y turistico de Marruecos, especialmente en las provincias del sur.',
+      heroSubtitle3:
+        'Creemos en una cooperacion Norte-Sur basada en el intercambio, la innovacion y la creacion de valor compartido.',
       heroCtaPrimary: 'Ver oportunidades',
       heroCtaSecondary: 'Descubrir eventos',
       introTitle: 'Nuestra mision',
       introText:
-        'Acompanamos a asociaciones locales con un enfoque humano, transparente y orientado al impacto.',
+        'NORD SUD ACTION, asociacion marroqui para la comunicacion, el desarrollo socioeconomico y el fomento de la inversion, trabaja para fortalecer las dinamicas territoriales conectando a actores publicos, privados y asociativos en torno a proyectos de alto impacto.',
       aboutDetail:
-        'A traves del apoyo educativo, alianzas locales y solidaridad de emergencia, construimos un impacto sostenible centrado en las personas.',
+        'Nuestra mision es promover la inversion, acompanar las iniciativas locales y organizar eventos estructurantes (foros, raids, festivales, competiciones deportivas, fines de semana de prospeccion...) que contribuyen al posicionamiento economico y turistico de Marruecos, especialmente en las provincias del sur.',
+      aboutBelief:
+        'Creemos en una cooperacion Norte-Sur basada en el intercambio, la innovacion y la creacion de valor compartido.',
       featuredEventsTitle: 'Eventos destacados',
       viewAllEvents: 'Ver todos los eventos',
       adsSectionTitle: 'Publicidad activa',
       adsSectionSubtitle: 'Contenido promocional visible solo durante fechas activas.',
+      partnersTitle: 'Nuestros socios',
       homeCtaTitle: 'Comparte una oportunidad con la comunidad',
       homeCtaText:
         'Ayuda a las personas a acceder al voluntariado, al empleo y al apoyo social publicando iniciativas verificadas.',
