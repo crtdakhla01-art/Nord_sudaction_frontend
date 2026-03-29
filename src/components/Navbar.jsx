@@ -30,6 +30,7 @@ function Navbar() {
             <NavLink to="/events" className={navClassName} onClick={() => setIsOpen(false)}>{t('navEvents')}</NavLink>
             <NavLink to="/actualites" className={navClassName} onClick={() => setIsOpen(false)}>Actualites</NavLink>
             <NavLink to="/opportunities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navOpportunities')}</NavLink>
+            <NavLink to="/galerie" className={navClassName} onClick={() => setIsOpen(false)}>{t('navGallery')}</NavLink>
             <NavLink to="/contact" className={navClassName} onClick={() => setIsOpen(false)}>{t('navContact')}</NavLink>
           </nav>
 
@@ -63,6 +64,7 @@ function Navbar() {
           <NavLink to="/events" className={navClassName} onClick={() => setIsOpen(false)}>{t('navEvents')}</NavLink>
           <NavLink to="/actualites" className={navClassName} onClick={() => setIsOpen(false)}>Actualites</NavLink>
           <NavLink to="/opportunities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navOpportunities')}</NavLink>
+          <NavLink to="/galerie" className={navClassName} onClick={() => setIsOpen(false)}>{t('navGallery')}</NavLink>
           <NavLink to="/contact" className={navClassName} onClick={() => setIsOpen(false)}>{t('navContact')}</NavLink>
         </nav>
       )}

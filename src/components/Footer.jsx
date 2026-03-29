@@ -20,7 +20,7 @@ function Footer() {
           <div className="mt-3 flex items-center gap-3 text-primary-300">
             <a
               className="rounded-full border border-primary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
-              href="https://www.linkedin.com/company/association-nord-sud-action/"
+              href="https://www.facebook.com/nordsudaction"
               target="_blank"
               rel="noreferrer"
               aria-label="Facebook"

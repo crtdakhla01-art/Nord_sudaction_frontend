@@ -19,6 +19,7 @@ import EventsPage from './pages/EventsPage'
 import HomePage from './pages/HomePage'
 import OpportunitiesPage from './pages/OpportunitiesPage'
 import OpportunityDetailPage from './pages/OpportunityDetailPage'
+import GalleryPage from './pages/GalleryPage'
 import PostDetailPage from './pages/PostDetailPage'
 
 function AdminHomeRedirect() {
@@ -63,7 +64,8 @@ function App() {
         <Route path="/actualites/communiques" element={<ActualitesPage forcedType="communique" />} />
         <Route path="/actualites/media" element={<ActualitesPage forcedType="media" />} />
         <Route path="/actualites/:slug" element={<PostDetailPage />} />
-        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/galerie" element={<GalleryPage />} />
+    <Route path="/contact" element={<ContactPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

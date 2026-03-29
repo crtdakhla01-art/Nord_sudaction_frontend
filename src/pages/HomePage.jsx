@@ -7,6 +7,7 @@ import ErrorState from '../components/ErrorState'
 import heroImage from '../assets/hero.png'
 import Button from '../components/Button'
 import SectionContainer from '../components/SectionContainer'
+import VideoPlayer from '../components/VideoPlayer'
 import AdvertisementsTable from '../components/AdvertisementsTable'
 import { useAdvertisements } from '../hooks/useAdvertisements'
 
@@ -125,12 +126,8 @@ function HomePage() {
 
       <SectionContainer className="bg-white/70 pt-0 pb-4">
         <div className="mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10">
-          <div className="flex h-[280px] w-full items-center justify-center rounded-2xl bg-[#d2cdc7] p-1">
-            <img
-              src="/riad_tanga_lug_2.jpeg"
-              alt="Raid Tanja Lagouira"
-              className="max-h-full max-w-full object-contain"
-            />
+          <div className="w-full">
+            <VideoPlayer url="https://www.youtube.com/watch?v=DPrBVkE22mM" title="Raid Tanja Lagouira" />
           </div>
           <div className="flex h-full flex-col">
             <p className="text-base font-semibold text-primary-400">{t('raidEdition')}</p>
@@ -140,12 +137,12 @@ function HomePage() {
             <p className="mt-3 text-base leading-7 text-primary-400">{t('raidText2')}</p>
             <div className="mt-auto pt-4 flex justify-end">
               <a
-                href="https://youtu.be/DPrBVkE22mM?si=ZQR2q8rZK9C6EvVM"
+                href="https://www.raidtanjalagouira.ma"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center font-semibold text-secondary-500 underline-offset-2 hover:underline"
               >
-                {t('raidVideoLabel')}
+                www.raidtanjalagouira.ma
               </a>
             </div>
           </div>
