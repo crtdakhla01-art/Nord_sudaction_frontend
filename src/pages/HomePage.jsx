@@ -22,19 +22,18 @@ const partners = [
   '/partner_8.jpeg',
   '/partner_9.jpeg',
   '/partner_10.jpeg',
-  '/partner_11.jpeg',
   '/partner_12.jpeg',
   '/partner_13.jpeg',
-  '/partner_14.jpeg',
+  '/partner_14.jpg',
   '/partner_15.jpeg',
   '/partner_16.jpeg',
-  '/partner_18.jpeg',
+  '/partner_17.jpeg',
   '/partner_19.jpeg',
-  '/partner_20.jpeg',
   '/partner_21.jpeg',
   '/partner_22.jpeg',
   '/partner_23.jpeg',
   '/partner_24.jpeg',
+  '/partner_25.jpg',
 ]
 
 function HomePage() {
@@ -56,8 +55,8 @@ function HomePage() {
         </div>
       </SectionContainer>
 
-      <SectionContainer className="-mt-4 pb-10 pt-0 lg:-mt-6 lg:pt-0">
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-2">
+      <SectionContainer className="pb-10 pt-2 md:pt-4 lg:-mt-8 lg:pt-0">
+        <div className="mx-auto grid w-full max-w-6xl items-start gap-8 lg:grid-cols-2">
           <img
             className="order-1 hidden h-[320px] w-full rounded-3xl object-cover shadow-xl md:block md:h-[420px] lg:order-2"
             src={heroImage}
@@ -67,7 +66,7 @@ function HomePage() {
             {/* <p className="mb-4 inline-block rounded-full bg-secondary-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-secondary-600">
               NGO Platform
             </p> */}
-            <h1 className="text-4xl font-extrabold leading-tight text-primary-500 md:text-5xl">{t('heroTitle')}</h1>
+            <h1 className="text-2xl font-extrabold leading-[1.1] text-primary-500 md:text-[36px] lg:text-[38px]">{t('heroTitle')}</h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-primary-400">{t('heroSubtitle')}</p>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-primary-400">{t('heroSubtitle2')}</p>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-primary-400">{t('heroSubtitle3')}</p>
