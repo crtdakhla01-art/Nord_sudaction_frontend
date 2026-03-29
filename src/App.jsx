@@ -12,6 +12,7 @@ import AdminPostsPage from './pages/admin/AdminPostsPage'
 import AdminOverviewPage from './pages/admin/AdminOverviewPage'
 import AdminVerifyOtpPage from './pages/admin/AdminVerifyOtpPage'
 import ActualitesPage from './pages/ActualitesPage'
+import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
 import EventDetailPage from './pages/EventDetailPage'
 import EventsPage from './pages/EventsPage'
@@ -52,6 +53,7 @@ function App() {
 
       <Route element={<MainLayout />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/a-propos" element={<AboutPage />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/events/:id" element={<EventDetailPage />} />
         <Route path="/opportunities" element={<OpportunitiesPage />} />

@@ -75,11 +75,8 @@ function HomePage() {
             <p className="mt-3 max-w-2xl text-sm leading-7 text-primary-400">{t('heroSubtitle2')}</p>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-primary-400">{t('heroSubtitle3')}</p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <Button as={Link} to="/opportunities">
-                {t('heroCtaPrimary')}
-              </Button>
-              <Button as={Link} to="/events" variant="secondary">
-                {t('heroCtaSecondary')}
+              <Button as={Link} to="/a-propos">
+                {t('heroCtaMore')}
               </Button>
             </div>
           </div>
@@ -88,11 +85,13 @@ function HomePage() {
 
       <SectionContainer className="bg-white/70">
         <div className="mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10">
-          <img
-            src="/la_cope.jpeg"
-            alt="La Cope"
-            className="h-auto w-full rounded-2xl object-cover"
-          />
+          <div className="flex h-[280px] w-full items-center justify-center rounded-2xl bg-white p-4">
+            <img
+              src="/la_cope.jpeg"
+              alt="La Cope"
+              className="max-h-full max-w-full object-contain"
+            />
+          </div>
           <div>
             <p className="text-base font-semibold text-primary-400">{t('laCopeEdition')}</p>
             <h2 className="mt-2 text-3xl font-bold text-primary-500">{t('laCopeTitre')}</h2>
@@ -124,15 +123,22 @@ function HomePage() {
         </div>
       </SectionContainer>
 
-      <SectionContainer className="pt-0 pb-4">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-5 rounded-3xl bg-primary-500 px-8 py-10 text-white md:flex-row md:items-center">
-          <div>
-            <h3 className="text-2xl font-bold">{t('homeCtaTitle')}</h3>
-            <p className="mt-2 max-w-2xl text-sm text-primary-200">{t('homeCtaText')}</p>
+      <SectionContainer className="bg-white/70 pt-0 pb-4">
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10">
+          <div className="flex h-[280px] w-full items-center justify-center rounded-2xl bg-[#c41414] p-4">
+            <img
+              src="/riad_tanga_lug.jpeg"
+              alt="Raid Tanja Lagouira"
+              className="max-h-full max-w-full object-contain"
+            />
           </div>
-          <Button as={Link} to="/opportunities" className="bg-secondary-500! text-white! hover:bg-secondary-600!">
-            {t('heroCtaPrimary')}
-          </Button>
+          <div>
+            <p className="text-base font-semibold text-primary-400">{t('raidEdition')}</p>
+            <h2 className="mt-2 text-3xl font-bold text-primary-500">{t('raidTitle')}</h2>
+            <p className="mt-4 text-lg font-semibold text-secondary-500">{t('raidDates')}</p>
+            <p className="mt-4 text-base leading-7 text-primary-400">{t('raidText1')}</p>
+            <p className="mt-3 text-sm leading-7 text-primary-400">{t('raidText2')}</p>
+          </div>
         </div>
       </SectionContainer>
 

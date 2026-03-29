@@ -52,7 +52,7 @@ function OpportunitiesPage() {
 
   const validate = () => {
     const errors = {}
-    const requiredFields = ['first_name', 'last_name', 'description', 'budget', 'phone', 'email', 'type_id']
+    const requiredFields = ['titre', 'ville', 'first_name', 'last_name', 'description', 'email', 'type_id']
 
     requiredFields.forEach((field) => {
       if (!formValues[field]) {
@@ -194,6 +194,7 @@ function OpportunitiesPage() {
                 value={formValues.titre}
                 onChange={handleChange}
                 error={formErrors.titre}
+                required
               />
               <InputField
                 label={t('cardVille')}
@@ -201,6 +202,7 @@ function OpportunitiesPage() {
                 value={formValues.ville}
                 onChange={handleChange}
                 error={formErrors.ville}
+                required
               />
             </div>
 
@@ -211,6 +213,7 @@ function OpportunitiesPage() {
                 value={formValues.first_name}
                 onChange={handleChange}
                 error={formErrors.first_name}
+                required
               />
               <InputField
                 label={t('formLastName')}
@@ -218,6 +221,7 @@ function OpportunitiesPage() {
                 value={formValues.last_name}
                 onChange={handleChange}
                 error={formErrors.last_name}
+                required
               />
             </div>
 
@@ -228,6 +232,7 @@ function OpportunitiesPage() {
               onChange={handleChange}
               rows={5}
               error={formErrors.description}
+              required
             />
 
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -256,10 +261,11 @@ function OpportunitiesPage() {
                 value={formValues.email}
                 onChange={handleChange}
                 error={formErrors.email}
+                required
               />
 
               <label className="block text-sm font-medium text-primary-500">
-                <span>{t('formType')}</span>
+                <span>{t('formType')}<span className="ml-0.5 text-red-500">*</span></span>
                 <select
                   className="mt-2 block w-full rounded-xl border border-primary-200 bg-white px-4 py-2.5 text-primary-500 shadow-sm outline-none transition focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20"
                   name="type_id"

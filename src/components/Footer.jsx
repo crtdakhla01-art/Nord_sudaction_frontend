@@ -13,7 +13,7 @@ function Footer() {
         <div>
           <p className="text-sm font-semibold text-white">{t('footerContact')}</p>
           <p className="mt-2 text-sm text-primary-300">contact@nordsudaction.org</p>
-          <p className="text-sm text-primary-300">+212 600 000 000</p>
+          <p className="text-sm text-primary-300">+212660544904</p>
         </div>
         <div>
           <p className="text-sm font-semibold text-white">{t('footerSocial')}</p>

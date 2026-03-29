@@ -65,13 +65,13 @@ function ContactPage() {
               </div>
             </div>
             <a
-              href="https://wa.me/212600000000"
+              href="https://wa.me/212660544904"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-xl bg-accent-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-accent-600"
             >
               <span className="inline-block h-2 w-2 rounded-full bg-white/60" />
-              {t('whatsappLabel')} +212 600 000 000
+              {t('whatsappLabel')} +212 660 544 904
             </a>
           </div>
         </div>

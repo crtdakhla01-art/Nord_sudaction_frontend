@@ -13,23 +13,60 @@ const resources = {
       heroTitle: 'Là où les projets deviennent des investissements',
       heroSubtitle: 'NORD SUD ACTION « ',
       heroSubtitleBold:
-        'Association marocaine pour la communication, le developpement socio-economique et l incitation a l investissement',
+        'Association marocaine pour la communication, le développement socio-économique et l\'incitation à l\'investissement',
       heroSubtitlePost:
         ' » oeuvre pour le renforcement des dynamiques territoriales en mettant en relation les acteurs publics, prives et associatifs autour de projets a fort impact.',
       heroSubtitle2:
         'Notre mission est de promouvoir l investissement, accompagner les initiatives locales et organiser des evenements structurants (forums, raids, festivals, competitions sportives, week-ends de prospection...) contribuant au rayonnement economique et touristique du Maroc, et particulierement les provinces du sud.',
       heroSubtitle3:
         'Nous croyons en une cooperation Nord-Sud basee sur l echange, l innovation et la creation de valeur partagee.',
-      heroCtaPrimary: 'Voir les opportunites',
-      heroCtaSecondary: 'Decouvrir les evenements',
+      heroCtaMore: 'Voir plus',
       introTitle: 'Notre mission',
       introText:
         'Nous accompagnons les associations locales avec une approche humaine, transparente et orientee impact.',
       aboutDetail:
         'A travers l education, les partenariats locaux et la solidarite d urgence, nous construisons un impact durable centre sur les personnes.',
+      aboutPageEyebrow: 'A propos de nous',
+      aboutPageTitle: 'A propos de NORD SUD ACTION',
+      aboutPageIntro:
+        'Association marocaine pour la communication, le developpement socio-economique et l incitation a l investissement.',
+      aboutPageSectionTitle: 'Evenements majeurs organises par l association',
+      aboutPageSectionIntro:
+        'NORD SUD ACTION a initie et organise de nombreux forums, congres, salons et voyages de presse, reunissant decideurs, investisseurs, medias internationaux et personnalites politiques. Parmi les evenements phares :',
+      aboutPageForumTitle: 'Le Forum des Investisseurs Internationaux',
+      aboutPageForumText:
+        'Un rendez-vous strategique reunissant des operateurs economiques marocains et etrangers interesses par les opportunites de Dakhla et des provinces du Sud.',
+      aboutPageRaidTitle: 'Le RAID TANJA LAGOUIRA',
+      aboutPageRaidText:
+        'Evenement sportif, promotionnel et solidaire reliant Tanger a Dakhla. Ce raid attire chaque annee des participants de renom, des entreprises sponsors et de nombreuses institutions nationales et internationales. Il constitue aujourd hui l un des plus grands evenements itinerants du Maroc.',
+      aboutPageCongressTitle: 'Le Congres des Plus Belles Baies du Monde',
+      aboutPageCongressText:
+        'Organise a Dakhla, ce congres a permis de promouvoir la baie de Dakhla sur la scene mondiale, en mettant en avant son potentiel touristique, ecologique et sportif.',
+      aboutPagePressTripsTitle: 'Des voyages de presse internationaux',
+      aboutPagePressTripsText:
+        'Permettant de faire decouvrir la region a des journalistes de grands medias etrangers et de renforcer son image a l echelle mondiale.',
+      aboutPageConferencesTitle: 'Conferences et rencontres economiques',
+      aboutPageConferencesText:
+        'Tant au Maroc qu a l etranger, reunissant experts, decideurs institutionnels et operateurs economiques.',
+      aboutPageImpactTitle: 'Impact et contribution',
+      aboutPageImpactIntro: 'L association joue un role majeur dans :',
+      aboutPageImpactItems: [
+        'L attraction d investissements dans la region Dakhla-Oued Eddahab.',
+        'La stimulation du tourisme et du marketing territorial.',
+        'Le renforcement des liens diplomatiques paralleles par la societe civile.',
+        'La promotion culturelle et sportive dans les provinces du Sud.',
+        'La diffusion internationale du message de paix et de developpement porte par les initiatives royales.',
+      ],
       laCopeEdition: '3e édition sous le thème :',
       laCopeTitre: 'Dakhla carrefour du sport et des affaires.',
       laCopeDates: '22-25 octobre 2026',
+      raidEdition: '17eme edition',
+      raidTitle: 'RAID TANJA LAGOUIRA',
+      raidDates: '30 octobre au 8 novembre 2026',
+      raidText1:
+        'Un raid qui relie deux fetes nationales : 31 octobre, fete de l unite / 6 novembre, la glorieuse marche verte.',
+      raidText2:
+        'Une traversee du Royaume, de Tanger a Dakhla, pour celebrer l unite territoriale dans le temps et dans l espace.',
       featuredEventsTitle: 'Evenements a la une',
       viewAllEvents: 'Voir tous les evenements',
       adsSectionTitle: 'Publicites actives',
@@ -41,12 +78,12 @@ const resources = {
       eventsPageTitle: 'Evenements',
       eventsIntro:
         'Decouvrez des moments ou benevoles, associations et communautes locales se reunissent.',
-      eventsUpcomingTab: 'Evenements a venir',
-      eventsPassedTab: 'Evenements passes',
+      eventsUpcomingTab: 'Événements à venir',
+      eventsPassedTab: 'Événements passés',
       eventsFilterAll: 'Tous les types',
       opportunitiesPageTitle: 'Opportunites',
       opportunitiesViewTab: 'Voir les opportunites',
-      opportunitiesSubmitTab: 'Soumettre une opportunite',
+      opportunitiesSubmitTab: 'Soumettre une offre',
       filterAllTypes: 'Tous les types',
       contactTitle: 'Contact',
       contactIntro:
@@ -174,7 +211,7 @@ const resources = {
       monthsLabel: 'Mois',
       daysLabel: 'Jours',
       hoursLabel: 'Heures',
-      footerText: 'Ensemble, nous transformons la solidarite en action durable.',
+      footerText: 'Là où les projets deviennent des investissements',
       footerContact: 'Contact',
       footerSocial: 'Réseaux sociaux',
       footerCopyright: 'Tous droits réservés.',
@@ -198,16 +235,53 @@ const resources = {
         'Our mission is to promote investment, support local initiatives, and organize structuring events (forums, raids, festivals, sports competitions, prospecting weekends...) that contribute to Morocco s economic and tourism influence, especially in the southern provinces.',
       heroSubtitle3:
         'We believe in North-South cooperation based on exchange, innovation, and the creation of shared value.',
-      heroCtaPrimary: 'View opportunities',
-      heroCtaSecondary: 'Explore events',
+      heroCtaMore: 'See more',
       introTitle: 'Our mission',
       introText:
         'We support local associations through a human, transparent, and impact-focused approach.',
       aboutDetail:
         'Through education support, local partnerships, and emergency solidarity, we build long-term impact centered on people.',
+      aboutPageEyebrow: 'About us',
+      aboutPageTitle: 'About NORD SUD ACTION',
+      aboutPageIntro:
+        'A Moroccan association dedicated to communication, socio-economic development, and investment promotion.',
+      aboutPageSectionTitle: 'Major events organized by the association',
+      aboutPageSectionIntro:
+        'NORD SUD ACTION has initiated and organized numerous forums, congresses, fairs, and press trips, bringing together decision-makers, investors, international media, and political figures. Its flagship events include:',
+      aboutPageForumTitle: 'The International Investors Forum',
+      aboutPageForumText:
+        'A strategic gathering bringing together Moroccan and foreign economic operators interested in the opportunities of Dakhla and the southern provinces.',
+      aboutPageRaidTitle: 'The RAID TANJA LAGOUIRA',
+      aboutPageRaidText:
+        'A sporting, promotional, and solidarity event linking Tangier to Dakhla. Every year, this raid attracts renowned participants, sponsoring companies, and many national and international institutions. It has become one of Morocco s largest itinerant events.',
+      aboutPageCongressTitle: 'The Congress of the Most Beautiful Bays in the World',
+      aboutPageCongressText:
+        'Organized in Dakhla, this congress helped promote Dakhla Bay on the global stage by highlighting its tourism, ecological, and sporting potential.',
+      aboutPagePressTripsTitle: 'International press trips',
+      aboutPagePressTripsText:
+        'Designed to introduce the region to journalists from major foreign media outlets and strengthen its image on a global scale.',
+      aboutPageConferencesTitle: 'Economic conferences and meetings',
+      aboutPageConferencesText:
+        'Held in Morocco and abroad, bringing together experts, institutional decision-makers, and economic operators.',
+      aboutPageImpactTitle: 'Impact and contribution',
+      aboutPageImpactIntro: 'The association plays a major role in:',
+      aboutPageImpactItems: [
+        'Attracting investment to the Dakhla-Oued Eddahab region.',
+        'Stimulating tourism and territorial marketing.',
+        'Strengthening parallel diplomatic ties through civil society.',
+        'Promoting culture and sport in the southern provinces.',
+        'Sharing internationally a message of peace and development carried by royal initiatives.',
+      ],
       laCopeEdition: '3rd edition with the theme:',
       laCopeTitre: 'Dakhla crossroads of sport and business.',
       laCopeDates: '22–25 October 2026',
+      raidEdition: '17th edition',
+      raidTitle: 'RAID TANJA LAGOUIRA',
+      raidDates: '30 October to 8 November 2026',
+      raidText1:
+        'A raid linking two national celebrations: 31 October, the Feast of Unity / 6 November, the glorious Green March.',
+      raidText2:
+        'A crossing of the Kingdom, from Tangier to Dakhla, to celebrate territorial unity across both time and space.',
       featuredEventsTitle: 'Featured events',
       viewAllEvents: 'View all events',
       adsSectionTitle: 'Active advertisements',
@@ -351,7 +425,7 @@ const resources = {
       monthsLabel: 'Months',
       daysLabel: 'Days',
       hoursLabel: 'Hours',
-      footerText: 'Together, we turn solidarity into sustainable action.',
+      footerText: 'Where projects become investments',
       footerContact: 'Contact',
       footerSocial: 'Social',
       footerCopyright: 'All rights reserved.',
@@ -375,16 +449,53 @@ const resources = {
         'Nuestra mision es promover la inversion, acompanar las iniciativas locales y organizar eventos estructurantes (foros, raids, festivales, competiciones deportivas, fines de semana de prospeccion...) que contribuyen al posicionamiento economico y turistico de Marruecos, especialmente en las provincias del sur.',
       heroSubtitle3:
         'Creemos en una cooperacion Norte-Sur basada en el intercambio, la innovacion y la creacion de valor compartido.',
-      heroCtaPrimary: 'Ver oportunidades',
-      heroCtaSecondary: 'Descubrir eventos',
+      heroCtaMore: 'Ver mas',
       introTitle: 'Nuestra mision',
       introText:
         'Acompanamos a asociaciones locales con un enfoque humano, transparente y orientado al impacto.',
       aboutDetail:
         'A traves del apoyo educativo, alianzas locales y solidaridad de emergencia, construimos un impacto sostenible centrado en las personas.',
+      aboutPageEyebrow: 'Sobre nosotros',
+      aboutPageTitle: 'Sobre NORD SUD ACTION',
+      aboutPageIntro:
+        'Una asociacion marroqui dedicada a la comunicacion, el desarrollo socioeconomico y el fomento de la inversion.',
+      aboutPageSectionTitle: 'Eventos principales organizados por la asociacion',
+      aboutPageSectionIntro:
+        'NORD SUD ACTION ha iniciado y organizado numerosos foros, congresos, ferias y viajes de prensa, reuniendo a responsables, inversores, medios internacionales y personalidades politicas. Entre los eventos mas destacados se encuentran:',
+      aboutPageForumTitle: 'El Foro de Inversores Internacionales',
+      aboutPageForumText:
+        'Un encuentro estrategico que reune a operadores economicos marroquies y extranjeros interesados en las oportunidades de Dajla y las provincias del sur.',
+      aboutPageRaidTitle: 'El RAID TANJA LAGOUIRA',
+      aboutPageRaidText:
+        'Evento deportivo, promocional y solidario que une Tanger con Dajla. Cada ano atrae a participantes reconocidos, empresas patrocinadoras y numerosas instituciones nacionales e internacionales. Hoy constituye uno de los mayores eventos itinerantes de Marruecos.',
+      aboutPageCongressTitle: 'El Congreso de las Bahi as mas Bellas del Mundo',
+      aboutPageCongressText:
+        'Organizado en Dajla, este congreso permitio promover la bahia de Dajla en la escena mundial, destacando su potencial turistico, ecologico y deportivo.',
+      aboutPagePressTripsTitle: 'Viajes de prensa internacionales',
+      aboutPagePressTripsText:
+        'Permiten dar a conocer la region a periodistas de grandes medios extranjeros y reforzar su imagen a escala mundial.',
+      aboutPageConferencesTitle: 'Conferencias y encuentros economicos',
+      aboutPageConferencesText:
+        'Tanto en Marruecos como en el extranjero, reuniendo a expertos, responsables institucionales y operadores economicos.',
+      aboutPageImpactTitle: 'Impacto y contribucion',
+      aboutPageImpactIntro: 'La asociacion desempena un papel importante en:',
+      aboutPageImpactItems: [
+        'La atraccion de inversiones en la region de Dajla-Oued Eddahab.',
+        'La dinamizacion del turismo y del marketing territorial.',
+        'El fortalecimiento de los vinculos diplomaticos paralelos a traves de la sociedad civil.',
+        'La promocion cultural y deportiva en las provincias del sur.',
+        'La difusion internacional de un mensaje de paz y desarrollo impulsado por las iniciativas reales.',
+      ],
       laCopeEdition: '3.ª edición bajo el tema:',
       laCopeTitre: 'Dakhla, cruce del deporte y los negocios.',
       laCopeDates: '22-25 de octubre de 2026',
+      raidEdition: '17.ª edicion',
+      raidTitle: 'RAID TANJA LAGOUIRA',
+      raidDates: '30 de octubre al 8 de noviembre de 2026',
+      raidText1:
+        'Un raid que une dos fiestas nacionales: 31 de octubre, fiesta de la unidad / 6 de noviembre, la gloriosa Marcha Verde.',
+      raidText2:
+        'Una travesia del Reino, de Tanger a Dajla, para celebrar la unidad territorial en el tiempo y en el espacio.',
       featuredEventsTitle: 'Eventos destacados',
       viewAllEvents: 'Ver todos los eventos',
       adsSectionTitle: 'Publicidad activa',
@@ -528,7 +639,7 @@ const resources = {
       monthsLabel: 'Meses',
       daysLabel: 'Dias',
       hoursLabel: 'Horas',
-      footerText: 'Juntos, transformamos la solidaridad en accion sostenible.',
+      footerText: 'Donde los proyectos se convierten en inversiones',
       footerContact: 'Contacto',
       footerSocial: 'Redes sociales',
       footerCopyright: 'Todos los derechos reservados.',
