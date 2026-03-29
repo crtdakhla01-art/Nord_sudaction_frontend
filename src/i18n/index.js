@@ -11,8 +11,11 @@ const resources = {
       navOpportunities: 'Opportunites',
       navContact: 'Contact',
       heroTitle: 'Là où les projets deviennent des investissements',
-      heroSubtitle:
-        'NORD SUD ACTION « Association marocaine pour la communication, le developpement socio-economique et l incitation a l investissement » oeuvre pour le renforcement des dynamiques territoriales en mettant en relation les acteurs publics, prives et associatifs autour de projets a fort impact.',
+      heroSubtitle: 'NORD SUD ACTION « ',
+      heroSubtitleBold:
+        'Association marocaine pour la communication, le developpement socio-economique et l incitation a l investissement',
+      heroSubtitlePost:
+        ' » oeuvre pour le renforcement des dynamiques territoriales en mettant en relation les acteurs publics, prives et associatifs autour de projets a fort impact.',
       heroSubtitle2:
         'Notre mission est de promouvoir l investissement, accompagner les initiatives locales et organiser des evenements structurants (forums, raids, festivals, competitions sportives, week-ends de prospection...) contribuant au rayonnement economique et touristique du Maroc, et particulierement les provinces du sud.',
       heroSubtitle3:
@@ -24,6 +27,9 @@ const resources = {
         'Nous accompagnons les associations locales avec une approche humaine, transparente et orientee impact.',
       aboutDetail:
         'A travers l education, les partenariats locaux et la solidarite d urgence, nous construisons un impact durable centre sur les personnes.',
+      laCopeEdition: '3e édition sous le thème :',
+      laCopeTitre: 'Dakhla carrefour du sport et des affaires.',
+      laCopeDates: '22-25 octobre 2026',
       featuredEventsTitle: 'Evenements a la une',
       viewAllEvents: 'Voir tous les evenements',
       adsSectionTitle: 'Publicites actives',
@@ -183,8 +189,11 @@ const resources = {
       navOpportunities: 'Opportunities',
       navContact: 'Contact',
       heroTitle: 'Where projects become investments',
-      heroSubtitle:
-        'NORD SUD ACTION, a Moroccan association for communication, socio-economic development, and investment promotion, works to strengthen territorial dynamics by connecting public, private, and civil society stakeholders around high-impact projects.',
+      heroSubtitle: 'NORD SUD ACTION, ',
+      heroSubtitleBold:
+        'a Moroccan association for communication, socio-economic development, and investment promotion',
+      heroSubtitlePost:
+        ', works to strengthen territorial dynamics by connecting public, private, and civil society stakeholders around high-impact projects.',
       heroSubtitle2:
         'Our mission is to promote investment, support local initiatives, and organize structuring events (forums, raids, festivals, sports competitions, prospecting weekends...) that contribute to Morocco s economic and tourism influence, especially in the southern provinces.',
       heroSubtitle3:
@@ -196,6 +205,9 @@ const resources = {
         'We support local associations through a human, transparent, and impact-focused approach.',
       aboutDetail:
         'Through education support, local partnerships, and emergency solidarity, we build long-term impact centered on people.',
+      laCopeEdition: '3rd edition with the theme:',
+      laCopeTitre: 'Dakhla crossroads of sport and business.',
+      laCopeDates: '22–25 October 2026',
       featuredEventsTitle: 'Featured events',
       viewAllEvents: 'View all events',
       adsSectionTitle: 'Active advertisements',
@@ -354,8 +366,11 @@ const resources = {
       navOpportunities: 'Oportunidades',
       navContact: 'Contacto',
       heroTitle: 'Donde los proyectos se convierten en inversiones',
-      heroSubtitle:
-        'NORD SUD ACTION, asociacion marroqui para la comunicacion, el desarrollo socioeconomico y el fomento de la inversion, trabaja para fortalecer las dinamicas territoriales conectando a actores publicos, privados y asociativos en torno a proyectos de alto impacto.',
+      heroSubtitle: 'NORD SUD ACTION, ',
+      heroSubtitleBold:
+        'asociacion marroqui para la comunicacion, el desarrollo socioeconomico y el fomento de la inversion',
+      heroSubtitlePost:
+        ', trabaja para fortalecer las dinamicas territoriales conectando a actores publicos, privados y asociativos en torno a proyectos de alto impacto.',
       heroSubtitle2:
         'Nuestra mision es promover la inversion, acompanar las iniciativas locales y organizar eventos estructurantes (foros, raids, festivales, competiciones deportivas, fines de semana de prospeccion...) que contribuyen al posicionamiento economico y turistico de Marruecos, especialmente en las provincias del sur.',
       heroSubtitle3:
@@ -367,6 +382,9 @@ const resources = {
         'Acompanamos a asociaciones locales con un enfoque humano, transparente y orientado al impacto.',
       aboutDetail:
         'A traves del apoyo educativo, alianzas locales y solidaridad de emergencia, construimos un impacto sostenible centrado en las personas.',
+      laCopeEdition: '3.ª edición bajo el tema:',
+      laCopeTitre: 'Dakhla, cruce del deporte y los negocios.',
+      laCopeDates: '22-25 de octubre de 2026',
       featuredEventsTitle: 'Eventos destacados',
       viewAllEvents: 'Ver todos los eventos',
       adsSectionTitle: 'Publicidad activa',

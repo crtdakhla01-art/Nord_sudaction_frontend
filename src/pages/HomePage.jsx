@@ -5,7 +5,6 @@ import EventCard from '../components/EventCard'
 import LoadingState from '../components/LoadingState'
 import ErrorState from '../components/ErrorState'
 import heroImage from '../assets/hero.png'
-import aboutImage from '../assets/logo.jpeg'
 import Button from '../components/Button'
 import SectionContainer from '../components/SectionContainer'
 import AdvertisementsTable from '../components/AdvertisementsTable'
@@ -34,6 +33,9 @@ const partners = [
   '/partner_23.jpeg',
   '/partner_24.jpeg',
   '/partner_25.jpg',
+  '/partner_26.jpg',
+  '/partner_27.jpg',
+  '/partner_29.jpg',
 ]
 
 function HomePage() {
@@ -49,13 +51,13 @@ function HomePage() {
   const secondRowItems = shouldSlidePartners ? [...secondRowPartners, ...secondRowPartners] : secondRowPartners
   return (
     <div>
-      <SectionContainer className="pb-6 pt-0 lg:pt-0">
+      <SectionContainer className="pb-3 pt-0 lg:pt-0">
         <div className="mx-auto w-full max-w-6xl">
           <AdvertisementsTable advertisements={advertisements || []} />
         </div>
       </SectionContainer>
 
-      <SectionContainer className="pb-10 pt-2 md:pt-4 lg:-mt-8 lg:pt-0">
+      <SectionContainer className="pb-6 pt-2 md:pt-4 lg:-mt-4 lg:pt-0">
         <div className="mx-auto grid w-full max-w-6xl items-start gap-8 lg:grid-cols-2">
           <img
             className="order-1 hidden h-[320px] w-full rounded-3xl object-cover shadow-xl md:block md:h-[420px] lg:order-2"
@@ -67,7 +69,9 @@ function HomePage() {
               NGO Platform
             </p> */}
             <h1 className="text-2xl font-extrabold leading-[1.1] text-primary-500 md:text-[36px] lg:text-[38px]">{t('heroTitle')}</h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-primary-400">{t('heroSubtitle')}</p>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-primary-400">
+              {t('heroSubtitle')}<strong className="font-bold italic">{t('heroSubtitleBold')}</strong>{t('heroSubtitlePost')}
+            </p>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-primary-400">{t('heroSubtitle2')}</p>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-primary-400">{t('heroSubtitle3')}</p>
             <div className="mt-7 flex flex-wrap gap-3">
@@ -85,14 +89,14 @@ function HomePage() {
       <SectionContainer className="bg-white/70">
         <div className="mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10">
           <img
-            src={aboutImage}
-            alt="Association logo"
-            className="h-auto w-full rounded-2xl object-contain"
+            src="/la_cope.jpeg"
+            alt="La Cope"
+            className="h-auto w-full rounded-2xl object-cover"
           />
           <div>
-            <h2 className="text-3xl font-bold text-primary-500">{t('introTitle')}</h2>
-            <p className="mt-4 text-base leading-7 text-primary-400">{t('introText')}</p>
-            <p className="mt-4 text-sm leading-6 text-primary-300">{t('aboutDetail')}</p>
+            <p className="text-base font-semibold text-primary-400">{t('laCopeEdition')}</p>
+            <h2 className="mt-2 text-3xl font-bold text-primary-500">{t('laCopeTitre')}</h2>
+            <p className="mt-4 text-lg font-semibold text-secondary-500">{t('laCopeDates')}</p>
           </div>
         </div>
       </SectionContainer>
@@ -120,7 +124,7 @@ function HomePage() {
         </div>
       </SectionContainer>
 
-      <SectionContainer className="pt-0">
+      <SectionContainer className="pt-0 pb-4">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-5 rounded-3xl bg-primary-500 px-8 py-10 text-white md:flex-row md:items-center">
           <div>
             <h3 className="text-2xl font-bold">{t('homeCtaTitle')}</h3>
@@ -132,7 +136,7 @@ function HomePage() {
         </div>
       </SectionContainer>
 
-      <SectionContainer className="pb-8 pt-2">
+      <SectionContainer className="pb-4 pt-2">
         <div className="mx-auto w-full max-w-6xl rounded-2xl border border-primary-100 bg-white px-4 py-6 shadow-sm sm:px-6">
           <div className="mb-6 flex items-center gap-2">
             <span className="h-5 w-1 rounded-full bg-secondary-500" />
