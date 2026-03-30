@@ -59,8 +59,7 @@ function ContactPage() {
         className="mx-auto grid w-full max-w-6xl gap-8 md:grid-cols-2"
         variants={staggerContainer}
         initial="hidden"
-        whileInView="visible"
-        viewport={inViewViewport}
+        animate="visible"
       >
         <MotionDiv variants={fadeUp}>
           <MotionH1 className="text-4xl font-extrabold text-primary-500 md:text-5xl" variants={fadeLeft}>{t('contactTitle')}</MotionH1>

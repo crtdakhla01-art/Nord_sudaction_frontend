@@ -27,8 +27,7 @@ function AboutPage() {
         className="mx-auto w-full max-w-6xl space-y-6"
         variants={staggerContainer}
         initial="hidden"
-        whileInView="visible"
-        viewport={inViewViewport}
+        animate="visible"
       >
 
       {/* ── Hero banner ── */}

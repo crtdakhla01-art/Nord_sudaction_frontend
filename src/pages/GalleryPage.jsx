@@ -26,8 +26,8 @@ export default function GalleryPage() {
     <>
       {/* Title */}
       <SectionContainer className="bg-white">
-        <MotionDiv className="mx-auto max-w-6xl" variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-          <MotionH1 className="text-4xl font-extrabold text-primary-500 md:text-5xl" variants={fadeLeft} initial="hidden" whileInView="visible" viewport={inViewViewport}>
+        <MotionDiv className="mx-auto max-w-6xl" variants={fadeUp} initial="hidden" animate="visible">
+          <MotionH1 className="text-4xl font-extrabold text-primary-500 md:text-5xl" variants={fadeLeft}>
             {t('galleryTitle')}
           </MotionH1>
         </MotionDiv>

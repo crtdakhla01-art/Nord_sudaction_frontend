@@ -79,8 +79,7 @@ function PostDetailPage() {
         className="mx-auto w-full max-w-7xl"
         variants={staggerContainer}
         initial="hidden"
-        whileInView="visible"
-        viewport={inViewViewport}
+        animate="visible"
       >
 
         {/* Back link */}

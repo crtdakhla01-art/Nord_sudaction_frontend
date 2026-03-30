@@ -56,8 +56,7 @@ function ActualitesPage({ forcedType = 'article' }) {
         className="mx-auto w-full max-w-6xl space-y-8"
         variants={staggerContainer}
         initial="hidden"
-        whileInView="visible"
-        viewport={inViewViewport}
+        animate="visible"
       >
         <MotionDiv className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between" variants={fadeUp}>
           <div>

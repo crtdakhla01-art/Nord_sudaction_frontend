@@ -51,8 +51,7 @@ function EventsPage() {
         className="mx-auto w-full max-w-6xl"
         variants={staggerContainer}
         initial="hidden"
-        whileInView="visible"
-        viewport={inViewViewport}
+        animate="visible"
       >
         <MotionH1 className="text-4xl font-extrabold text-primary-500 md:text-5xl" variants={fadeLeft}>{t('eventsPageTitle')}</MotionH1>
 
