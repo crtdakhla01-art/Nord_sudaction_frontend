@@ -125,7 +125,7 @@ function HomePage() {
               type="button"
               onClick={dismissLaCope}
               aria-label="Masquer cette section"
-              className="absolute right-4 top-4 rounded-full border border-primary-200 bg-white px-2.5 py-1 text-xs font-bold text-primary-400 transition hover:border-secondary-300 hover:text-secondary-500"
+              className="absolute right-3 top-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-full bg-secondary-500 text-sm font-black text-white shadow-md transition hover:bg-secondary-600 md:right-4 md:top-4"
             >
               X
             </button>
@@ -210,7 +210,7 @@ function HomePage() {
               type="button"
               onClick={dismissRaidBlock}
               aria-label="Masquer cette section"
-              className="absolute right-4 top-4 rounded-full border border-primary-200 bg-white px-2.5 py-1 text-xs font-bold text-primary-400 transition hover:border-secondary-300 hover:text-secondary-500"
+              className="absolute right-3 top-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-full bg-secondary-500 text-sm font-black text-white shadow-md transition hover:bg-secondary-600 md:right-4 md:top-4"
             >
               X
             </button>
