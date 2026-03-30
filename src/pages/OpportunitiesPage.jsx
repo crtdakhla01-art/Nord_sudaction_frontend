@@ -20,7 +20,7 @@ const initialForm = {
   budget: '',
   phone: '',
   email: '',
-  type_id: '',
+  type_key: '',
   image: null,
 }
 
@@ -34,12 +34,53 @@ function OpportunitiesPage() {
   const itemsPerPage = 16
 
   const { data: opportunities, isLoading, isError, error } = useOpportunities()
-  const { data: opportunityTypes, isLoading: isLoadingTypes } = useOpportunityTypes()
+  const { data: opportunityTypes } = useOpportunityTypes()
   const submitMutation = useSubmitOpportunity()
+
+  const staticTypeOptions = [
+    { key: 'investment', label: t('opportunityTypeInvestment') },
+    { key: 'commerce', label: t('opportunityTypeCommerce') },
+    { key: 'partnership', label: t('opportunityTypePartnership') },
+    { key: 'calls', label: t('opportunityTypeCalls') },
+    { key: 'other', label: t('opportunityTypeOther') },
+  ]
+
+  const normalizeTypeName = (value = '') =>
+    value
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim()
+
+  const getTypeDisplayName = (name = '') =>
+    normalizeTypeName(name) === 'autre' ? t('opportunityTypeOther') : name
+
+  const hasOtherTypeFromBackend = (opportunityTypes || []).some(
+    (type) => normalizeTypeName(type?.name) === 'autre',
+  )
+
+  const sortedOpportunityTypes = [...(opportunityTypes || [])].sort((a, b) => {
+    const aIsOther = normalizeTypeName(a?.name) === 'autre'
+    const bIsOther = normalizeTypeName(b?.name) === 'autre'
+
+    if (aIsOther && !bIsOther) {
+      return 1
+    }
+
+    if (!aIsOther && bIsOther) {
+      return -1
+    }
+
+    return 0
+  })
 
   const filteredOpportunities = (opportunities || []).filter((opportunity) => {
     if (selectedTypeId === 'all') {
       return true
+    }
+
+    if (selectedTypeId === 'other') {
+      return normalizeTypeName(opportunity?.type?.name || '') === 'autre'
     }
 
     return String(opportunity.type_id) === selectedTypeId
@@ -52,7 +93,7 @@ function OpportunitiesPage() {
 
   const validate = () => {
     const errors = {}
-    const requiredFields = ['titre', 'ville', 'first_name', 'last_name', 'description', 'email', 'type_id']
+    const requiredFields = ['titre', 'ville', 'first_name', 'last_name', 'description', 'email', 'type_key']
 
     requiredFields.forEach((field) => {
       if (!formValues[field]) {
@@ -129,7 +170,7 @@ function OpportunitiesPage() {
                     {t('filterAllTypes')}
                   </button>
 
-                  {(opportunityTypes || []).map((type) => (
+                  {sortedOpportunityTypes.map((type) => (
                     <button
                       key={type.id}
                       type="button"
@@ -143,9 +184,26 @@ function OpportunitiesPage() {
                           : 'border border-primary-200 bg-white text-primary-500 hover:border-secondary-300 hover:text-secondary-500'
                       }`}
                     >
-                      {type.name}
+                      {getTypeDisplayName(type.name)}
                     </button>
                   ))}
+
+                  {!hasOtherTypeFromBackend ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedTypeId('other')
+                        setPage(1)
+                      }}
+                      className={`rounded-xl px-4 py-2 text-sm font-semibold transition ${
+                        selectedTypeId === 'other'
+                          ? 'bg-secondary-500 text-white shadow'
+                          : 'border border-primary-200 bg-white text-primary-500 hover:border-secondary-300 hover:text-secondary-500'
+                      }`}
+                    >
+                      {t('opportunityTypeOther')}
+                    </button>
+                  ) : null}
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -268,19 +326,19 @@ function OpportunitiesPage() {
                 <span>{t('formType')}<span className="ml-0.5 text-red-500">*</span></span>
                 <select
                   className="mt-2 block w-full rounded-xl border border-primary-200 bg-white px-4 py-2.5 text-primary-500 shadow-sm outline-none transition focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20"
-                  name="type_id"
-                  value={formValues.type_id}
+                  name="type_key"
+                  value={formValues.type_key}
                   onChange={handleChange}
                 >
-                  <option value="">{isLoadingTypes ? t('loading') : t('formSelectType')}</option>
-                  {(opportunityTypes || []).map((type) => (
-                    <option key={type.id} value={type.id}>
-                      {type.name}
+                  <option value="">{t('formSelectType')}</option>
+                  {staticTypeOptions.map((type) => (
+                    <option key={type.key} value={type.key}>
+                      {type.label}
                     </option>
                   ))}
                 </select>
-                {formErrors.type_id ? (
-                  <span className="mt-1 block text-xs text-secondary-600">{formErrors.type_id}</span>
+                {formErrors.type_key ? (
+                  <span className="mt-1 block text-xs text-secondary-600">{formErrors.type_key}</span>
                 ) : null}
               </label>
             </div>
@@ -304,7 +362,7 @@ function OpportunitiesPage() {
               </p>
             ) : null}
 
-            <Button type="submit" disabled={submitMutation.isPending || isLoadingTypes}>
+            <Button type="submit" disabled={submitMutation.isPending}>
               {submitMutation.isPending ? t('sending') : t('submit')}
             </Button>
           </form>

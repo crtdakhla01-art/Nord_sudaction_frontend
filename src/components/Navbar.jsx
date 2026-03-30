@@ -28,7 +28,7 @@ function Navbar() {
           <nav className="hidden flex-row items-center gap-1 md:flex">
             <NavLink to="/" className={navClassName} onClick={() => setIsOpen(false)}>{t('navHome')}</NavLink>
             <NavLink to="/events" className={navClassName} onClick={() => setIsOpen(false)}>{t('navEvents')}</NavLink>
-            <NavLink to="/actualites" className={navClassName} onClick={() => setIsOpen(false)}>Actualites</NavLink>
+            <NavLink to="/actualites" className={navClassName} onClick={() => setIsOpen(false)}>{t('navActualites')}</NavLink>
             <NavLink to="/opportunities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navOpportunities')}</NavLink>
             <NavLink to="/galerie" className={navClassName} onClick={() => setIsOpen(false)}>{t('navGallery')}</NavLink>
             <NavLink to="/contact" className={navClassName} onClick={() => setIsOpen(false)}>{t('navContact')}</NavLink>

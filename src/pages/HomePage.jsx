@@ -1,9 +1,9 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useEvents } from '../hooks/useEvents'
-import EventCard from '../components/EventCard'
-import LoadingState from '../components/LoadingState'
+import { useActivities } from '../hooks/useActivities'
 import ErrorState from '../components/ErrorState'
+import LoadingState from '../components/LoadingState'
 import heroImage from '../assets/hero.png'
 import Button from '../components/Button'
 import SectionContainer from '../components/SectionContainer'
@@ -41,15 +41,49 @@ const partners = [
 
 function HomePage() {
   const { t } = useTranslation()
-  const { data: events, isLoading, isError, error } = useEvents()
+  const { data: activities, isLoading, isError, error } = useActivities()
   const { data: advertisements } = useAdvertisements()
+  const [expandedTitles, setExpandedTitles] = useState({})
+  const [hideLaCope, setHideLaCope] = useState(() => localStorage.getItem('hide_home_la_cope') === '1')
+  const [hideRaidBlock, setHideRaidBlock] = useState(() => localStorage.getItem('hide_home_raid_block') === '1')
 
-  const featuredEvents = (events || []).slice(0, 3)
+  const featuredActivities = activities || []
+  const homeActivities = featuredActivities.slice(0, 5)
   const shouldSlidePartners = partners.length > 10
   const firstRowPartners = partners.filter((_, index) => index % 2 === 0)
   const secondRowPartners = partners.filter((_, index) => index % 2 !== 0)
   const firstRowItems = shouldSlidePartners ? [...firstRowPartners, ...firstRowPartners] : firstRowPartners
   const secondRowItems = shouldSlidePartners ? [...secondRowPartners, ...secondRowPartners] : secondRowPartners
+
+  const getTitlePreview = (title = '', words = 3) => {
+    const parts = title.trim().split(/\s+/)
+    if (parts.length <= words) {
+      return { text: title, truncated: false }
+    }
+
+    return {
+      text: `${parts.slice(0, words).join(' ')}...`,
+      truncated: true,
+    }
+  }
+
+  const toggleTitle = (id) => {
+    setExpandedTitles((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }))
+  }
+
+  const dismissLaCope = () => {
+    setHideLaCope(true)
+    localStorage.setItem('hide_home_la_cope', '1')
+  }
+
+  const dismissRaidBlock = () => {
+    setHideRaidBlock(true)
+    localStorage.setItem('hide_home_raid_block', '1')
+  }
+
   return (
     <div>
       <SectionContainer className="pb-3 pt-0 lg:pt-0">
@@ -84,29 +118,39 @@ function HomePage() {
         </div>
       </SectionContainer>
 
-      <SectionContainer className="bg-white/70">
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10">
-          <div className="flex h-[280px] w-full items-center justify-center rounded-2xl bg-white p-4">
-            <img
-              src="/la_cope.jpeg"
-              alt="La Cope"
-              className="max-h-full max-w-full object-contain"
-            />
+      {!hideLaCope ? (
+        <SectionContainer className="bg-white/70">
+          <div className="relative mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10">
+            <button
+              type="button"
+              onClick={dismissLaCope}
+              aria-label="Masquer cette section"
+              className="absolute right-4 top-4 rounded-full border border-primary-200 bg-white px-2.5 py-1 text-xs font-bold text-primary-400 transition hover:border-secondary-300 hover:text-secondary-500"
+            >
+              X
+            </button>
+            <div className="flex h-[280px] w-full items-center justify-center rounded-2xl bg-white p-4">
+              <img
+                src="/la_cope.jpeg"
+                alt="La Cope"
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div>
+              <p className="text-base font-semibold text-primary-400">{t('laCopeEdition')}</p>
+              <h2 className="mt-2 text-3xl font-bold text-primary-500">{t('laCopeTitre')}</h2>
+              <p className="mt-4 text-lg font-semibold text-secondary-500">{t('laCopeDates')}</p>
+            </div>
           </div>
-          <div>
-            <p className="text-base font-semibold text-primary-400">{t('laCopeEdition')}</p>
-            <h2 className="mt-2 text-3xl font-bold text-primary-500">{t('laCopeTitre')}</h2>
-            <p className="mt-4 text-lg font-semibold text-secondary-500">{t('laCopeDates')}</p>
-          </div>
-        </div>
-      </SectionContainer>
+        </SectionContainer>
+      ) : null}
 
       <SectionContainer>
         <div className="mx-auto w-full max-w-6xl">
           <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-3xl font-bold text-primary-500">{t('featuredEventsTitle')}</h2>
-            <Link to="/events" className="text-sm font-semibold text-secondary-500 transition hover:text-accent-500">
-              {t('viewAllEvents')}
+            <h2 className="text-3xl font-bold text-primary-500">Activités</h2>
+            <Link to="/activities" className="text-sm font-semibold text-secondary-500 transition hover:text-accent-500">
+              voir plus
             </Link>
           </div>
 
@@ -114,40 +158,85 @@ function HomePage() {
           {isError ? <ErrorState message={error?.message} /> : null}
 
           {!isLoading && !isError ? (
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-              {featuredEvents.length === 0 ? <p className="text-primary-400">{t('emptyEvents')}</p> : null}
-              {featuredEvents.map((event) => (
-                <EventCard key={event.id} event={event} />
-              ))}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              {featuredActivities.length === 0 ? (
+                <p className="text-primary-400">Aucune activité disponible.</p>
+              ) : null}
+              {homeActivities.map((activity, index) => {
+                const preview = getTitlePreview(activity.title)
+                const isExpanded = Boolean(expandedTitles[activity.id])
+
+                return (
+                  <div
+                    key={activity.id}
+                    className={`flex flex-col overflow-hidden rounded-xl border border-primary-100 bg-white shadow transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md ${index >= 3 ? 'hidden lg:flex' : ''}`}
+                  >
+                    <div className="flex flex-1 flex-col justify-between p-5">
+                      <div>
+                        <h3 className="text-base font-bold leading-snug text-primary-500">
+                          {isExpanded ? activity.title : preview.text}
+                        </h3>
+                        {preview.truncated ? (
+                          <button
+                            type="button"
+                            onClick={() => toggleTitle(activity.id)}
+                            className="mt-1 text-[10px] font-semibold lowercase text-secondary-500 hover:underline"
+                          >
+                            {isExpanded ? 'voir moins' : 'voir plus'}
+                          </button>
+                        ) : null}
+                      </div>
+                      <a
+                        href={activity.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-4 block w-full rounded-xl bg-secondary-500 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-secondary-600"
+                      >
+                        Voir l'activité
+                      </a>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           ) : null}
         </div>
       </SectionContainer>
 
-      <SectionContainer className="bg-white/70 pt-0 pb-4">
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10">
-          <div className="w-full">
-            <VideoPlayer url="https://www.youtube.com/watch?v=DPrBVkE22mM" title="Raid Tanja Lagouira" />
-          </div>
-          <div className="flex h-full flex-col">
-            <p className="text-base font-semibold text-primary-400">{t('raidEdition')}</p>
-            <h2 className="mt-2 text-3xl font-bold text-primary-500">{t('raidTitle')}</h2>
-            <p className="mt-4 text-lg font-semibold text-secondary-500">{t('raidDates')}</p>
-            <p className="mt-4 text-base leading-7 text-primary-400">{t('raidText1')}</p>
-            <p className="mt-3 text-base leading-7 text-primary-400">{t('raidText2')}</p>
-            <div className="mt-auto pt-4 flex justify-end">
-              <a
-                href="https://www.raidtanjalagouira.ma"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center font-semibold text-secondary-500 underline-offset-2 hover:underline"
-              >
-                www.raidtanjalagouira.ma
-              </a>
+      {!hideRaidBlock ? (
+        <SectionContainer className="bg-white/70 pb-4 pt-0">
+          <div className="relative mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10">
+            <button
+              type="button"
+              onClick={dismissRaidBlock}
+              aria-label="Masquer cette section"
+              className="absolute right-4 top-4 rounded-full border border-primary-200 bg-white px-2.5 py-1 text-xs font-bold text-primary-400 transition hover:border-secondary-300 hover:text-secondary-500"
+            >
+              X
+            </button>
+            <div className="w-full">
+              <VideoPlayer url="https://www.youtube.com/watch?v=DPrBVkE22mM" title="Raid Tanja Lagouira" />
+            </div>
+            <div className="flex h-full flex-col">
+              <p className="text-base font-semibold text-primary-400">{t('raidEdition')}</p>
+              <h2 className="mt-2 text-3xl font-bold text-primary-500">{t('raidTitle')}</h2>
+              <p className="mt-4 text-lg font-semibold text-secondary-500">{t('raidDates')}</p>
+              <p className="mt-4 text-base leading-7 text-primary-400">{t('raidText1')}</p>
+              <p className="mt-3 text-base leading-7 text-primary-400">{t('raidText2')}</p>
+              <div className="mt-auto flex justify-end pt-4">
+                <a
+                  href="https://www.raidtanjalagouira.ma"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center font-semibold text-secondary-500 underline-offset-2 hover:underline"
+                >
+                  www.raidtanjalagouira.ma
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      </SectionContainer>
+        </SectionContainer>
+      ) : null}
 
       <SectionContainer className="pb-4 pt-2">
         <div className="mx-auto w-full max-w-6xl rounded-2xl border border-primary-100 bg-white px-4 py-6 shadow-sm sm:px-6">

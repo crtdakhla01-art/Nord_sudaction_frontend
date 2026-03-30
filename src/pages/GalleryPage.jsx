@@ -10,7 +10,6 @@ const images = [
   { src: '/riad_tanga_lug.jpeg',   alt: 'Raid Tanja Lagouira' },
   { src: '/riad_tanga_lug_2.jpeg', alt: 'Raid Tanja Lagouira' },
   { src: '/la_cope.jpeg',          alt: 'La Cope' },
-  { src: '/riad_tanga_lug.jpeg',   alt: 'Raid Tanja Lagouira' },
   { src: '/riad_tanga_lug_2.jpeg', alt: 'Raid Tanja Lagouira' },
 ]
 

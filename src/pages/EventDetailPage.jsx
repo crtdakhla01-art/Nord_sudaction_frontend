@@ -235,43 +235,22 @@ function EventDetailPage() {
             <div className="absolute -right-16 -top-12 h-40 w-40 rounded-full bg-secondary-100 blur-3xl" />
             <div className="absolute -bottom-16 left-10 h-32 w-32 rounded-full bg-primary-100 blur-3xl" />
 
-            <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-3xl">
+            <div className="relative z-10">
+              <div className="flex items-center justify-between gap-3">
                 <Link
                   to="/events"
                   className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary-50 px-4 py-2 text-sm font-semibold text-primary-500 transition-all duration-300 hover:bg-primary-100 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2"
                 >
                   ← {t('backToEvents')}
                 </Link>
-
-                <div className="mt-5 flex flex-wrap items-center gap-3">
-                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] ${event.is_it_passed ? 'bg-primary-100 text-primary-500' : 'bg-secondary-500 text-white'}`}>
-                    {event.is_it_passed ? t('passed') : t('upcoming')}
-                  </span>
-                  <span className="inline-flex rounded-full border border-primary-100 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary-400">
-                    {gallery.length} {t('mediaLabel')}
-                  </span>
-                </div>
-
-                <h1 className="mt-4 text-3xl font-black tracking-tight text-primary-500 sm:text-4xl lg:text-5xl">
-                  {event.title}
-                </h1>
+                <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] ${event.is_it_passed ? 'bg-primary-100 text-primary-500' : 'bg-secondary-500 text-white'}`}>
+                  {event.is_it_passed ? t('passed') : t('upcoming')}
+                </span>
               </div>
 
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:min-w-[340px]">
-                <div className="rounded-2xl border border-primary-100 bg-primary-50 px-4 py-4">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-300">{t('cardDate')}</p>
-                  <p className="mt-2 text-sm font-semibold leading-6 text-primary-500">{formatDateLabel(event.date, i18n.language)}</p>
-                </div>
-                <div className="rounded-2xl border border-primary-100 bg-white px-4 py-4">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-300">{t('cardLocation')}</p>
-                  <p className="mt-2 text-sm font-semibold leading-6 text-primary-500">{event.location || '-'}</p>
-                </div>
-                <div className="rounded-2xl border border-secondary-100 bg-secondary-50 px-4 py-4">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary-400">{t('gallerySection')}</p>
-                  <p className="mt-2 text-sm font-semibold leading-6 text-secondary-600">{images.length} images / {videos.length} videos</p>
-                </div>
-              </div>
+              <h1 className="mt-4 max-w-3xl text-2xl font-black tracking-tight text-primary-500 sm:text-3xl lg:text-4xl">
+                {event.title}
+              </h1>
             </div>
           </div>
 
@@ -390,10 +369,6 @@ function EventDetailPage() {
                   <div className="rounded-2xl border border-primary-100 bg-white px-4 py-4">
                     <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-300">{t('cardLocation')}</p>
                     <p className="mt-2 text-sm font-semibold leading-6 text-primary-500">{event.location || '-'}</p>
-                  </div>
-                  <div className="rounded-2xl border border-primary-100 bg-white px-4 py-4">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-300">{t('status')}</p>
-                    <p className="mt-2 text-sm font-semibold leading-6 text-primary-500">{event.is_it_passed ? t('passed') : t('upcoming')}</p>
                   </div>
                 </div>
               </section>

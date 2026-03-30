@@ -186,14 +186,6 @@ function PostDetailPage() {
             </SidebarWidget>
 
 
-            <div className="overflow-hidden rounded-xl bg-secondary-500 p-5 text-white shadow">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-white/70">Nord Sud Action</p>
-              <h4 className="mt-1 text-base font-extrabold leading-snug">Vous avez une opportunité à partager ?</h4>
-              <p className="mt-2 text-xs leading-relaxed text-white/80">Soumettez vos projets, partenariats et appels à initiative sur notre plateforme.</p>
-              <Link to="/opportunities" className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-white px-4 py-2 text-xs font-bold text-secondary-500 transition hover:bg-primary-50">
-                Voir les opportunités →
-              </Link>
-            </div>
 
           </aside>
         </div>

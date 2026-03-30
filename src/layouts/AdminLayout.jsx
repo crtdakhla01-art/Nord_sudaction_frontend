@@ -45,6 +45,11 @@ function AdminLayout() {
             </NavLink>
           ) : null}
           {role === 'admin' ? (
+            <NavLink to="/admin/activities" className={navClass}>
+              Activités
+            </NavLink>
+          ) : null}
+          {role === 'admin' ? (
             <span className="block rounded-xl px-4 py-2 text-sm font-semibold text-primary-200">{t('users')}</span>
           ) : null}
         </nav>

@@ -25,7 +25,7 @@ export const submitOpportunity = async (formValues) => {
   payload.append('budget', formValues.budget)
   payload.append('phone', formValues.phone)
   payload.append('email', formValues.email)
-  payload.append('type_id', formValues.type_id)
+  payload.append('type_key', formValues.type_key)
 
   if (formValues.image) {
     payload.append('image', formValues.image)
