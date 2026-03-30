@@ -22,8 +22,8 @@ export const createAdminPost = async (payload) => {
     formData.append('published_at', payload.published_at)
   }
 
-  if (payload.image) {
-    formData.append('image', payload.image)
+  if (payload.media) {
+    formData.append('media', payload.media)
   }
 
   const { data } = await adminApi.post('/admin/posts', formData)
@@ -48,8 +48,8 @@ export const updateAdminPost = async ({ id, values }) => {
     formData.append('published_at', values.published_at)
   }
 
-  if (values.image) {
-    formData.append('image', values.image)
+  if (values.media) {
+    formData.append('media', values.media)
   }
 
   const { data } = await adminApi.post(`/admin/posts/${id}`, formData)

@@ -33,8 +33,8 @@ function SidebarPost({ post }) {
   return (
     <Link to={`/actualites/${post.slug}`} className="group flex items-start gap-3 py-3 transition">
       <div className="h-14 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-primary-100">
-        {post.image ? (
-          <img src={getImageUrl(post.image)} alt={post.title} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
+        {post.media && !/\.(mp4|webm|ogg|mov|avi|mkv)$/i.test(post.media) ? (
+          <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
         ) : (
           <div className="flex h-full items-center justify-center">
             <span className="text-[10px] font-black text-secondary-500 opacity-40">NSA</span>
@@ -96,9 +96,13 @@ function PostDetailPage() {
             <motion.article className="overflow-hidden rounded-xl bg-white shadow-md" variants={fadeUp}>
 
               {/* Hero image */}
-              {post.image ? (
+              {post.media ? (
                 <div className="h-64 w-full overflow-hidden sm:h-80 md:h-[420px]">
-                  <img src={getImageUrl(post.image)} alt={post.title} className="h-full w-full object-cover" />
+                  {/\.(mp4|webm|ogg|mov|avi|mkv)$/i.test(post.media) ? (
+                    <video src={getImageUrl(post.media)} className="h-full w-full object-cover" controls />
+                  ) : (
+                    <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-cover" />
+                  )}
                 </div>
               ) : null}
 
@@ -160,9 +164,13 @@ function PostDetailPage() {
                         to={`/actualites/${item.slug}`}
                         className="group interactive-card flex flex-col overflow-hidden rounded-xl bg-white shadow transition-all duration-300"
                       >
-                      {item.image ? (
+                      {item.media ? (
                         <div className="h-32 w-full overflow-hidden bg-primary-50">
-                          <img src={getImageUrl(item.image)} alt={item.title} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
+                          {/\.(mp4|webm|ogg|mov|avi|mkv)$/i.test(item.media) ? (
+                            <video src={getImageUrl(item.media)} className="h-full w-full object-cover" muted />
+                          ) : (
+                            <img src={getImageUrl(item.media)} alt={item.title} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
+                          )}
                         </div>
                       ) : (
                         <div className="flex h-28 items-center justify-center bg-primary-50">

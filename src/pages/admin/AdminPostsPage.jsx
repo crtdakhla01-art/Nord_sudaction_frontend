@@ -18,7 +18,7 @@ const initialValues = {
   status: 'draft',
   is_featured: false,
   published_at: '',
-  image: null,
+  media: null,
 }
 
 function AdminPostsPage() {
@@ -66,7 +66,7 @@ function AdminPostsPage() {
       status: item.status || 'draft',
       is_featured: Boolean(item.is_featured),
       published_at: toDateInputValue(item.published_at),
-      image: null,
+      media: null,
     })
   }
 
@@ -148,7 +148,7 @@ function AdminPostsPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          <InputField label="Image" type="file" name="image" accept="image/*" onChange={onChange} />
+          <InputField label="Media" type="file" name="media" accept="image/*,video/*" onChange={onChange} />
 
           <label className="inline-flex items-center gap-3 text-sm font-medium text-primary-500">
             <input
@@ -230,8 +230,12 @@ function AdminPostsPage() {
             <article key={item.id} className="flex flex-col gap-4 rounded-2xl border border-primary-100 bg-white p-6 shadow-md md:flex-row md:items-center md:justify-between">
               <div className="flex items-center gap-4">
                 <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-primary-50">
-                  {item.image ? (
-                    <img src={getImageUrl(item.image)} alt={item.title} className="h-full w-full object-cover" loading="lazy" />
+                  {item.media ? (
+                    /\.(mp4|webm|ogg|mov|avi|mkv)$/i.test(item.media) ? (
+                      <video src={getImageUrl(item.media)} className="h-full w-full object-cover" muted />
+                    ) : (
+                      <img src={getImageUrl(item.media)} alt={item.title} className="h-full w-full object-cover" loading="lazy" />
+                    )
                   ) : (
                     <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary-300">NSA</span>
                   )}
