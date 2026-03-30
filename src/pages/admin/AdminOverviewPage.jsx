@@ -74,16 +74,6 @@ function AdminOverviewPage() {
           </article>
 
           <article className="w-full rounded-2xl border border-primary-100 bg-white p-6 shadow-md">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-primary-400">{t('navAdvertisements')}</h3>
-            <p className="mt-3 text-2xl font-black text-primary-500">{stats?.advertisements?.total ?? 0}</p>
-            <div className="mt-3 space-y-1">
-              <StatLine label="Active" value={stats?.advertisements?.active ?? 0} />
-              <StatLine label="Scheduled" value={stats?.advertisements?.scheduled ?? 0} />
-              <StatLine label="Expired" value={stats?.advertisements?.expired ?? 0} />
-            </div>
-          </article>
-
-          <article className="w-full rounded-2xl border border-primary-100 bg-white p-6 shadow-md">
             <h3 className="text-sm font-semibold uppercase tracking-wide text-primary-400">{t('navContact')}</h3>
             <p className="mt-3 text-2xl font-black text-primary-500">{stats?.contacts?.total ?? 0}</p>
             <div className="mt-3 space-y-1">

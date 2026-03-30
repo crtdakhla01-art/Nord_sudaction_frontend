@@ -10,7 +10,6 @@ import Button from '../components/Button'
 import SectionContainer from '../components/SectionContainer'
 import VideoPlayer from '../components/VideoPlayer'
 import AdvertisementsTable from '../components/AdvertisementsTable'
-import { useAdvertisements } from '../hooks/useAdvertisements'
 import { fadeLeft, fadeUp, inViewViewport, scaleHover, staggerContainer } from '../utils/animations'
 
 const partners = [
@@ -41,6 +40,16 @@ const partners = [
   '/partner_29.jpg',
 ]
 
+const staticAdvertisements = [
+  {
+    id: 'ad-1',
+    image: 'https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=1400&q=80',
+    link: 'https://www.raidtanjalagouira.ma',
+    begin_date: '2026-01-01',
+    end_date: '2030-12-31',
+  },
+]
+
 function HomePage() {
   const MotionDiv = motion.div
   const MotionImg = motion.img
@@ -52,10 +61,8 @@ function HomePage() {
 
   const { t } = useTranslation()
   const { data: activities, isLoading, isError, error } = useActivities()
-  const { data: advertisements } = useAdvertisements()
   const [expandedTitles, setExpandedTitles] = useState({})
-  const [hideLaCope, setHideLaCope] = useState(() => localStorage.getItem('hide_home_la_cope') === '1')
-  const [hideRaidBlock, setHideRaidBlock] = useState(() => localStorage.getItem('hide_home_raid_block') === '1')
+
   const prefersReducedMotion = useReducedMotion()
 
   const { scrollYProgress: pageScrollProgress } = useScroll()
@@ -93,27 +100,17 @@ function HomePage() {
     }))
   }
 
-  const dismissLaCope = () => {
-    setHideLaCope(true)
-    localStorage.setItem('hide_home_la_cope', '1')
-  }
-
-  const dismissRaidBlock = () => {
-    setHideRaidBlock(true)
-    localStorage.setItem('hide_home_raid_block', '1')
-  }
-
   return (
     <div>
       <SectionContainer className="pb-3 pt-0 lg:pt-0">
         <MotionDiv
-          className="mx-auto w-full max-w-6xl"
+          className="w-full"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={inViewViewport}
         >
-          <AdvertisementsTable advertisements={advertisements || []} />
+          <AdvertisementsTable advertisements={staticAdvertisements} />
         </MotionDiv>
       </SectionContainer>
 
@@ -158,23 +155,14 @@ function HomePage() {
         </MotionDiv>
       </SectionContainer>
 
-      {!hideLaCope ? (
-        <SectionContainer className="bg-white/70">
+      <SectionContainer className="bg-white/70">
           <MotionDiv
-            className="relative mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10"
+            className="mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10"
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={inViewViewport}
           >
-            <button
-              type="button"
-              onClick={dismissLaCope}
-              aria-label="Masquer cette section"
-              className="absolute right-3 top-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-full bg-secondary-500 text-sm font-black text-white shadow-md transition hover:bg-secondary-600 md:right-4 md:top-4"
-            >
-              X
-            </button>
             <MotionDiv className="flex h-[280px] w-full items-center justify-center rounded-2xl bg-white p-4" style={{ y: heroImageY }}>
               <img
                 src="/la_cope.jpeg"
@@ -197,7 +185,6 @@ function HomePage() {
             </div>
           </MotionDiv>
         </SectionContainer>
-      ) : null}
 
       <SectionContainer>
         <MotionDiv
@@ -284,23 +271,14 @@ function HomePage() {
         </MotionDiv>
       </SectionContainer>
 
-      {!hideRaidBlock ? (
-        <SectionContainer className="bg-white/70 pb-4 pt-0">
+      <SectionContainer className="bg-white/70 pb-4 pt-0">
           <MotionDiv
-            className="relative mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10"
+            className="mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10"
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={inViewViewport}
           >
-            <button
-              type="button"
-              onClick={dismissRaidBlock}
-              aria-label="Masquer cette section"
-              className="absolute right-3 top-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-full bg-secondary-500 text-sm font-black text-white shadow-md transition hover:bg-secondary-600 md:right-4 md:top-4"
-            >
-              X
-            </button>
             <MotionDiv className="w-full" style={{ y: heroImageY }}>
               <VideoPlayer url="https://www.youtube.com/watch?v=DPrBVkE22mM" title="Raid Tanja Lagouira" />
             </MotionDiv>
@@ -331,7 +309,6 @@ function HomePage() {
             </div>
           </MotionDiv>
         </SectionContainer>
-      ) : null}
 
       <SectionContainer className="pb-4 pt-2">
         <MotionDiv

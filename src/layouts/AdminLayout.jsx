@@ -40,11 +40,6 @@ function AdminLayout() {
             </NavLink>
           ) : null}
           {role === 'admin' ? (
-            <NavLink to="/admin/advertisements" className={navClass}>
-              {t('navAdvertisements')}
-            </NavLink>
-          ) : null}
-          {role === 'admin' ? (
             <NavLink to="/admin/activities" className={navClass}>
               Activités
             </NavLink>

@@ -7,7 +7,6 @@ import MainLayout from './layouts/MainLayout'
 import AdminEventsPage from './pages/admin/AdminEventsPage'
 import AdminLoginPage from './pages/admin/AdminLoginPage'
 import AdminActivitiesPage from './pages/admin/AdminActivitiesPage'
-import AdminAdvertisementsPage from './pages/admin/AdminAdvertisementsPage'
 import AdminOpportunitiesPage from './pages/admin/AdminOpportunitiesPage'
 import AdminOpportunityDetailPage from './pages/admin/AdminOpportunityDetailPage'
 import AdminPostsPage from './pages/admin/AdminPostsPage'
@@ -52,7 +51,6 @@ function App() {
             <Route element={<ProtectedAdminRoute allowedRoles={['admin']} />}>
               <Route path="posts" element={<AdminPostsPage />} />
               <Route path="events" element={<AdminEventsPage />} />
-              <Route path="advertisements" element={<AdminAdvertisementsPage />} />
               <Route path="activities" element={<AdminActivitiesPage />} />
             </Route>
           </Route>
