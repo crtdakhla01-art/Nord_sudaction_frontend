@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom'
 import { useMemo, useState } from 'react'
+import { motion } from 'framer-motion'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
 import SectionContainer from '../components/SectionContainer'
 import { getImageUrl } from '../api/client'
 import { usePosts } from '../hooks/usePosts'
 import { formatDateLabel } from '../utils/date'
+import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
 
 const typeLabel = {
   article: 'Articles',
@@ -14,6 +16,10 @@ const typeLabel = {
 }
 
 function ActualitesPage({ forcedType = 'article' }) {
+  const MotionDiv = motion.div
+  const MotionH1 = motion.h1
+  const MotionArticle = motion.article
+
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
   const [selectedType, setSelectedType] = useState(forcedType || 'article')
@@ -46,10 +52,16 @@ function ActualitesPage({ forcedType = 'article' }) {
 
   return (
     <SectionContainer>
-      <div className="mx-auto w-full max-w-6xl space-y-8">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <MotionDiv
+        className="mx-auto w-full max-w-6xl space-y-8"
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={inViewViewport}
+      >
+        <MotionDiv className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between" variants={fadeUp}>
           <div>
-            <h1 className="mt-2 text-4xl font-extrabold text-primary-500 md:text-5xl">{pageTitle}</h1>
+            <MotionH1 className="mt-2 text-4xl font-extrabold text-primary-500 md:text-5xl" variants={fadeLeft}>{pageTitle}</MotionH1>
           </div>
 
           <input
@@ -62,9 +74,9 @@ function ActualitesPage({ forcedType = 'article' }) {
             placeholder="Search by title..."
             className="w-full rounded-xl border border-primary-200 bg-white px-4 py-2.5 text-sm text-primary-500 shadow-sm outline-none transition focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20 md:max-w-xs"
           />
-        </div>
+        </MotionDiv>
 
-        <div className="flex flex-wrap gap-2">
+        <MotionDiv className="flex flex-wrap gap-2" variants={fadeUp}>
           {typeOptions.map((type) => (
             <button
               key={type.value}
@@ -81,10 +93,10 @@ function ActualitesPage({ forcedType = 'article' }) {
               {type.label}
             </button>
           ))}
-        </div>
+        </MotionDiv>
 
         {featured ? (
-          <article className="overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-md">
+          <MotionArticle className="overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-md" variants={fadeUp} whileHover={{ scale: 1.01 }} transition={{ duration: 0.25, ease: 'easeOut' }}>
             <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr]">
               <div className="h-72 md:h-full">
                 {featured.image ? (
@@ -100,12 +112,12 @@ function ActualitesPage({ forcedType = 'article' }) {
                 <h2 className="mt-3 text-2xl font-black text-primary-500">{featured.title}</h2>
                 <p className="mt-3 text-sm leading-7 text-primary-400">{featured.description}</p>
                 <p className="mt-3 text-xs font-semibold uppercase text-primary-400">{formatDateLabel(featured.published_at || featured.created_at, 'fr')}</p>
-                <Link to={`/actualites/${featured.slug}`} className="mt-5 inline-flex cursor-pointer rounded-lg bg-secondary-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-secondary-600">
+                <Link to={`/actualites/${featured.slug}`} className="mt-5 inline-flex cursor-pointer rounded-lg bg-secondary-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-secondary-600 active:scale-95">
                   Read details
                 </Link>
               </div>
             </div>
-          </article>
+          </MotionArticle>
         ) : null}
 
         {isLoading ? <LoadingState /> : null}
@@ -113,39 +125,40 @@ function ActualitesPage({ forcedType = 'article' }) {
 
         {!isLoading && !isError ? (
           <>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <MotionDiv className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4" variants={staggerContainer}>
               {posts.map((post) => (
-                <Link
-                  to={`/actualites/${post.slug}`}
-                  key={post.id}
-                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-primary-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-                >
-                  <div className="h-32 w-full flex-shrink-0 overflow-hidden bg-primary-50">
-                    {post.image ? (
-                      <img src={getImageUrl(post.image)} alt={post.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
-                    ) : (
-                      <div className="flex h-full items-center justify-center">
-                        <span className="text-4xl font-black text-secondary-500 opacity-20">NSA</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex flex-1 flex-col justify-between gap-2 p-3">
-                    <div className="space-y-1">
-                      <p className="text-xs font-semibold uppercase text-secondary-500">{typeLabel[post.type] || post.type}</p>
-                      <h3 className="text-sm font-bold text-primary-500 line-clamp-2">{post.title}</h3>
-                      <p className="line-clamp-2 text-xs text-primary-400">{post.description}</p>
-                      <p className="text-xs font-semibold uppercase text-primary-400">{formatDateLabel(post.published_at || post.created_at, 'fr')}</p>
+                <motion.div key={post.id} variants={fadeUp} whileHover={{ scale: 1.03, boxShadow: '0 16px 36px rgba(20, 20, 20, 0.12)' }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.3, ease: 'easeOut' }}>
+                  <Link
+                    to={`/actualites/${post.slug}`}
+                    className="group interactive-card flex h-full flex-col overflow-hidden rounded-2xl border border-primary-100 bg-white shadow-sm transition-all duration-300"
+                  >
+                    <div className="h-32 w-full flex-shrink-0 overflow-hidden bg-primary-50">
+                      {post.image ? (
+                        <img src={getImageUrl(post.image)} alt={post.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+                      ) : (
+                        <div className="flex h-full items-center justify-center">
+                          <span className="text-4xl font-black text-secondary-500 opacity-20">NSA</span>
+                        </div>
+                      )}
                     </div>
-                    <button
-                      type="button"
-                      className="mt-1 inline-flex w-full cursor-pointer items-center justify-center rounded-lg bg-secondary-500 px-3 py-2 text-xs font-semibold text-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-accent-500 hover:shadow-lg hover:shadow-secondary-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-500 focus-visible:ring-offset-2"
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </Link>
+                    <div className="flex flex-1 flex-col justify-between gap-2 p-3">
+                      <div className="space-y-1">
+                        <p className="text-xs font-semibold uppercase text-secondary-500">{typeLabel[post.type] || post.type}</p>
+                        <h3 className="text-sm font-bold text-primary-500 line-clamp-2">{post.title}</h3>
+                        <p className="line-clamp-2 text-xs text-primary-400">{post.description}</p>
+                        <p className="text-xs font-semibold uppercase text-primary-400">{formatDateLabel(post.published_at || post.created_at, 'fr')}</p>
+                      </div>
+                      <button
+                        type="button"
+                        className="mt-1 inline-flex w-full cursor-pointer items-center justify-center rounded-lg bg-secondary-500 px-3 py-2 text-xs font-semibold text-white shadow-sm transition-all duration-300 ease-out hover:bg-accent-500 hover:shadow-lg hover:shadow-secondary-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-500 focus-visible:ring-offset-2"
+                      >
+                        View Details
+                      </button>
+                    </div>
+                  </Link>
+                </motion.div>
               ))}
-            </div>
+            </MotionDiv>
 
             {posts.length === 0 ? (
               <p className="rounded-2xl border border-primary-100 bg-white px-4 py-5 text-sm text-primary-400 shadow-md">
@@ -176,7 +189,7 @@ function ActualitesPage({ forcedType = 'article' }) {
             ) : null}
           </>
         ) : null}
-      </div>
+      </MotionDiv>
     </SectionContainer>
   )
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { motion } from 'framer-motion'
 import Button from '../components/Button'
 import ErrorState from '../components/ErrorState'
 import InputField from '../components/InputField'
@@ -10,6 +11,7 @@ import TextareaField from '../components/TextareaField'
 import { useOpportunityTypes } from '../hooks/useOpportunityTypes'
 import { useOpportunities } from '../hooks/useOpportunities'
 import { useSubmitOpportunity } from '../hooks/useSubmitOpportunity'
+import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
 
 const initialForm = {
   titre: '',
@@ -25,6 +27,10 @@ const initialForm = {
 }
 
 function OpportunitiesPage() {
+  const MotionDiv = motion.div
+  const MotionH1 = motion.h1
+  const MotionForm = motion.form
+
   const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState('list')
   const [selectedTypeId, setSelectedTypeId] = useState('all')
@@ -136,25 +142,31 @@ function OpportunitiesPage() {
 
   return (
     <SectionContainer>
-      <div className="mx-auto w-full max-w-6xl">
-        <h1 className="text-4xl font-extrabold text-primary-500 md:text-5xl">{t('opportunitiesPageTitle')}</h1>
+      <MotionDiv
+        className="mx-auto w-full max-w-6xl"
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={inViewViewport}
+      >
+        <MotionH1 className="text-4xl font-extrabold text-primary-500 md:text-5xl" variants={fadeLeft}>{t('opportunitiesPageTitle')}</MotionH1>
 
-        <div className="mt-6 inline-flex items-center gap-1 rounded-xl border border-primary-100 bg-white p-1 shadow-sm">
+        <MotionDiv className="mt-6 inline-flex items-center gap-1 rounded-xl border border-primary-100 bg-white p-1 shadow-sm" variants={fadeUp}>
           <button type="button" className={tabClass('list')} onClick={() => setActiveTab('list')}>
             {t('opportunitiesViewTab')}
           </button>
           <button type="button" className={tabClass('submit')} onClick={() => setActiveTab('submit')}>
             {t('opportunitiesSubmitTab')}
           </button>
-        </div>
+        </MotionDiv>
 
         {activeTab === 'list' ? (
-          <div className="mt-7">
+          <MotionDiv className="mt-7" variants={fadeUp}>
             {isLoading ? <LoadingState /> : null}
             {isError ? <ErrorState message={error?.message} /> : null}
             {!isLoading && !isError ? (
               <>
-                <div className="mb-6 flex flex-wrap gap-2">
+                <MotionDiv className="mb-6 flex flex-wrap gap-2" variants={fadeUp}>
                   <button
                     type="button"
                     onClick={() => {
@@ -204,16 +216,18 @@ function OpportunitiesPage() {
                       {t('opportunityTypeOther')}
                     </button>
                   ) : null}
-                </div>
+                </MotionDiv>
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <MotionDiv className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4" variants={staggerContainer}>
                   {filteredOpportunities.length === 0 ? (
                     <p className="text-primary-400">{t('emptyOpportunities')}</p>
                   ) : null}
                   {paginatedOpportunities.map((opportunity) => (
-                    <OpportunityCard key={opportunity.id} opportunity={opportunity} />
+                    <motion.div key={opportunity.id} variants={fadeUp} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.25, ease: 'easeOut' }}>
+                      <OpportunityCard opportunity={opportunity} />
+                    </motion.div>
                   ))}
-                </div>
+                </MotionDiv>
 
                 {shouldPaginate ? (
                   <div className="mt-5 flex items-center justify-end gap-2">
@@ -238,12 +252,13 @@ function OpportunitiesPage() {
                 ) : null}
               </>
             ) : null}
-          </div>
+          </MotionDiv>
         ) : (
-          <form
+          <MotionForm
             className="mt-7 space-y-5 rounded-2xl border border-primary-100 bg-white p-6 shadow-md"
             onSubmit={handleSubmit}
             noValidate
+            variants={fadeUp}
           >
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <InputField
@@ -365,9 +380,9 @@ function OpportunitiesPage() {
             <Button type="submit" disabled={submitMutation.isPending}>
               {submitMutation.isPending ? t('sending') : t('submit')}
             </Button>
-          </form>
+          </MotionForm>
         )}
-      </div>
+      </MotionDiv>
     </SectionContainer>
   )
 }

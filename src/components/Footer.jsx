@@ -1,14 +1,27 @@
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import logo from '../assets/logo.jpeg'
 
 function Footer() {
   const { t } = useTranslation()
 
   return (
     <footer className="mt-8 bg-primary-800 text-white">
-      <div className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="text-lg font-bold text-white">Nord Sud Action</p>
+          <img src={logo} alt="Nord Sud Action" className="h-14 w-auto rounded-lg" />
           <p className="mt-2 max-w-sm text-sm leading-6 text-primary-300">{t('footerText')}</p>
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-white">Pages</p>
+          <div className="mt-2 flex flex-col gap-2">
+            <Link to="/" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navHome')}</Link>
+            <Link to="/events" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navEvents')}</Link>
+            <Link to="/actualites" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navActualites')}</Link>
+            <Link to="/opportunities" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navOpportunities')}</Link>
+            <Link to="/galerie" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navGallery')}</Link>
+            <Link to="/contact" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navContact')}</Link>
+          </div>
         </div>
         <div>
           <p className="text-sm font-semibold text-white">{t('footerContact')}</p>
@@ -19,7 +32,7 @@ function Footer() {
           <p className="text-sm font-semibold text-white">{t('footerSocial')}</p>
           <div className="mt-3 flex items-center gap-3 text-primary-300">
             <a
-              className="rounded-full border border-primary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
+              className="icon-float rounded-full border border-primary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
               href="https://www.facebook.com/nordsudaction"
               target="_blank"
               rel="noreferrer"
@@ -32,7 +45,7 @@ function Footer() {
             </a>
 
             <a
-              className="rounded-full border border-primary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
+              className="icon-float rounded-full border border-primary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
               href="https://instagram.com"
               target="_blank"
               rel="noreferrer"
@@ -45,7 +58,7 @@ function Footer() {
             </a>
 
             <a
-              className="rounded-full border border-primary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
+              className="icon-float rounded-full border border-primary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
               href="https://www.linkedin.com/company/association-nord-sud-action/"
               target="_blank"
               rel="noreferrer"

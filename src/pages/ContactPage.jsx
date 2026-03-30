@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { motion } from 'framer-motion'
 import Button from '../components/Button'
 import ErrorState from '../components/ErrorState'
 import InputField from '../components/InputField'
 import SectionContainer from '../components/SectionContainer'
 import TextareaField from '../components/TextareaField'
 import { useSubmitContactMessage } from '../hooks/useSubmitContactMessage'
+import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
 
 const initialForm = {
   name: '',
@@ -14,6 +16,10 @@ const initialForm = {
 }
 
 function ContactPage() {
+  const MotionDiv = motion.div
+  const MotionH1 = motion.h1
+  const MotionForm = motion.form
+
   const { t } = useTranslation()
   const [formValues, setFormValues] = useState(initialForm)
   const [formErrors, setFormErrors] = useState({})
@@ -49,9 +55,15 @@ function ContactPage() {
 
   return (
     <SectionContainer>
-      <div className="mx-auto grid w-full max-w-6xl gap-8 md:grid-cols-2">
-        <div>
-          <h1 className="text-4xl font-extrabold text-primary-500 md:text-5xl">{t('contactTitle')}</h1>
+      <MotionDiv
+        className="mx-auto grid w-full max-w-6xl gap-8 md:grid-cols-2"
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={inViewViewport}
+      >
+        <MotionDiv variants={fadeUp}>
+          <MotionH1 className="text-4xl font-extrabold text-primary-500 md:text-5xl" variants={fadeLeft}>{t('contactTitle')}</MotionH1>
           <p className="mt-4 text-base leading-7 text-primary-400">{t('contactIntro')}</p>
 
           <div className="mt-6 space-y-4 rounded-2xl border border-primary-100 bg-white p-6 shadow-sm">
@@ -68,18 +80,19 @@ function ContactPage() {
               href="https://wa.me/212660544904"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl bg-accent-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-accent-600"
+              className="animated-underline inline-flex items-center gap-2 rounded-xl bg-accent-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-accent-600 active:scale-95"
             >
               <span className="inline-block h-2 w-2 rounded-full bg-white/60" />
               {t('whatsappLabel')} +212 660 544 904
             </a>
           </div>
-        </div>
+        </MotionDiv>
 
-        <form
+        <MotionForm
           className="space-y-5 rounded-2xl border border-primary-100 bg-white p-6 shadow-md"
           onSubmit={handleSubmit}
           noValidate
+          variants={fadeUp}
         >
           <InputField
             label={t('formName')}
@@ -119,8 +132,8 @@ function ContactPage() {
           <Button type="submit" disabled={submitMutation.isPending}>
             {submitMutation.isPending ? t('sending') : t('submit')}
           </Button>
-        </form>
-      </div>
+        </MotionForm>
+      </MotionDiv>
     </SectionContainer>
   )
 }

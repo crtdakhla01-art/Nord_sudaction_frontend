@@ -1,15 +1,24 @@
 import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { getImageUrl } from '../api/client'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
 import SectionContainer from '../components/SectionContainer'
 import { useOpportunity } from '../hooks/useOpportunity'
+import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
 
 function OpportunityDetailPage() {
+  const MotionDiv = motion.div
+  const MotionSection = motion.section
+  const MotionH1 = motion.h1
+
   const { id } = useParams()
   const { t } = useTranslation()
   const { data: opportunity, isLoading, isError, error } = useOpportunity(id)
+  const prefersReducedMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll()
+  const mediaY = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [-15, 15])
 
   if (isLoading) {
     return (
@@ -32,10 +41,16 @@ function OpportunityDetailPage() {
   return (
     <div className="bg-[linear-gradient(180deg,_#fff_0%,_#fafafa_38%,_#f3f3f3_100%)]">
       <SectionContainer className="pt-8 sm:pt-10 lg:pt-12">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
+        <MotionDiv
+          className="mx-auto flex w-full max-w-6xl flex-col gap-8"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={inViewViewport}
+        >
 
           {/* Header card */}
-          <div className="relative overflow-hidden rounded-[32px] border border-primary-100 bg-white p-6 shadow-[0_20px_60px_rgba(20,20,20,0.07)] sm:p-8 lg:p-10">
+          <MotionDiv className="relative overflow-hidden rounded-[32px] border border-primary-100 bg-white p-6 shadow-[0_20px_60px_rgba(20,20,20,0.07)] sm:p-8 lg:p-10" variants={fadeUp}>
             <div className="absolute -right-16 -top-12 h-40 w-40 rounded-full bg-secondary-100 blur-3xl" />
             <div className="absolute -bottom-16 left-10 h-32 w-32 rounded-full bg-primary-100 blur-3xl" />
 
@@ -55,9 +70,9 @@ function OpportunityDetailPage() {
                 )}
               </div>
 
-              <h1 className="mt-4 text-3xl font-black tracking-tight text-primary-500 sm:text-4xl lg:text-5xl">
+              <MotionH1 className="mt-4 text-3xl font-black tracking-tight text-primary-500 sm:text-4xl lg:text-5xl" variants={fadeLeft}>
                 {opportunity.titre || `${opportunity.first_name || ''} ${opportunity.last_name || ''}`.trim() || '-'}
-              </h1>
+              </MotionH1>
 
               {/* Info tiles */}
               <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -81,13 +96,13 @@ function OpportunityDetailPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </MotionDiv>
 
           {/* Content */}
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(300px,0.9fr)]">
+          <MotionDiv className="grid gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(300px,0.9fr)]" variants={fadeUp}>
 
             {/* Description */}
-            <section className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)] sm:p-8">
+            <MotionSection className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)] sm:p-8" variants={fadeUp}>
               <p className="text-xs font-bold uppercase tracking-[0.24em] text-secondary-500">{t('formDescription')}</p>
               <h2 className="mt-2 text-xl font-bold text-primary-500">{t('descriptionHeading')}</h2>
               <div className="mt-5 rounded-2xl bg-primary-50 p-5 sm:p-6">
@@ -95,27 +110,23 @@ function OpportunityDetailPage() {
                   {opportunity.description || '-'}
                 </p>
               </div>
-            </section>
+            </MotionSection>
 
             {/* Side info */}
             <div className="space-y-5">
               {/* Image */}
-              <section className="overflow-hidden rounded-[28px] border border-primary-100 bg-white shadow-[0_14px_34px_rgba(20,20,20,0.05)]">
-                {opportunity.image ? (
+              {opportunity.image ? (
+              <MotionSection className="overflow-hidden rounded-[28px] border border-primary-100 bg-white shadow-[0_14px_34px_rgba(20,20,20,0.05)]" variants={fadeUp} style={{ y: mediaY }}>
                   <img
                     src={getImageUrl(opportunity.image)}
                     alt={opportunity.titre || 'Opportunity'}
                     className="h-56 w-full object-cover"
                   />
-                ) : (
-                  <div className="flex h-56 w-full items-center justify-center bg-primary-50">
-                    <span className="text-4xl font-black text-secondary-500 opacity-20">NSA</span>
-                  </div>
-                )}
-              </section>
+              </MotionSection>
+              ) : null}
 
               {/* Contact */}
-              <section className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)]">
+              <MotionSection className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)]" variants={fadeUp}>
                 <p className="text-xs font-bold uppercase tracking-[0.24em] text-secondary-500">{t('contactTitle')}</p>
                 <ul className="mt-4 space-y-3 text-sm text-primary-400">
                   <li>
@@ -135,11 +146,11 @@ function OpportunityDetailPage() {
                     <strong className="text-secondary-600">{t('cardPhone')}:</strong> {opportunity.phone}
                   </li>
                 </ul>
-              </section>
+              </MotionSection>
             </div>
-          </div>
+          </MotionDiv>
 
-        </div>
+        </MotionDiv>
       </SectionContainer>
     </div>
   )

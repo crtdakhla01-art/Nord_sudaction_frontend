@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { getImageUrl } from '../api/client'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
 import SectionContainer from '../components/SectionContainer'
 import { useEvent } from '../hooks/useEvent'
 import { formatDateLabel } from '../utils/date'
+import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
 
 function MediaThumb({ item, isActive, onSelect }) {
   const { t } = useTranslation()
@@ -110,12 +112,19 @@ function MediaLightbox({ item, onClose, onPrev, onNext, hasMultiple }) {
 }
 
 function EventDetailPage() {
+  const MotionDiv = motion.div
+  const MotionSection = motion.section
+  const MotionH1 = motion.h1
+
   const { id } = useParams()
   const { t, i18n } = useTranslation()
   const { data: event, isLoading, isError, error } = useEvent(id)
   const [activeIndex, setActiveIndex] = useState(0)
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [nowDate, setNowDate] = useState(() => new Date())
+  const prefersReducedMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll()
+  const mediaY = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [-15, 15])
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
@@ -200,9 +209,15 @@ function EventDetailPage() {
   return (
     <div className="bg-[linear-gradient(180deg,_#fff_0%,_#fafafa_38%,_#f3f3f3_100%)]">
       <SectionContainer className="pt-8 sm:pt-10 lg:pt-12">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
+        <MotionDiv
+          className="mx-auto flex w-full max-w-6xl flex-col gap-8"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={inViewViewport}
+        >
           {countdown ? (
-            <section className="relative overflow-hidden rounded-[24px] border border-primary-100 bg-[linear-gradient(180deg,_#ffffff_0%,_#fafafa_100%)] px-4 py-5 shadow-[0_12px_28px_rgba(20,20,20,0.06)] sm:px-6">
+            <MotionSection className="relative overflow-hidden rounded-[24px] border border-primary-100 bg-[linear-gradient(180deg,_#ffffff_0%,_#fafafa_100%)] px-4 py-5 shadow-[0_12px_28px_rgba(20,20,20,0.06)] sm:px-6" variants={fadeUp}>
               <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-secondary-100/70 blur-2xl" />
               <div className="relative z-10">
                 <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary-500">{t('eventStartsIn')}</p>
@@ -228,10 +243,10 @@ function EventDetailPage() {
                   </div>
                 </div>
               </div>
-            </section>
+            </MotionSection>
           ) : null}
 
-          <div className="relative overflow-hidden rounded-[32px] border border-primary-100 bg-white p-6 shadow-[0_20px_60px_rgba(20,20,20,0.07)] sm:p-8 lg:p-10">
+          <MotionDiv className="relative overflow-hidden rounded-[32px] border border-primary-100 bg-white p-6 shadow-[0_20px_60px_rgba(20,20,20,0.07)] sm:p-8 lg:p-10" variants={fadeUp}>
             <div className="absolute -right-16 -top-12 h-40 w-40 rounded-full bg-secondary-100 blur-3xl" />
             <div className="absolute -bottom-16 left-10 h-32 w-32 rounded-full bg-primary-100 blur-3xl" />
 
@@ -248,23 +263,23 @@ function EventDetailPage() {
                 </span>
               </div>
 
-              <h1 className="mt-4 max-w-3xl text-2xl font-black tracking-tight text-primary-500 sm:text-3xl lg:text-4xl">
+              <MotionH1 className="mt-4 max-w-3xl text-2xl font-black tracking-tight text-primary-500 sm:text-3xl lg:text-4xl" variants={fadeLeft}>
                 {event.title}
-              </h1>
+              </MotionH1>
             </div>
-          </div>
+          </MotionDiv>
 
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(320px,0.9fr)]">
+          <MotionDiv className="grid gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(320px,0.9fr)]" variants={fadeUp}>
             <div className="space-y-8">
-              <section className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)] sm:p-8">
+              <MotionSection className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)] sm:p-8" variants={fadeUp}>
                 <p className="text-xs font-bold uppercase tracking-[0.24em] text-secondary-500">{t('formDescription')}</p>
                 <h2 className="mt-2 text-xl font-bold text-primary-500">{t('descriptionHeading')}</h2>
                 <div className="mt-5 rounded-2xl bg-primary-50 p-5 sm:p-6">
                   <p className="whitespace-pre-line text-base leading-8 text-primary-400">{event.description}</p>
                 </div>
-              </section>
+              </MotionSection>
 
-              <section className="rounded-[28px] border border-primary-100 bg-white p-5 shadow-[0_14px_34px_rgba(20,20,20,0.05)] sm:p-6">
+              <MotionSection className="rounded-[28px] border border-primary-100 bg-white p-5 shadow-[0_14px_34px_rgba(20,20,20,0.05)] sm:p-6" variants={fadeUp} style={{ y: mediaY }}>
                 <div className="mb-5 flex items-center justify-between gap-4">
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.24em] text-secondary-500">{t('gallerySection')}</p>
@@ -319,15 +334,17 @@ function EventDetailPage() {
                 </div>
 
                 {images.length > 0 ? (
-                  <div className="mt-5 flex flex-wrap gap-3">
+                  <motion.div className="mt-5 flex flex-wrap gap-3" variants={staggerContainer}>
                     {images.map((item, index) => (
-                      <MediaThumb key={`${item.image}-${index}`} item={item} isActive={index === activeIndex} onSelect={() => setActiveIndex(index)} />
+                      <motion.div key={`${item.image}-${index}`} variants={fadeUp}>
+                        <MediaThumb item={item} isActive={index === activeIndex} onSelect={() => setActiveIndex(index)} />
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 ) : null}
-              </section>
+              </MotionSection>
 
-              <section className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)] sm:p-8">
+              <MotionSection className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)] sm:p-8" variants={fadeUp}>
                 <p className="text-xs font-bold uppercase tracking-[0.24em] text-secondary-500">{t('videosLabel')}</p>
                 <h2 className="mt-2 text-xl font-bold text-primary-500">{t('videosLabel')}</h2>
 
@@ -355,11 +372,11 @@ function EventDetailPage() {
                     {t('galleryEmpty')}
                   </div>
                 )}
-              </section>
+              </MotionSection>
             </div>
 
             <div className="space-y-8">
-              <section className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)]">
+              <MotionSection className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)]" variants={fadeUp}>
                 <p className="text-xs font-bold uppercase tracking-[0.24em] text-secondary-500">{t('quickInfo')}</p>
                 <div className="mt-5 space-y-3">
                   <div className="rounded-2xl border border-primary-100 bg-primary-50 px-4 py-4">
@@ -371,9 +388,9 @@ function EventDetailPage() {
                     <p className="mt-2 text-sm font-semibold leading-6 text-primary-500">{event.location || '-'}</p>
                   </div>
                 </div>
-              </section>
+              </MotionSection>
 
-              <section className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)]">
+              <MotionSection className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)]" variants={fadeUp}>
                 <p className="text-xs font-bold uppercase tracking-[0.24em] text-secondary-500">{t('mediaSection')}</p>
                 <div className="mt-5 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
                   <div className="rounded-2xl border border-primary-100 bg-primary-50 px-4 py-4">
@@ -389,9 +406,9 @@ function EventDetailPage() {
                     <p className="mt-2 text-2xl font-black text-secondary-500">{links.length}</p>
                   </div>
                 </div>
-              </section>
+              </MotionSection>
 
-              <section className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)]">
+              <MotionSection className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)]" variants={fadeUp}>
                 <p className="text-xs font-bold uppercase tracking-[0.24em] text-secondary-500">{t('linksSection')}</p>
                 <h2 className="mt-2 text-xl font-bold text-primary-500">{t('openLink')}</h2>
 
@@ -420,10 +437,10 @@ function EventDetailPage() {
                     {t('galleryEmpty')}
                   </div>
                 )}
-              </section>
+              </MotionSection>
             </div>
-          </div>
-        </div>
+          </MotionDiv>
+        </MotionDiv>
       </SectionContainer>
 
       {isLightboxOpen && activeImage && hasPreviewableMedia ? (

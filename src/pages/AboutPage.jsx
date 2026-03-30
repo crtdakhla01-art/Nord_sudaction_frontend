@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
+import { motion } from 'framer-motion'
 import SectionContainer from '../components/SectionContainer'
 import logo from '../assets/logo.jpeg'
+import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
 
 const events = [
   { titleKey: 'aboutPageForumTitle', textKey: 'aboutPageForumText' },
@@ -11,33 +13,44 @@ const events = [
 ]
 
 function AboutPage() {
+  const MotionDiv = motion.div
+  const MotionH1 = motion.h1
+  const MotionH2 = motion.h2
+  const MotionLi = motion.li
+
   const { t } = useTranslation()
   const impactItems = t('aboutPageImpactItems', { returnObjects: true })
 
   return (
     <SectionContainer>
-      <div className="mx-auto w-full max-w-6xl space-y-6">
+      <MotionDiv
+        className="mx-auto w-full max-w-6xl space-y-6"
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={inViewViewport}
+      >
 
       {/* ── Hero banner ── */}
-      <div className="relative overflow-hidden rounded-3xl bg-secondary-500 px-6 py-10 shadow-lg sm:px-10 sm:py-14">
+      <MotionDiv className="relative overflow-hidden rounded-3xl bg-secondary-500 px-6 py-10 shadow-lg sm:px-10 sm:py-14" variants={fadeUp}>
         <div className="relative z-10 flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="max-w-xl">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-white/70">{t('aboutPageEyebrow')}</p>
-            <h1 className="mt-3 text-3xl font-extrabold leading-tight text-white sm:text-4xl">{t('brand')}</h1>
+            <MotionH1 className="mt-3 text-3xl font-extrabold leading-tight text-white sm:text-4xl" variants={fadeLeft}>{t('brand')}</MotionH1>
             <p className="mt-4 text-sm leading-7 text-white/80">{t('heroSubtitleBold')}</p>
           </div>
-          <img src={logo} alt={t('brand')} className="h-32 w-48 flex-shrink-0 rounded-2xl bg-white object-contain p-3 shadow-md sm:h-40 sm:w-60" />
+          <img src={logo} alt={t('brand')} className="hidden lg:block h-32 w-48 flex-shrink-0 rounded-2xl bg-white object-contain p-3 shadow-md sm:h-40 sm:w-60" />
         </div>
         {/* decorative circle */}
         <span className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/5" />
         <span className="pointer-events-none absolute -bottom-10 -left-10 h-48 w-48 rounded-full bg-white/5" />
-      </div>
+      </MotionDiv>
 
       {/* ── Mission ── */}
-      <div className="mt-6 rounded-3xl border border-primary-100 bg-white px-6 py-8 shadow-sm sm:px-8">
+      <MotionDiv className="mt-6 rounded-3xl border border-primary-100 bg-white px-6 py-8 shadow-sm sm:px-8" variants={fadeUp}>
         <div className="flex items-center gap-3">
           <span className="h-6 w-1.5 rounded-full bg-secondary-500" />
-          <h2 className="text-xl font-bold text-primary-500">{t('introTitle')}</h2>
+          <MotionH2 className="text-xl font-bold text-primary-500" variants={fadeLeft}>{t('introTitle')}</MotionH2>
         </div>
         <p className="mt-4 text-base leading-8 text-primary-400">
           {t('heroSubtitle')}<strong className="font-semibold text-primary-500">{t('heroSubtitleBold')}</strong>{t('heroSubtitlePost')}
@@ -46,19 +59,19 @@ function AboutPage() {
           <p className="rounded-2xl bg-primary-50 px-5 py-4 text-sm leading-7 text-primary-400">{t('heroSubtitle2')}</p>
           <p className="rounded-2xl bg-primary-50 px-5 py-4 text-sm leading-7 text-primary-400">{t('heroSubtitle3')}</p>
         </div>
-      </div>
+      </MotionDiv>
 
       {/* ── Flagship events ── */}
-      <div className="mt-6 rounded-3xl border border-primary-100 bg-white px-6 py-8 shadow-sm sm:px-8">
+      <MotionDiv className="mt-6 rounded-3xl border border-primary-100 bg-white px-6 py-8 shadow-sm sm:px-8" variants={fadeUp}>
         <div className="flex items-center gap-3">
           <span className="h-6 w-1.5 rounded-full bg-secondary-500" />
-          <h2 className="text-xl font-bold text-primary-500">{t('aboutPageSectionTitle')}</h2>
+          <MotionH2 className="text-xl font-bold text-primary-500" variants={fadeLeft}>{t('aboutPageSectionTitle')}</MotionH2>
         </div>
         <p className="mt-4 text-sm leading-7 text-primary-400">{t('aboutPageSectionIntro')}</p>
 
-        <div className="mt-6 space-y-0 divide-y divide-primary-100">
+        <MotionDiv className="mt-6 space-y-0 divide-y divide-primary-100" variants={staggerContainer}>
           {events.map(({ titleKey, textKey }, i) => (
-            <div key={titleKey} className="flex gap-4 py-5 first:pt-0 last:pb-0">
+            <motion.div key={titleKey} className="flex gap-4 py-5 first:pt-0 last:pb-0" variants={fadeUp}>
               <span className="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-secondary-500 text-xs font-bold text-white">
                 {i + 1}
               </span>
@@ -66,29 +79,29 @@ function AboutPage() {
                 <h3 className="font-bold text-primary-500">{t(titleKey)}</h3>
                 <p className="mt-1.5 text-sm leading-7 text-primary-400">{t(textKey)}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
-      </div>
+        </MotionDiv>
+      </MotionDiv>
 
       {/* ── Impact ── */}
-      <div className="mt-6 rounded-3xl bg-primary-900 px-6 py-8 shadow-sm sm:px-8">
+      <MotionDiv className="mt-6 rounded-3xl bg-primary-900 px-6 py-8 shadow-sm sm:px-8" variants={fadeUp}>
         <div className="flex items-center gap-3">
           <span className="h-6 w-1.5 rounded-full bg-secondary-500" />
-          <h2 className="text-xl font-bold text-white">{t('aboutPageImpactTitle')}</h2>
+          <MotionH2 className="text-xl font-bold text-white" variants={fadeLeft}>{t('aboutPageImpactTitle')}</MotionH2>
         </div>
         <p className="mt-3 text-sm text-white/60">{t('aboutPageImpactIntro')}</p>
-        <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+        <motion.ul className="mt-5 grid gap-3 sm:grid-cols-2" variants={staggerContainer}>
           {impactItems.map((item) => (
-            <li key={item} className="flex items-start gap-3 rounded-2xl bg-white/5 px-4 py-3">
+            <MotionLi key={item} className="flex items-start gap-3 rounded-2xl bg-white/5 px-4 py-3" variants={fadeUp}>
               <span className="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-secondary-400" />
               <span className="text-sm leading-6 text-white/80">{item}</span>
-            </li>
+            </MotionLi>
           ))}
-        </ul>
-      </div>
+        </motion.ul>
+      </MotionDiv>
 
-      </div>
+      </MotionDiv>
     </SectionContainer>
   )
 }

@@ -1,12 +1,17 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { motion } from 'framer-motion'
 import EventCard from '../components/EventCard'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
 import SectionContainer from '../components/SectionContainer'
 import { useEvents } from '../hooks/useEvents'
+import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
 
 function EventsPage() {
+  const MotionDiv = motion.div
+  const MotionH1 = motion.h1
+
   const { t } = useTranslation()
   const { data: events, isLoading, isError, error } = useEvents()
   const [activeTab, setActiveTab] = useState('upcoming')
@@ -42,10 +47,16 @@ function EventsPage() {
 
   return (
     <SectionContainer>
-      <div className="mx-auto w-full max-w-6xl">
-        <h1 className="text-4xl font-extrabold text-primary-500 md:text-5xl">{t('eventsPageTitle')}</h1>
+      <MotionDiv
+        className="mx-auto w-full max-w-6xl"
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={inViewViewport}
+      >
+        <MotionH1 className="text-4xl font-extrabold text-primary-500 md:text-5xl" variants={fadeLeft}>{t('eventsPageTitle')}</MotionH1>
 
-        <div className="mt-6 w-full overflow-x-auto pb-1">
+        <MotionDiv className="mt-6 w-full overflow-x-auto pb-1" variants={fadeUp}>
           <div className="inline-flex min-w-max items-center gap-1 rounded-xl border border-primary-100 bg-white p-1 shadow-sm">
             <button
               type="button"
@@ -68,19 +79,21 @@ function EventsPage() {
               {t('eventsPassedTab')}
             </button>
           </div>
-        </div>
+        </MotionDiv>
 
         {isLoading ? <LoadingState /> : null}
         {isError ? <ErrorState message={error?.message} /> : null}
 
         {!isLoading && !isError ? (
           <>
-            <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <MotionDiv className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4" variants={staggerContainer}>
               {timelineEvents.length === 0 ? <p className="text-primary-400">{t('emptyEvents')}</p> : null}
               {paginatedEvents.map((event) => (
-                <EventCard key={event.id} event={event} />
+                <motion.div key={event.id} variants={fadeUp} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.25, ease: 'easeOut' }}>
+                  <EventCard event={event} />
+                </motion.div>
               ))}
-            </div>
+            </MotionDiv>
 
             {shouldPaginate ? (
               <div className="mt-5 flex items-center justify-end gap-2">
@@ -105,7 +118,7 @@ function EventsPage() {
             ) : null}
           </>
         ) : null}
-      </div>
+      </MotionDiv>
     </SectionContainer>
   )
 }

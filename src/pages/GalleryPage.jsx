@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { motion } from 'framer-motion'
 import SectionContainer from '../components/SectionContainer'
+import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
 
 // Add or remove images here — place files in the /public folder and reference them as '/filename.jpg'
 const images = [
@@ -14,6 +16,9 @@ const images = [
 ]
 
 export default function GalleryPage() {
+  const MotionDiv = motion.div
+  const MotionH1 = motion.h1
+
   const { t } = useTranslation()
   const [lightbox, setLightbox] = useState(null)
 
@@ -21,16 +26,16 @@ export default function GalleryPage() {
     <>
       {/* Title */}
       <SectionContainer className="bg-white">
-        <div className="mx-auto max-w-6xl">
-          <h1 className="text-4xl font-extrabold text-primary-500 md:text-5xl">
+        <MotionDiv className="mx-auto max-w-6xl" variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
+          <MotionH1 className="text-4xl font-extrabold text-primary-500 md:text-5xl" variants={fadeLeft} initial="hidden" whileInView="visible" viewport={inViewViewport}>
             {t('galleryTitle')}
-          </h1>
-        </div>
+          </MotionH1>
+        </MotionDiv>
       </SectionContainer>
 
       {/* Introduction */}
       <SectionContainer className="bg-white">
-        <div className="mx-auto max-w-6xl">
+        <MotionDiv className="mx-auto max-w-6xl" variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
           <div className="rounded-2xl border border-primary-100 bg-white p-6 shadow-sm sm:p-8">
             <p className="text-base leading-7 text-primary-400 md:text-lg">
               {t('galleryIntro1')}
@@ -42,40 +47,51 @@ export default function GalleryPage() {
               {t('galleryIntro3')}
             </p>
           </div>
-        </div>
+        </MotionDiv>
       </SectionContainer>
 
       {/* Photo grid */}
       <SectionContainer className="bg-white pt-2">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
+        <MotionDiv className="mx-auto max-w-6xl" variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
+          <motion.div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={inViewViewport}>
             {images.map((img, index) => (
-              <button
+              <motion.button
                 key={index}
                 type="button"
                 onClick={() => setLightbox(img)}
                 className="group overflow-hidden rounded-xl border border-primary-100 bg-primary-50 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-500"
+                variants={fadeUp}
+                whileHover={{ scale: 1.03, boxShadow: '0 14px 30px rgba(20, 20, 20, 0.12)' }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
               >
                 <img
                   src={img.src}
                   alt={img.alt}
                   className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105 sm:h-56"
                 />
-              </button>
+              </motion.button>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </MotionDiv>
       </SectionContainer>
 
       {/* Lightbox */}
       {lightbox && (
-        <div
+        <motion.div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
           onClick={() => setLightbox(null)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25, ease: 'easeOut' }}
         >
-          <div
+          <motion.div
             className="relative max-h-[90vh] max-w-4xl w-full"
             onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
           >
             <img
               src={lightbox.src}
@@ -90,8 +106,8 @@ export default function GalleryPage() {
             >
               ✕
             </button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
     </>
   )

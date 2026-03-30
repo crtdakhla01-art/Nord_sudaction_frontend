@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { useEffect, useMemo } from 'react'
+import { motion } from 'framer-motion'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
 import SectionContainer from '../components/SectionContainer'
@@ -7,6 +8,7 @@ import { getImageUrl } from '../api/client'
 import { usePost } from '../hooks/usePost'
 import { usePosts } from '../hooks/usePosts'
 import { formatDateLabel } from '../utils/date'
+import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
 
 const typeLabel = { article: 'Articles', communique: 'Communiqués', media: 'Médias' }
 const typeBadge = {
@@ -48,6 +50,9 @@ function SidebarPost({ post }) {
 }
 
 function PostDetailPage() {
+  const MotionDiv = motion.div
+  const MotionH1 = motion.h1
+
   const { slug } = useParams()
   const { data, isLoading, isError, error } = usePost(slug)
 
@@ -70,7 +75,13 @@ function PostDetailPage() {
 
   return (
     <SectionContainer>
-      <div className="mx-auto w-full max-w-7xl">
+      <MotionDiv
+        className="mx-auto w-full max-w-7xl"
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={inViewViewport}
+      >
 
         {/* Back link */}
         <Link to="/actualites" className="mb-6 inline-flex items-center gap-1.5 text-sm font-semibold text-secondary-500 transition hover:text-secondary-600">
@@ -78,11 +89,11 @@ function PostDetailPage() {
         </Link>
 
         {/* 2-column layout */}
-        <div className="grid grid-cols-12 gap-6">
+        <MotionDiv className="grid grid-cols-12 gap-6" variants={fadeUp}>
 
           {/* ── Main article — col-span-8 ── */}
           <main className="col-span-12 lg:col-span-8">
-            <article className="overflow-hidden rounded-xl bg-white shadow-md">
+            <motion.article className="overflow-hidden rounded-xl bg-white shadow-md" variants={fadeUp}>
 
               {/* Hero image */}
               {post.image ? (
@@ -105,7 +116,7 @@ function PostDetailPage() {
                 </div>
 
                 {/* Title */}
-                <h1 className="text-2xl font-extrabold leading-snug tracking-tight text-primary-500 md:text-3xl">{post.title}</h1>
+                <MotionH1 className="text-2xl font-extrabold leading-snug tracking-tight text-primary-500 md:text-3xl" variants={fadeLeft}>{post.title}</MotionH1>
 
                 {/* Lead description */}
                 <p className="border-l-4 border-secondary-500 pl-4 text-base font-medium leading-relaxed text-primary-400">{post.description}</p>
@@ -133,7 +144,7 @@ function PostDetailPage() {
                   </div>
                 ) : null}
               </div>
-            </article>
+            </motion.article>
 
             {/* Related posts */}
             {related.length > 0 ? (
@@ -142,13 +153,13 @@ function PostDetailPage() {
                   <span className="h-5 w-1 rounded-full bg-secondary-500" />
                   <h2 className="text-sm font-extrabold uppercase tracking-wide text-primary-500">Articles liés</h2>
                 </div>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+                <motion.div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3" variants={staggerContainer}>
                   {related.map((item) => (
-                    <Link
-                      to={`/actualites/${item.slug}`}
-                      key={item.id}
-                      className="group flex flex-col overflow-hidden rounded-xl bg-white shadow transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
-                    >
+                    <motion.div key={item.id} variants={fadeUp} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.25, ease: 'easeOut' }}>
+                      <Link
+                        to={`/actualites/${item.slug}`}
+                        className="group interactive-card flex flex-col overflow-hidden rounded-xl bg-white shadow transition-all duration-300"
+                      >
                       {item.image ? (
                         <div className="h-32 w-full overflow-hidden bg-primary-50">
                           <img src={getImageUrl(item.image)} alt={item.title} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
@@ -165,9 +176,10 @@ function PostDetailPage() {
                         <h3 className="line-clamp-2 text-sm font-bold leading-snug text-primary-500 group-hover:text-secondary-500 transition-colors">{item.title}</h3>
                         <p className="text-[11px] text-primary-300">{formatDateLabel(item.published_at || item.created_at, 'fr')}</p>
                       </div>
-                    </Link>
+                      </Link>
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
               </section>
             ) : null}
           </main>
@@ -188,8 +200,8 @@ function PostDetailPage() {
 
 
           </aside>
-        </div>
-      </div>
+        </MotionDiv>
+      </MotionDiv>
     </SectionContainer>
   )
 }

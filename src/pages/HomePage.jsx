@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { useActivities } from '../hooks/useActivities'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
@@ -10,6 +11,7 @@ import SectionContainer from '../components/SectionContainer'
 import VideoPlayer from '../components/VideoPlayer'
 import AdvertisementsTable from '../components/AdvertisementsTable'
 import { useAdvertisements } from '../hooks/useAdvertisements'
+import { fadeLeft, fadeUp, inViewViewport, scaleHover, staggerContainer } from '../utils/animations'
 
 const partners = [
   '/partner_1.jpg',
@@ -40,12 +42,29 @@ const partners = [
 ]
 
 function HomePage() {
+  const MotionDiv = motion.div
+  const MotionImg = motion.img
+  const MotionH1 = motion.h1
+  const MotionH2 = motion.h2
+  const MotionH3 = motion.h3
+  const MotionArticle = motion.article
+  const MotionLink = motion.a
+
   const { t } = useTranslation()
   const { data: activities, isLoading, isError, error } = useActivities()
   const { data: advertisements } = useAdvertisements()
   const [expandedTitles, setExpandedTitles] = useState({})
   const [hideLaCope, setHideLaCope] = useState(() => localStorage.getItem('hide_home_la_cope') === '1')
   const [hideRaidBlock, setHideRaidBlock] = useState(() => localStorage.getItem('hide_home_raid_block') === '1')
+  const prefersReducedMotion = useReducedMotion()
+
+  const { scrollYProgress: pageScrollProgress } = useScroll()
+
+  const heroImageY = useTransform(
+    pageScrollProgress,
+    [0, 1],
+    prefersReducedMotion ? [0, 0] : [-20, 20],
+  )
 
   const featuredActivities = activities || []
   const homeActivities = featuredActivities.slice(0, 5)
@@ -87,14 +106,27 @@ function HomePage() {
   return (
     <div>
       <SectionContainer className="pb-3 pt-0 lg:pt-0">
-        <div className="mx-auto w-full max-w-6xl">
+        <MotionDiv
+          className="mx-auto w-full max-w-6xl"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={inViewViewport}
+        >
           <AdvertisementsTable advertisements={advertisements || []} />
-        </div>
+        </MotionDiv>
       </SectionContainer>
 
       <SectionContainer className="pb-6 pt-2 md:pt-4 lg:-mt-4 lg:pt-0">
-        <div className="mx-auto grid w-full max-w-6xl items-start gap-8 lg:grid-cols-2">
-          <img
+        <MotionDiv
+          className="mx-auto grid w-full max-w-6xl items-start gap-8 lg:grid-cols-2"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={inViewViewport}
+        >
+          <MotionImg
+            style={{ y: heroImageY }}
             className="order-1 hidden h-[320px] w-full rounded-3xl object-cover shadow-xl md:block md:h-[420px] lg:order-2"
             src={heroImage}
             alt="Humanitarian work"
@@ -103,7 +135,15 @@ function HomePage() {
             {/* <p className="mb-4 inline-block rounded-full bg-secondary-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-secondary-600">
               NGO Platform
             </p> */}
-            <h1 className="text-2xl font-extrabold leading-[1.1] text-primary-500 md:text-[36px] lg:text-[38px]">{t('heroTitle')}</h1>
+            <MotionH1
+              className="text-2xl font-extrabold leading-[1.1] text-primary-500 md:text-[36px] lg:text-[38px]"
+              variants={fadeLeft}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
+              {t('heroTitle')}
+            </MotionH1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-primary-400">
               {t('heroSubtitle')}<strong className="font-bold italic">{t('heroSubtitleBold')}</strong>{t('heroSubtitlePost')}
             </p>
@@ -115,12 +155,18 @@ function HomePage() {
               </Button>
             </div>
           </div>
-        </div>
+        </MotionDiv>
       </SectionContainer>
 
       {!hideLaCope ? (
         <SectionContainer className="bg-white/70">
-          <div className="relative mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10">
+          <MotionDiv
+            className="relative mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={inViewViewport}
+          >
             <button
               type="button"
               onClick={dismissLaCope}
@@ -129,27 +175,49 @@ function HomePage() {
             >
               X
             </button>
-            <div className="flex h-[280px] w-full items-center justify-center rounded-2xl bg-white p-4">
+            <MotionDiv className="flex h-[280px] w-full items-center justify-center rounded-2xl bg-white p-4" style={{ y: heroImageY }}>
               <img
                 src="/la_cope.jpeg"
                 alt="La Cope"
                 className="max-h-full max-w-full object-contain"
               />
-            </div>
+            </MotionDiv>
             <div>
               <p className="text-base font-semibold text-primary-400">{t('laCopeEdition')}</p>
-              <h2 className="mt-2 text-3xl font-bold text-primary-500">{t('laCopeTitre')}</h2>
+              <MotionH2
+                className="mt-2 text-3xl font-bold text-primary-500"
+                variants={fadeLeft}
+                initial="hidden"
+                whileInView="visible"
+                viewport={inViewViewport}
+              >
+                {t('laCopeTitre')}
+              </MotionH2>
               <p className="mt-4 text-lg font-semibold text-secondary-500">{t('laCopeDates')}</p>
             </div>
-          </div>
+          </MotionDiv>
         </SectionContainer>
       ) : null}
 
       <SectionContainer>
-        <div className="mx-auto w-full max-w-6xl">
+        <MotionDiv
+          className="mx-auto w-full max-w-6xl"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={inViewViewport}
+        >
           <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-3xl font-bold text-primary-500">Activités</h2>
-            <Link to="/activities" className="text-sm font-semibold text-secondary-500 transition hover:text-accent-500">
+            <MotionH2
+              className="text-3xl font-bold text-primary-500"
+              variants={fadeLeft}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
+              Activités
+            </MotionH2>
+            <Link to="/activities" className="animated-underline text-sm font-semibold text-secondary-500 transition hover:text-accent-500">
               voir plus
             </Link>
           </div>
@@ -158,7 +226,13 @@ function HomePage() {
           {isError ? <ErrorState message={error?.message} /> : null}
 
           {!isLoading && !isError ? (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            <MotionDiv
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
               {featuredActivities.length === 0 ? (
                 <p className="text-primary-400">Aucune activité disponible.</p>
               ) : null}
@@ -167,9 +241,13 @@ function HomePage() {
                 const isExpanded = Boolean(expandedTitles[activity.id])
 
                 return (
-                  <div
+                  <MotionArticle
                     key={activity.id}
-                    className={`flex flex-col overflow-hidden rounded-xl border border-primary-100 bg-white shadow transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md ${index >= 3 ? 'hidden lg:flex' : ''}`}
+                    className={`interactive-card flex cursor-pointer flex-col overflow-hidden rounded-xl border border-primary-100 bg-white shadow transition-all duration-300 ${index >= 3 ? 'hidden lg:flex' : ''}`}
+                    variants={fadeUp}
+                    whileHover={scaleHover.whileHover}
+                    whileTap={scaleHover.whileTap}
+                    transition={scaleHover.transition}
                   >
                     <div className="flex flex-1 flex-col justify-between p-5">
                       <div>
@@ -186,26 +264,35 @@ function HomePage() {
                           </button>
                         ) : null}
                       </div>
-                      <a
+                      <MotionLink
                         href={activity.link}
                         target="_blank"
                         rel="noreferrer"
                         className="mt-4 block w-full rounded-xl bg-secondary-500 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-secondary-600"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ duration: 0.2, ease: 'easeOut' }}
                       >
                         Voir l'activité
-                      </a>
+                      </MotionLink>
                     </div>
-                  </div>
+                  </MotionArticle>
                 )
               })}
-            </div>
+            </MotionDiv>
           ) : null}
-        </div>
+        </MotionDiv>
       </SectionContainer>
 
       {!hideRaidBlock ? (
         <SectionContainer className="bg-white/70 pb-4 pt-0">
-          <div className="relative mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10">
+          <MotionDiv
+            className="relative mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={inViewViewport}
+          >
             <button
               type="button"
               onClick={dismissRaidBlock}
@@ -214,12 +301,20 @@ function HomePage() {
             >
               X
             </button>
-            <div className="w-full">
+            <MotionDiv className="w-full" style={{ y: heroImageY }}>
               <VideoPlayer url="https://www.youtube.com/watch?v=DPrBVkE22mM" title="Raid Tanja Lagouira" />
-            </div>
+            </MotionDiv>
             <div className="flex h-full flex-col">
               <p className="text-base font-semibold text-primary-400">{t('raidEdition')}</p>
-              <h2 className="mt-2 text-3xl font-bold text-primary-500">{t('raidTitle')}</h2>
+              <MotionH2
+                className="mt-2 text-3xl font-bold text-primary-500"
+                variants={fadeLeft}
+                initial="hidden"
+                whileInView="visible"
+                viewport={inViewViewport}
+              >
+                {t('raidTitle')}
+              </MotionH2>
               <p className="mt-4 text-lg font-semibold text-secondary-500">{t('raidDates')}</p>
               <p className="mt-4 text-base leading-7 text-primary-400">{t('raidText1')}</p>
               <p className="mt-3 text-base leading-7 text-primary-400">{t('raidText2')}</p>
@@ -228,21 +323,35 @@ function HomePage() {
                   href="https://www.raidtanjalagouira.ma"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center font-semibold text-secondary-500 underline-offset-2 hover:underline"
+                  className="animated-underline inline-flex items-center font-semibold text-secondary-500"
                 >
                   www.raidtanjalagouira.ma
                 </a>
               </div>
             </div>
-          </div>
+          </MotionDiv>
         </SectionContainer>
       ) : null}
 
       <SectionContainer className="pb-4 pt-2">
-        <div className="mx-auto w-full max-w-6xl rounded-2xl border border-primary-100 bg-white px-4 py-6 shadow-sm sm:px-6">
+        <MotionDiv
+          className="mx-auto w-full max-w-6xl rounded-2xl border border-primary-100 bg-white px-4 py-6 shadow-sm sm:px-6"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={inViewViewport}
+        >
           <div className="mb-6 flex items-center gap-2">
             <span className="h-5 w-1 rounded-full bg-secondary-500" />
-            <h3 className="text-sm font-extrabold uppercase tracking-wide text-primary-500">{t('partnersTitle')}</h3>
+            <MotionH3
+              className="text-sm font-extrabold uppercase tracking-wide text-primary-500"
+              variants={fadeLeft}
+              initial="hidden"
+              whileInView="visible"
+              viewport={inViewViewport}
+            >
+              {t('partnersTitle')}
+            </MotionH3>
           </div>
 
           {shouldSlidePartners ? (
@@ -297,7 +406,7 @@ function HomePage() {
               ))}
             </div>
           )}
-        </div>
+        </MotionDiv>
       </SectionContainer>
     </div>
   )
