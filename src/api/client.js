@@ -20,6 +20,16 @@ export const publicImageBaseUrl =
 
 export const getImageUrl = (path) => {
   if (!path) return null
-  if (path.startsWith('http://') || path.startsWith('https://')) return path
-  return `${publicImageBaseUrl.replace(/\/+$/, '')}/${String(path).replace(/^\/+/, '')}`
+  const normalizedPath = String(path).trim()
+
+  if (normalizedPath.startsWith('http://') || normalizedPath.startsWith('https://')) {
+    return normalizedPath
+  }
+
+  // Keep app-root absolute paths untouched (e.g. /banner_1.png from frontend/public).
+  if (normalizedPath.startsWith('/')) {
+    return normalizedPath
+  }
+
+  return `${publicImageBaseUrl.replace(/\/+$/, '')}/${normalizedPath.replace(/^\/+/, '')}`
 }

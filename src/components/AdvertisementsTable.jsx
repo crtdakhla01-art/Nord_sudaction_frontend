@@ -30,12 +30,13 @@ function AdvertisementsTable({ advertisements = [] }) {
   const currentAd = displayAds[0]
 
   const clickable = Boolean(currentAd.link)
+  const isBannerTwo = String(currentAd.image || '').includes('banner_2.png')
 
   const imageNode = (
     <img
       src={getImageUrl(currentAd.image)}
       alt="Advertisement"
-      className={`h-[120px] w-full rounded-lg object-cover sm:h-[150px] md:h-[190px] transition-all duration-300 ${
+      className={`${isBannerTwo ? 'h-[186px] object-cover' : 'h-auto object-contain'} w-full transition-all duration-300 ${
         clickable ? 'cursor-pointer group-hover:scale-[1.03]' : ''
       }`}
     />
@@ -44,14 +45,14 @@ function AdvertisementsTable({ advertisements = [] }) {
   return (
     <div className="w-full">
       <article
-        className="group relative w-full overflow-hidden rounded-[8px] bg-transparent transition-all duration-300"
+        className="group relative w-full overflow-hidden bg-transparent transition-all duration-300"
       >
         {clickable ? (
-          <a href={currentAd.link} target="_blank" rel="noreferrer" className="block w-full overflow-hidden rounded-[6px]">
+          <a href={currentAd.link} target="_blank" rel="noreferrer" className="block w-full overflow-hidden">
             {imageNode}
           </a>
         ) : (
-          <div className="w-full overflow-hidden rounded-[6px]">{imageNode}</div>
+          <div className="w-full overflow-hidden">{imageNode}</div>
         )}
       </article>
     </div>

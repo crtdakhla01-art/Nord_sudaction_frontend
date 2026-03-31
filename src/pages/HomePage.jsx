@@ -1,11 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { useActivities } from '../hooks/useActivities'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
-import heroImage from '../assets/hero.png'
 import Button from '../components/Button'
 import SectionContainer from '../components/SectionContainer'
 import VideoPlayer from '../components/VideoPlayer'
@@ -43,16 +42,24 @@ const partners = [
 const staticAdvertisements = [
   {
     id: 'ad-1',
-    image: 'https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=1400&q=80',
+    image: '/banner_3.png',
     link: 'https://www.raidtanjalagouira.ma',
     begin_date: '2026-01-01',
     end_date: '2030-12-31',
   },
 ]
 
+const homeHeroGalleryImages = [
+  '/header_image_1.jpeg',
+  '/header_image_2.jpeg',
+  '/header_image_3.jpeg',
+  '/header_image_4.jpeg',
+  '/header_image_5.jpeg',
+  '/header_image_6.jpeg',
+]
+
 function HomePage() {
   const MotionDiv = motion.div
-  const MotionImg = motion.img
   const MotionH1 = motion.h1
   const MotionH2 = motion.h2
   const MotionH3 = motion.h3
@@ -62,6 +69,7 @@ function HomePage() {
   const { t } = useTranslation()
   const { data: activities, isLoading, isError, error } = useActivities()
   const [expandedTitles, setExpandedTitles] = useState({})
+  const [currentHeroImageIndex, setCurrentHeroImageIndex] = useState(0)
 
   const prefersReducedMotion = useReducedMotion()
 
@@ -80,6 +88,18 @@ function HomePage() {
   const secondRowPartners = partners.filter((_, index) => index % 2 !== 0)
   const firstRowItems = shouldSlidePartners ? [...firstRowPartners, ...firstRowPartners] : firstRowPartners
   const secondRowItems = shouldSlidePartners ? [...secondRowPartners, ...secondRowPartners] : secondRowPartners
+
+  useEffect(() => {
+    if (prefersReducedMotion || homeHeroGalleryImages.length <= 1) {
+      return undefined
+    }
+
+    const intervalId = window.setInterval(() => {
+      setCurrentHeroImageIndex((previousIndex) => (previousIndex + 1) % homeHeroGalleryImages.length)
+    }, 3500)
+
+    return () => window.clearInterval(intervalId)
+  }, [prefersReducedMotion])
 
   const getTitlePreview = (title = '', words = 3) => {
     const parts = title.trim().split(/\s+/)
@@ -122,12 +142,36 @@ function HomePage() {
           whileInView="visible"
           viewport={inViewViewport}
         >
-          <MotionImg
+          <MotionDiv
             style={{ y: heroImageY }}
-            className="order-1 hidden h-[320px] w-full rounded-3xl object-cover shadow-xl md:block md:h-[420px] lg:order-2"
-            src={heroImage}
-            alt="Humanitarian work"
-          />
+            className="order-1 hidden h-[320px] overflow-hidden rounded-[2rem] border border-primary-100 bg-gradient-to-br from-white via-primary-50 to-secondary-50 p-4 shadow-xl md:block md:h-[420px] lg:order-2"
+          >
+            <div className="mb-3 flex items-center justify-end px-1">
+              <div className="flex items-center gap-2">
+                {homeHeroGalleryImages.map((imageSrc, index) => {
+                  const isActive = index === currentHeroImageIndex
+
+                  return (
+                    <span
+                      key={imageSrc}
+                      className={`h-2.5 rounded-full transition-all duration-300 ${
+                        isActive ? 'w-7 bg-secondary-500' : 'w-2.5 bg-primary-200'
+                      }`}
+                    />
+                  )
+                })}
+              </div>
+            </div>
+            <motion.img
+              key={homeHeroGalleryImages[currentHeroImageIndex]}
+              src={homeHeroGalleryImages[currentHeroImageIndex]}
+              alt={`${t('brand')} ${currentHeroImageIndex + 1}`}
+              className="h-[calc(100%-2.25rem)] w-full rounded-[1.5rem] border border-white/70 object-cover shadow-md"
+              initial={{ opacity: 0.35 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+            />
+          </MotionDiv>
           <div className="order-2 lg:order-1">
             {/* <p className="mb-4 inline-block rounded-full bg-secondary-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-secondary-600">
               NGO Platform
@@ -155,7 +199,7 @@ function HomePage() {
         </MotionDiv>
       </SectionContainer>
 
-      <SectionContainer className="bg-white/70">
+      {/* <SectionContainer className="bg-white/70">
           <MotionDiv
             className="mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10"
             variants={fadeUp}
@@ -184,7 +228,45 @@ function HomePage() {
               <p className="mt-4 text-lg font-semibold text-secondary-500">{t('laCopeDates')}</p>
             </div>
           </MotionDiv>
-        </SectionContainer>
+      </SectionContainer> */}
+            <SectionContainer className="bg-white/70 pb-4 pt-0">
+          <MotionDiv
+            className="mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={inViewViewport}
+          >
+            <MotionDiv className="w-full" style={{ y: heroImageY }}>
+              <VideoPlayer url="https://www.youtube.com/watch?v=DPrBVkE22mM" title="Raid Tanja Lagouira" />
+            </MotionDiv>
+            <div className="flex h-full flex-col">
+              <p className="text-base font-semibold text-primary-400">{t('raidEdition')}</p>
+              <MotionH2
+                className="mt-2 text-3xl font-bold text-primary-500"
+                variants={fadeLeft}
+                initial="hidden"
+                whileInView="visible"
+                viewport={inViewViewport}
+              >
+                {t('raidTitle')}
+              </MotionH2>
+              <p className="mt-4 text-lg font-semibold text-secondary-500">{t('raidDates')}</p>
+              <p className="mt-4 text-base leading-7 text-primary-400">{t('raidText1')}</p>
+              <p className="mt-3 text-base leading-7 text-primary-400">{t('raidText2')}</p>
+              <div className="mt-auto flex justify-end pt-4">
+                <a
+                  href="https://www.raidtanjalagouira.ma"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="animated-underline inline-flex items-center font-semibold text-secondary-500"
+                >
+                  www.raidtanjalagouira.ma
+                </a>
+              </div>
+            </div>
+          </MotionDiv>
+      </SectionContainer>
 
       <SectionContainer>
         <MotionDiv
@@ -271,44 +353,7 @@ function HomePage() {
         </MotionDiv>
       </SectionContainer>
 
-      <SectionContainer className="bg-white/70 pb-4 pt-0">
-          <MotionDiv
-            className="mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={inViewViewport}
-          >
-            <MotionDiv className="w-full" style={{ y: heroImageY }}>
-              <VideoPlayer url="https://www.youtube.com/watch?v=DPrBVkE22mM" title="Raid Tanja Lagouira" />
-            </MotionDiv>
-            <div className="flex h-full flex-col">
-              <p className="text-base font-semibold text-primary-400">{t('raidEdition')}</p>
-              <MotionH2
-                className="mt-2 text-3xl font-bold text-primary-500"
-                variants={fadeLeft}
-                initial="hidden"
-                whileInView="visible"
-                viewport={inViewViewport}
-              >
-                {t('raidTitle')}
-              </MotionH2>
-              <p className="mt-4 text-lg font-semibold text-secondary-500">{t('raidDates')}</p>
-              <p className="mt-4 text-base leading-7 text-primary-400">{t('raidText1')}</p>
-              <p className="mt-3 text-base leading-7 text-primary-400">{t('raidText2')}</p>
-              <div className="mt-auto flex justify-end pt-4">
-                <a
-                  href="https://www.raidtanjalagouira.ma"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="animated-underline inline-flex items-center font-semibold text-secondary-500"
-                >
-                  www.raidtanjalagouira.ma
-                </a>
-              </div>
-            </div>
-          </MotionDiv>
-        </SectionContainer>
+
 
       <SectionContainer className="pb-4 pt-2">
         <MotionDiv

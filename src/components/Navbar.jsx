@@ -38,7 +38,7 @@ function Navbar() {
               type="button"
               aria-expanded={isOpen}
               aria-label="Toggle navigation menu"
-              className="inline-flex min-h-12 min-w-12 items-center justify-center rounded-xl border border-primary-200 bg-primary-50 text-primary-500 transition-all duration-300 md:hidden"
+              className="mx-auto block w-full md:max-w-[1024px]"
               onClick={() => setIsOpen((prev) => !prev)}
             >
               <span className="text-xl leading-none">{isOpen ? 'x' : '='}</span>
@@ -46,11 +46,10 @@ function Navbar() {
           </MotionDiv>
         </div>
       </div>
-
       <div className="border-y border-primary-100 bg-white">
         <div className="px-4 sm:px-5 md:px-7 lg:px-8">
-          <MotionDiv className="mx-auto flex w-full max-w-6xl flex-col gap-3 py-4 md:flex-row md:items-center md:justify-between md:gap-8" variants={fadeUp}>
-            <NavLink to="/" className="flex items-center" onClick={() => setIsOpen(false)}>
+          <MotionDiv className="mx-auto flex w-full max-w-6xl flex-row items-center justify-start gap-3 py-4 md:gap-8" variants={fadeUp}>
+            <NavLink to="/" className="flex flex-shrink-0 items-center" onClick={() => setIsOpen(false)}>
               <motion.img
                 src={logo}
                 alt={t('brand')}
@@ -63,15 +62,15 @@ function Navbar() {
               href="https://www.raidtanjalagouira.ma"
               target="_blank"
               rel="noreferrer"
-              className="block w-full md:max-w-[620px]"
+              className="flex-1 block"
               variants={fadeUp}
               whileHover={{ scale: 1.01 }}
               transition={{ duration: 0.25, ease: 'easeOut' }}
             >
               <motion.img
-                src="/riad_tanga_lug_2.jpeg"
+                src="/banner_1.png"
                 alt="Advertisement"
-                className="h-[92px] w-full rounded-lg border border-primary-100 object-cover shadow-sm sm:h-[120px]"
+                className="h-[60px] w-full rounded-lg border border-primary-100 object-cover shadow-sm sm:h-[80px] md:h-[100px] lg:h-[120px]"
                 variants={fadeUp}
               />
             </motion.a>
