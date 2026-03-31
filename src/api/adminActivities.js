@@ -4,11 +4,22 @@ const getBaseUrl = () =>
   import.meta.env.VITE_API_BASE_URL ||
   `${window.location.protocol}//${window.location.hostname}:8000/api`
 
-const authHeaders = () => ({
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
-  Authorization: `Bearer ${localStorage.getItem(ADMIN_TOKEN_KEY)}`,
-})
+const authHeaders = ({ json = false } = {}) => {
+  const token = localStorage.getItem(ADMIN_TOKEN_KEY)
+  const headers = {
+    Accept: 'application/json',
+  }
+
+  if (json) {
+    headers['Content-Type'] = 'application/json'
+  }
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
+  }
+
+  return headers
+}
 
 const handleResponse = async (res) => {
   const data = await res.json()
@@ -26,7 +37,7 @@ export const fetchAdminActivities = async () => {
 export const createActivity = async (payload) => {
   const res = await fetch(`${getBaseUrl()}/admin/activities`, {
     method: 'POST',
-    headers: authHeaders(),
+    headers: authHeaders({ json: true }),
     body: JSON.stringify(payload),
   })
   return handleResponse(res)
@@ -35,7 +46,7 @@ export const createActivity = async (payload) => {
 export const updateActivity = async ({ id, values }) => {
   const res = await fetch(`${getBaseUrl()}/admin/activities/${id}`, {
     method: 'PUT',
-    headers: authHeaders(),
+    headers: authHeaders({ json: true }),
     body: JSON.stringify(values),
   })
   return handleResponse(res)
