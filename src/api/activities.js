@@ -1,10 +1,15 @@
-const getBaseUrl = () =>
-  import.meta.env.VITE_API_BASE_URL
+import { publicApi } from './client'
 
 export const fetchActivities = async () => {
-  const res = await fetch(`${getBaseUrl()}/activities`, {
-    headers: { Accept: 'application/json' },
-  })
-  if (!res.ok) throw new Error('Failed to fetch activities')
-  return res.json()
+  try {
+    const { data } = await publicApi.get('/activities')
+    return data
+  } catch (error) {
+    if (error?.response?.status === 404) {
+      const { data } = await publicApi.get('/admin/activities')
+      return data
+    }
+
+    throw new Error(error?.response?.data?.message || error?.message || 'Failed to fetch activities')
+  }
 }
