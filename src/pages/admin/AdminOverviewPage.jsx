@@ -63,7 +63,7 @@ function AdminOverviewPage() {
           </article>
 
           <article className="w-full rounded-2xl border border-primary-100 bg-white p-6 shadow-md">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-primary-400">Actualites</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-primary-400">Actualités</h3>
             <p className="mt-3 text-2xl font-black text-primary-500">{stats?.posts?.total ?? 0}</p>
             <div className="mt-3 space-y-1">
               <StatLine label="Published" value={stats?.posts?.published ?? 0} />

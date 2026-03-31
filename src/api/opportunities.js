@@ -27,6 +27,13 @@ export const submitOpportunity = async (formValues) => {
   payload.append('email', formValues.email)
   payload.append('type_key', formValues.type_key)
 
+  if (Array.isArray(formValues.images)) {
+    formValues.images.forEach((file) => {
+      payload.append('images[]', file)
+    })
+  }
+
+  // Backward compatibility if caller still sends a single image field.
   if (formValues.image) {
     payload.append('image', formValues.image)
   }

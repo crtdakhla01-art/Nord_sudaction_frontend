@@ -144,7 +144,7 @@ function HomePage() {
         >
           <MotionDiv
             style={{ y: heroImageY }}
-            className="order-1 hidden h-[320px] overflow-hidden rounded-[2rem] border border-primary-100 bg-gradient-to-br from-white via-primary-50 to-secondary-50 p-4 shadow-xl md:block md:h-[420px] lg:order-2"
+            className="order-2 mt-[10px] h-[260px] overflow-hidden rounded-[2rem] border border-primary-100 bg-gradient-to-br from-white via-primary-50 to-secondary-50 p-4 shadow-xl sm:h-[320px] md:h-[420px] lg:order-2"
           >
             <div className="mb-3 flex items-center justify-end px-1">
               <div className="flex items-center gap-2">
@@ -172,7 +172,7 @@ function HomePage() {
               transition={{ duration: 0.6, ease: 'easeOut' }}
             />
           </MotionDiv>
-          <div className="order-2 lg:order-1">
+          <div className="order-1 lg:order-1">
             {/* <p className="mb-4 inline-block rounded-full bg-secondary-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-secondary-600">
               NGO Platform
             </p> */}
@@ -229,7 +229,7 @@ function HomePage() {
             </div>
           </MotionDiv>
       </SectionContainer> */}
-            <SectionContainer className="bg-white/70 pb-4 pt-0">
+        <SectionContainer className="bg-white/70 pb-4 pt-0">
           <MotionDiv
             className="mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10"
             variants={fadeUp}

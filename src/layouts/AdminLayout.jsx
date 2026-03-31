@@ -31,7 +31,7 @@ function AdminLayout() {
           </NavLink>
           {role === 'admin' ? (
             <NavLink to="/admin/posts" className={navClass}>
-              Actualites
+              Actualités
             </NavLink>
           ) : null}
           {role === 'admin' ? (

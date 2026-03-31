@@ -23,7 +23,7 @@ const initialForm = {
   phone: '',
   email: '',
   type_key: '',
-  image: null,
+  images: [],
 }
 
 function OpportunitiesPage() {
@@ -117,9 +117,37 @@ function OpportunitiesPage() {
 
   const handleChange = (event) => {
     const { name, value, files } = event.target
+
+    if (name === 'images') {
+      const incomingFiles = Array.from(files || [])
+
+      setFormValues((prev) => {
+        const mergedFiles = [...prev.images, ...incomingFiles]
+        const dedupedFiles = mergedFiles.filter((file, index, list) => {
+          return index === list.findIndex((item) => (
+            item.name === file.name && item.size === file.size && item.lastModified === file.lastModified
+          ))
+        })
+
+        return {
+          ...prev,
+          images: dedupedFiles,
+        }
+      })
+
+      return
+    }
+
     setFormValues((prev) => ({
       ...prev,
-      [name]: name === 'image' ? files?.[0] || null : value,
+      [name]: value,
+    }))
+  }
+
+  const removeSelectedImage = (targetIndex) => {
+    setFormValues((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, index) => index !== targetIndex),
     }))
   }
 
@@ -361,11 +389,37 @@ function OpportunitiesPage() {
               <InputField
                 label={t('formImage')}
                 type="file"
-                name="image"
+                name="images"
                 accept="image/*"
+                multiple
                 onChange={handleChange}
+                onClick={(event) => {
+                  event.currentTarget.value = ''
+                }}
               />
             </div>
+
+            {formValues.images.length > 0 ? (
+              <div className="space-y-2">
+                <p className="text-xs text-primary-400">
+                  {formValues.images.length} file(s) selected
+                </p>
+                <div className="space-y-1">
+                  {formValues.images.map((file, index) => (
+                    <div key={`${file.name}-${file.lastModified}-${index}`} className="flex items-center justify-between rounded-lg border border-primary-100 bg-primary-50 px-3 py-2 text-xs text-primary-500">
+                      <span className="truncate pr-2">{file.name}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeSelectedImage(index)}
+                        className="rounded-md px-2 py-1 font-semibold text-secondary-500 hover:bg-secondary-50"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
 
             {submitMutation.isError ? (
               <ErrorState message={submitMutation.error?.response?.data?.message || submitMutation.error?.message} />

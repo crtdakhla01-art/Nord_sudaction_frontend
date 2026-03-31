@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getImageUrl } from '../api/client'
+import { getPrimaryOpportunityImage } from '../utils/opportunityImages'
 
 function OpportunityCard({ opportunity }) {
   const { t } = useTranslation()
+  const primaryImage = getPrimaryOpportunityImage(opportunity)
 
   return (
     <Link
@@ -11,10 +13,10 @@ function OpportunityCard({ opportunity }) {
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-primary-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
     >
       <div className="h-32 w-full flex-shrink-0 overflow-hidden bg-primary-50">
-        {opportunity.image ? (
+        {primaryImage ? (
           <img
             className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-            src={getImageUrl(opportunity.image)}
+            src={getImageUrl(primaryImage)}
             alt={opportunity.titre || `${opportunity.first_name || ''} ${opportunity.last_name || ''}`.trim() || 'Opportunity'}
           />
         ) : (

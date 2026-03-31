@@ -7,7 +7,7 @@ import SectionContainer from '../components/SectionContainer'
 import { getImageUrl } from '../api/client'
 import { usePosts } from '../hooks/usePosts'
 import { formatDateLabel } from '../utils/date'
-import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
+import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
 const typeLabel = {
   article: 'Articles',
@@ -43,7 +43,7 @@ function ActualitesPage({ forcedType = 'article' }) {
   const shouldPaginate = totalPosts > 16
   const featured = posts.find((item) => item.is_featured)
 
-  const pageTitle = 'Actualites'
+  const pageTitle = 'Actualités'
   const typeOptions = [
     { value: 'article', label: 'Articles' },
     { value: 'communique', label: 'Communiques' },
