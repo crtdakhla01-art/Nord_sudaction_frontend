@@ -19,7 +19,7 @@ function isRainy(code) {
 
 function SunCloudSvg({ showRain }) {
   return (
-    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="w-20 scale-[110%]">
+    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="w-10 lg:w-20 scale-[110%]">
       <defs>
         <linearGradient gradientUnits="userSpaceOnUse" y2="28.33" y1="19.67" x2="21.5" x1="16.5" id="b">
           <stop stopColor="#fbbf24" offset="0" />
@@ -105,7 +105,7 @@ function DakhlaWeather() {
         <SunCloudSvg showRain={rain} />
       </div>
       <div className="flex flex-col items-center flex-1">
-        <h3 className="text-[6px] lg:text-[10px] font-medium">الداخلة</h3>
+        <h3 className="text-[6px] lg:text-[10px] font-medium">Dakhla</h3>
         <h4 className="font-sans text-base lg:text-2xl font-bold leading-none">
           {temp}°
         </h4>
