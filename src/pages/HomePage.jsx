@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
-import { useActivities } from '../hooks/useActivities'
+import { usePosts } from '../hooks/usePosts'
+import { getImageUrl } from '../api/client'
+import { formatDateLabel } from '../utils/date'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
 import Button from '../components/Button'
@@ -67,8 +69,7 @@ function HomePage() {
   const MotionLink = motion.a
 
   const { t } = useTranslation()
-  const { data: activities, isLoading, isError, error } = useActivities()
-  const [expandedTitles, setExpandedTitles] = useState({})
+  const { data: postsData, isLoading, isError, error } = usePosts({ per_page: 5, type: 'article' })
   const [currentHeroImageIndex, setCurrentHeroImageIndex] = useState(0)
 
   const prefersReducedMotion = useReducedMotion()
@@ -81,8 +82,7 @@ function HomePage() {
     prefersReducedMotion ? [0, 0] : [-20, 20],
   )
 
-  const featuredActivities = activities || []
-  const homeActivities = featuredActivities.slice(0, 5)
+  const homePosts = postsData?.data?.slice(0, 5) || []
   const shouldSlidePartners = partners.length > 10
   const firstRowPartners = partners.filter((_, index) => index % 2 === 0)
   const secondRowPartners = partners.filter((_, index) => index % 2 !== 0)
@@ -100,25 +100,6 @@ function HomePage() {
 
     return () => window.clearInterval(intervalId)
   }, [prefersReducedMotion])
-
-  const getTitlePreview = (title = '', words = 3) => {
-    const parts = title.trim().split(/\s+/)
-    if (parts.length <= words) {
-      return { text: title, truncated: false }
-    }
-
-    return {
-      text: `${parts.slice(0, words).join(' ')}...`,
-      truncated: true,
-    }
-  }
-
-  const toggleTitle = (id) => {
-    setExpandedTitles((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }))
-  }
 
   return (
     <div>
@@ -284,9 +265,9 @@ function HomePage() {
               whileInView="visible"
               viewport={inViewViewport}
             >
-              Activités
+              Actualités
             </MotionH2>
-            <Link to="/activities" className="animated-underline text-sm font-semibold text-secondary-500 transition hover:text-accent-500">
+            <Link to="/actualites" className="animated-underline text-sm font-semibold text-secondary-500 transition hover:text-accent-500">
               voir plus
             </Link>
           </div>
@@ -302,52 +283,41 @@ function HomePage() {
               whileInView="visible"
               viewport={inViewViewport}
             >
-              {featuredActivities.length === 0 ? (
-                <p className="text-primary-400">Aucune activité disponible.</p>
+              {homePosts.length === 0 ? (
+                <p className="text-primary-400">Aucune actualité disponible.</p>
               ) : null}
-              {homeActivities.map((activity, index) => {
-                const preview = getTitlePreview(activity.title)
-                const isExpanded = Boolean(expandedTitles[activity.id])
-
-                return (
-                  <MotionArticle
-                    key={activity.id}
-                    className={`interactive-card flex cursor-pointer flex-col overflow-hidden rounded-xl border border-primary-100 bg-white shadow transition-all duration-300 ${index >= 3 ? 'hidden lg:flex' : ''}`}
-                    variants={fadeUp}
-                    whileHover={scaleHover.whileHover}
-                    whileTap={scaleHover.whileTap}
-                    transition={scaleHover.transition}
-                  >
-                    <div className="flex flex-1 flex-col justify-between p-5">
-                      <div>
-                        <h3 className="text-base font-bold leading-snug text-primary-500">
-                          {isExpanded ? activity.title : preview.text}
-                        </h3>
-                        {preview.truncated ? (
-                          <button
-                            type="button"
-                            onClick={() => toggleTitle(activity.id)}
-                            className="mt-1 text-[10px] font-semibold lowercase text-secondary-500 hover:underline"
-                          >
-                            {isExpanded ? 'voir moins' : 'voir plus'}
-                          </button>
-                        ) : null}
+              {homePosts.map((post, index) => (
+                <MotionArticle
+                  key={post.id}
+                  className={`interactive-card flex cursor-pointer flex-col overflow-hidden rounded-xl border border-primary-100 bg-white shadow transition-all duration-300 ${index >= 3 ? 'hidden lg:flex' : ''}`}
+                  variants={fadeUp}
+                  whileHover={scaleHover.whileHover}
+                  whileTap={scaleHover.whileTap}
+                  transition={scaleHover.transition}
+                >
+                  <div className="h-28 w-full overflow-hidden bg-primary-50">
+                    {post.media ? (
+                      <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-cover" loading="lazy" decoding="async" />
+                    ) : (
+                      <div className="flex h-full items-center justify-center">
+                        <span className="text-2xl font-black text-secondary-500 opacity-20">NSA</span>
                       </div>
-                      <MotionLink
-                        href={activity.link}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-4 block w-full rounded-xl bg-secondary-500 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-secondary-600"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        transition={{ duration: 0.2, ease: 'easeOut' }}
-                      >
-                        Voir l'activité
-                      </MotionLink>
+                    )}
+                  </div>
+                  <div className="flex flex-1 flex-col justify-between p-4">
+                    <div>
+                      <h3 className="text-sm font-bold leading-snug text-primary-500 line-clamp-2">{post.title}</h3>
+                      <p className="mt-1 text-xs text-primary-400">{formatDateLabel(post.published_at || post.created_at, 'fr')}</p>
                     </div>
-                  </MotionArticle>
-                )
-              })}
+                    <Link
+                      to={`/actualites/${post.slug}`}
+                      className="mt-3 block w-full rounded-xl bg-secondary-500 px-4 py-2 text-center text-xs font-semibold text-white transition hover:bg-secondary-600"
+                    >
+                      Lire la suite
+                    </Link>
+                  </div>
+                </MotionArticle>
+              ))}
             </MotionDiv>
           ) : null}
         </MotionDiv>

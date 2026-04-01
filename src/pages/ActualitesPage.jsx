@@ -7,15 +7,11 @@ import SectionContainer from '../components/SectionContainer'
 import { getImageUrl } from '../api/client'
 import { usePosts } from '../hooks/usePosts'
 import { formatDateLabel } from '../utils/date'
+import { useTranslation } from 'react-i18next'
 import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
-const typeLabel = {
-  article: 'Articles',
-  communique: 'Communiques',
-  media: 'Media Coverage',
-}
-
 function ActualitesPage({ forcedType = 'article' }) {
+  const { t } = useTranslation()
   const MotionDiv = motion.div
   const MotionH1 = motion.h1
   const MotionArticle = motion.article
@@ -51,9 +47,8 @@ function ActualitesPage({ forcedType = 'article' }) {
 
   const pageTitle = 'Actualités'
   const typeOptions = [
-    { value: 'article', label: 'Articles' },
-    { value: 'communique', label: 'Communiques' },
-    { value: 'media', label: 'Media' },
+    { value: 'article', label: t('postTypeArticle') },
+    { value: 'communique', label: t('postTypeCommunique') },
   ]
 
   return (
@@ -152,7 +147,7 @@ function ActualitesPage({ forcedType = 'article' }) {
                     </div>
                     <div className="flex flex-1 flex-col justify-between gap-2 p-3">
                       <div className="space-y-1">
-                        <p className="text-xs font-semibold uppercase text-secondary-500">{typeLabel[post.type] || post.type}</p>
+                        <p className="text-xs font-semibold uppercase text-secondary-500">{post.type === 'communique' ? t('postTypeCommunique') : t('postTypeArticle')}</p>
                         <h3 className="text-sm font-bold text-primary-500 line-clamp-2">{post.title}</h3>
                         <p className="line-clamp-2 text-xs text-primary-400">{post.description}</p>
                         <p className="text-xs font-semibold uppercase text-primary-400">{formatDateLabel(post.published_at || post.created_at, 'fr')}</p>

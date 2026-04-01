@@ -142,7 +142,6 @@ function AdminPostsPage() {
             name="external_link"
             value={values.external_link}
             onChange={onChange}
-            required={values.type === 'media'}
           />
           <InputField label="Publish date" type="date" name="published_at" value={values.published_at} onChange={onChange} />
         </div>

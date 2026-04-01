@@ -76,7 +76,6 @@ function App() {
             <Route path="/actualites" element={<ActualitesPage />} />
             <Route path="/actualites/articles" element={<ActualitesPage forcedType="article" />} />
             <Route path="/actualites/communiques" element={<ActualitesPage forcedType="communique" />} />
-            <Route path="/actualites/media" element={<ActualitesPage forcedType="media" />} />
             <Route path="/actualites/:slug" element={<PostDetailPage />} />
             <Route path="/galerie" element={<GalleryPage />} />
             <Route path="/contact" element={<ContactPage />} />
