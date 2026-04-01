@@ -16,6 +16,7 @@ const resources = {
       galleryIntro1: 'Dans le cadre de sa mission de promotion territoriale, l’Association NORD SUD ACTION met à la disposition des organes de presse nationaux et internationaux une photothèque libre de droit.',
       galleryIntro2: 'Composée d’images en bonne résolution, elle porte principalement sur la région de Dakhla Oued Eddahab et les différentes activités menées par l’association. Ces visuels sont destinés à accompagner les publications et supports de communication.',
       galleryIntro3: 'Par courtoisie, il est demandé de mentionner le crédit photo www.nordsudaction.org, afin d’encourager cette démarche et de permettre à d’autres utilisateurs de se ressourcer à partir de cette base.',
+      galleryLoadMore: 'Voir plus de photos',
       heroTitle: 'Là où les projets deviennent des investissements',
       heroSubtitle: 'NORD SUD ACTION « ',
       heroSubtitleBold:
@@ -129,6 +130,7 @@ const resources = {
       formLink: 'Lien',
       formName: 'Nom',
       formEmail: 'Email',
+      formObject: 'Objet',
       formMessage: 'Message',
       submit: 'Envoyer',
       sending: 'Envoi...',
@@ -243,6 +245,7 @@ const resources = {
       galleryIntro1: 'NORD SUD ACTION makes available to the media a royalty-free photo gallery in high resolution.',
       galleryIntro2: 'These images mainly illustrate the Dakhla-Oued Eddahab region and the various activities carried out by the association.',
       galleryIntro3: 'A reliable and quality source, an alternative to the often outdated or low-resolution visuals available on the internet.',
+      galleryLoadMore: 'Load more photos',
       heroTitle: 'Where projects become investments',
       heroSubtitle: 'NORD SUD ACTION, ',
       heroSubtitleBold:
@@ -356,6 +359,7 @@ const resources = {
       formLink: 'Link',
       formName: 'Name',
       formEmail: 'Email',
+      formObject: 'Subject',
       formMessage: 'Message',
       submit: 'Submit',
       sending: 'Sending...',
@@ -469,6 +473,7 @@ const resources = {
       galleryIntro1: 'NORD SUD ACTION pone a disposición de los medios una galería de fotos libres de derechos en buena resolución.',
       galleryIntro2: 'Estas imágenes ilustran principalmente la región de Dakhla-Oued Eddahab y las distintas actividades llevadas a cabo por la asociación.',
       galleryIntro3: 'Una fuente fiable y de calidad, alternativa a los visuales a menudo obsoletos o de baja resolución disponibles en internet.',
+      galleryLoadMore: 'Ver más fotos',
       heroTitle: 'Donde los proyectos se convierten en inversiones',
       heroSubtitle: 'NORD SUD ACTION, ',
       heroSubtitleBold:
@@ -582,6 +587,7 @@ const resources = {
       formLink: 'Enlace',
       formName: 'Nombre',
       formEmail: 'Email',
+      formObject: 'Asunto',
       formMessage: 'Mensaje',
       submit: 'Enviar',
       sending: 'Enviando...',

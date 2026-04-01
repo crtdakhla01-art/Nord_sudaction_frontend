@@ -38,7 +38,7 @@ function AboutPage() {
             <MotionH1 className="mt-3 text-3xl font-extrabold leading-tight text-white sm:text-4xl" variants={fadeLeft}>{t('brand')}</MotionH1>
             <p className="mt-4 text-sm leading-7 text-white/80">{t('heroSubtitleBold')}</p>
           </div>
-          <img src={logo} alt={t('brand')} className="hidden lg:block h-32 w-48 flex-shrink-0 rounded-2xl bg-white object-contain p-3 shadow-md sm:h-40 sm:w-60" />
+          <img src={logo} alt={t('brand')} className="hidden lg:block h-32 w-48 flex-shrink-0 rounded-2xl bg-white object-contain p-3 shadow-md sm:h-40 sm:w-60" loading="lazy" decoding="async" />
         </div>
         {/* decorative circle */}
         <span className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/5" />

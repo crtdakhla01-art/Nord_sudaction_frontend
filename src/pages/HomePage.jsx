@@ -388,6 +388,7 @@ function HomePage() {
                           alt={`Partenaire ${(index % firstRowPartners.length) + 1}`}
                           className="max-h-full max-w-full object-contain"
                           loading="lazy"
+                          decoding="async"
                         />
                       </div>
                     </div>
@@ -405,6 +406,7 @@ function HomePage() {
                           alt={`Partenaire ${(index % secondRowPartners.length) + 1}`}
                           className="max-h-full max-w-full object-contain"
                           loading="lazy"
+                          decoding="async"
                         />
                       </div>
                     </div>
@@ -422,6 +424,7 @@ function HomePage() {
                       alt={`Partenaire ${index + 1}`}
                       className="max-h-full max-w-full object-contain"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 </div>

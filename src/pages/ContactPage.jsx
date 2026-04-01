@@ -7,11 +7,12 @@ import InputField from '../components/InputField'
 import SectionContainer from '../components/SectionContainer'
 import TextareaField from '../components/TextareaField'
 import { useSubmitContactMessage } from '../hooks/useSubmitContactMessage'
-import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
+import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
 const initialForm = {
   name: '',
   email: '',
+  object: '',
   message: '',
 }
 
@@ -38,6 +39,7 @@ function ContactPage() {
     } else if (!/^\S+@\S+\.\S+$/.test(formValues.email)) {
       errors.email = t('invalidEmailError')
     }
+    if (!formValues.object) errors.object = t('requiredError')
     if (!formValues.message) errors.message = t('requiredError')
 
     setFormErrors(errors)
@@ -108,6 +110,14 @@ function ContactPage() {
             value={formValues.email}
             onChange={handleChange}
             error={formErrors.email}
+          />
+
+          <InputField
+            label={t('formObject')}
+            name="object"
+            value={formValues.object}
+            onChange={handleChange}
+            error={formErrors.object}
           />
 
           <TextareaField

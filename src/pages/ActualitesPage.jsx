@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
@@ -22,16 +22,22 @@ function ActualitesPage({ forcedType = 'article' }) {
 
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
+  const [debouncedSearch, setDebouncedSearch] = useState('')
   const [selectedType, setSelectedType] = useState(forcedType || 'article')
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearch(search), 400)
+    return () => clearTimeout(timer)
+  }, [search])
 
   const params = useMemo(
     () => ({
       page,
       per_page: 16,
-      search: search || undefined,
+      search: debouncedSearch || undefined,
       type: selectedType,
     }),
-    [selectedType, page, search],
+    [selectedType, page, debouncedSearch],
   )
 
   const { data, isLoading, isError, error } = usePosts(params)
@@ -99,7 +105,7 @@ function ActualitesPage({ forcedType = 'article' }) {
             <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr]">
               <div className="h-72 md:h-full">
                 {featured.image ? (
-                  <img src={getImageUrl(featured.image)} alt={featured.title} className="h-full w-full object-cover" loading="lazy" />
+                  <img src={getImageUrl(featured.image)} alt={featured.title} className="h-full w-full object-cover" loading="lazy" decoding="async" />
                 ) : (
                   <div className="flex h-full items-center justify-center bg-primary-50">
                     <span className="text-4xl font-black text-secondary-500 opacity-20">NSA</span>
@@ -136,7 +142,7 @@ function ActualitesPage({ forcedType = 'article' }) {
                         /\.(mp4|webm|ogg|mov|avi|mkv)$/i.test(post.media) ? (
                           <video src={getImageUrl(post.media)} className="h-full w-full object-cover" muted />
                         ) : (
-                          <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+                          <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
                         )
                       ) : (
                         <div className="flex h-full items-center justify-center">

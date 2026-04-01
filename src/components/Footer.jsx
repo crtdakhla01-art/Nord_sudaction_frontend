@@ -9,7 +9,7 @@ function Footer() {
     <footer className="mt-8 bg-primary-800 text-white">
       <div className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <img src={logo} alt="Nord Sud Action" className="h-14 w-auto rounded-lg" />
+          <img src={logo} alt="Nord Sud Action" className="h-14 w-auto rounded-lg" loading="lazy" decoding="async" />
           <p className="mt-2 max-w-sm text-sm leading-6 text-primary-300">{t('footerText')}</p>
         </div>
         <div>

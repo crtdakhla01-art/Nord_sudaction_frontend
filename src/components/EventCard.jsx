@@ -1,10 +1,11 @@
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getImageUrl } from '../api/client'
 import { formatDateLabel } from '../utils/date'
 import { getFeaturedGalleryMedia } from '../utils/eventGallery'
 
-function EventCard({ event }) {
+const EventCard = memo(function EventCard({ event }) {
   const { t, i18n } = useTranslation()
   const featuredMedia = getFeaturedGalleryMedia(event)
 
@@ -20,6 +21,8 @@ function EventCard({ event }) {
               src={getImageUrl(featuredMedia.path)}
               alt={event.title}
               className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+              loading="lazy"
+              decoding="async"
             />
           ) : null}
 
@@ -82,6 +85,6 @@ function EventCard({ event }) {
         </div>
       </Link>
   )
-}
+})
 
 export default EventCard

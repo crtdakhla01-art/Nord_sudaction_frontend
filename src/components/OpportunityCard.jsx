@@ -1,9 +1,10 @@
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getImageUrl } from '../api/client'
 import { getPrimaryOpportunityImage } from '../utils/opportunityImages'
 
-function OpportunityCard({ opportunity }) {
+const OpportunityCard = memo(function OpportunityCard({ opportunity }) {
   const { t } = useTranslation()
   const primaryImage = getPrimaryOpportunityImage(opportunity)
 
@@ -18,6 +19,8 @@ function OpportunityCard({ opportunity }) {
             className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
             src={getImageUrl(primaryImage)}
             alt={opportunity.titre || `${opportunity.first_name || ''} ${opportunity.last_name || ''}`.trim() || 'Opportunity'}
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <span className="flex h-full w-full items-center justify-center text-4xl font-black text-secondary-500 opacity-20">NSA</span>
@@ -46,6 +49,6 @@ function OpportunityCard({ opportunity }) {
       </div>
     </Link>
   )
-}
+})
 
 export default OpportunityCard

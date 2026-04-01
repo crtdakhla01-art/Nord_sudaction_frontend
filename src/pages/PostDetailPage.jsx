@@ -34,7 +34,7 @@ function SidebarPost({ post }) {
     <Link to={`/actualites/${post.slug}`} className="group flex items-start gap-3 py-3 transition">
       <div className="h-14 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-primary-100">
         {post.media && !/\.(mp4|webm|ogg|mov|avi|mkv)$/i.test(post.media) ? (
-          <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
+          <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" loading="lazy" decoding="async" />
         ) : (
           <div className="flex h-full items-center justify-center">
             <span className="text-[10px] font-black text-secondary-500 opacity-40">NSA</span>
@@ -100,7 +100,7 @@ function PostDetailPage() {
                   {/\.(mp4|webm|ogg|mov|avi|mkv)$/i.test(post.media) ? (
                     <video src={getImageUrl(post.media)} className="h-full w-full object-cover" controls />
                   ) : (
-                    <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-cover" />
+                    <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-cover" loading="lazy" decoding="async" />
                   )}
                 </div>
               ) : null}
@@ -168,7 +168,7 @@ function PostDetailPage() {
                           {/\.(mp4|webm|ogg|mov|avi|mkv)$/i.test(item.media) ? (
                             <video src={getImageUrl(item.media)} className="h-full w-full object-cover" muted />
                           ) : (
-                            <img src={getImageUrl(item.media)} alt={item.title} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
+                            <img src={getImageUrl(item.media)} alt={item.title} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" loading="lazy" decoding="async" />
                           )}
                         </div>
                       ) : (

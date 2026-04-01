@@ -36,6 +36,8 @@ function AdvertisementsTable({ advertisements = [] }) {
     <img
       src={getImageUrl(currentAd.image)}
       alt="Advertisement"
+      loading="lazy"
+      decoding="async"
       className={`${isBannerTwo ? 'h-[186px] object-cover' : 'h-auto object-contain'} w-full transition-all duration-300 ${
         clickable ? 'cursor-pointer group-hover:scale-[1.03]' : ''
       }`}

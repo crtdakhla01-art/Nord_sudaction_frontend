@@ -24,7 +24,7 @@ function MediaThumb({ item, isActive, onSelect }) {
       }`}
       aria-pressed={isActive}
     >
-      <img src={getImageUrl(item.image)} alt="" className="h-full w-full object-cover" />
+      <img src={getImageUrl(item.image)} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" />
 
       <span className="absolute bottom-1 left-1 rounded-full bg-black/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-white">{t('imageLabel')}</span>
     </button>
@@ -100,7 +100,7 @@ function MediaLightbox({ item, onClose, onPrev, onNext, hasMultiple }) {
 
       <div className="flex max-h-[90vh] max-w-6xl items-center justify-center overflow-hidden rounded-[28px] bg-black shadow-2xl">
         {item?.image ? (
-          <img src={getImageUrl(item.image)} alt="" className="max-h-[90vh] max-w-full object-contain" />
+          <img src={getImageUrl(item.image)} alt="" className="max-h-[90vh] max-w-full object-contain" decoding="async" />
         ) : null}
 
         {item?.vedio ? (
@@ -311,7 +311,7 @@ function EventDetailPage() {
                 <div className="overflow-hidden rounded-[24px] bg-primary-50">
                   <div className="relative flex min-h-[280px] items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(217,36,43,0.12),_transparent_55%)] sm:min-h-[380px]">
                     {activeImage?.image ? (
-                      <img src={getImageUrl(activeImage.image)} alt={event.title} className="h-full w-full object-cover" />
+                      <img src={getImageUrl(activeImage.image)} alt={event.title} className="h-full w-full object-cover" loading="lazy" decoding="async" />
                     ) : null}
 
                     {!activeImage?.image ? (

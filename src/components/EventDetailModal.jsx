@@ -57,6 +57,8 @@ function EventDetailModal({ event, onClose }) {
               src={getImageUrl(activeItem.image)}
               alt={`${event.title} ${activeIndex + 1}`}
               className="h-full w-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           ) : activeItem?.vedio ? (
             <video
@@ -125,6 +127,8 @@ function EventDetailModal({ event, onClose }) {
                     src={getImageUrl(item.image)}
                     alt=""
                     className="h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 ) : item?.vedio ? (
                   <video
