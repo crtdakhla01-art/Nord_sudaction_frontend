@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import LanguageSwitcher from './LanguageSwitcher'
+import DakhlaWeather from './DakhlaWeather'
 import logo from '../assets/logo.jpeg'
 import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
@@ -57,32 +58,41 @@ function Navbar() {
       </div>
       <div className="border-y border-primary-100 bg-white">
         <div className="px-4 sm:px-5 md:px-7 lg:px-8">
-          <MotionDiv className="mx-auto w-full max-w-6xl py-3 lg:flex lg:items-center lg:justify-start lg:gap-8" variants={fadeUp}>
-            <NavLink to="/" className="hidden lg:flex lg:flex-shrink-0 lg:items-center" onClick={() => setIsOpen(false)}>
+          <MotionDiv className="mx-auto w-full max-w-6xl py-3 lg:flex lg:items-center lg:justify-between lg:gap-8" variants={fadeUp}>
+            <NavLink to="/" className="hidden lg:flex lg:flex-shrink-0 lg:items-center gap-3" onClick={() => setIsOpen(false)}>
               <motion.img
                 src={logo}
                 alt={t('brand')}
                 className="h-16 w-auto object-contain"
                 variants={fadeLeft}
               />
+              <span className="text-sm font-light text-primary-500 leading-tight max-w-[200px]">
+                {t('footerText')}
+              </span>
             </NavLink>
 
-            <motion.a
-              href="https://www.raidtanjalagouira.ma"
-              target="_blank"
-              rel="noreferrer"
-              className="block w-full lg:flex-1"
-              variants={fadeUp}
-              whileHover={{ scale: 1.01 }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
-            >
-              <motion.img
-                src="/banner_1.png"
-                alt="Advertisement"
-                className="h-[60px] w-full rounded-lg border border-primary-100 object-cover shadow-sm sm:h-[80px] md:h-[100px] lg:h-[120px]"
+            <div className="flex items-center gap-3 w-full lg:w-auto">
+              <div className="flex-shrink-0">
+                <DakhlaWeather />
+              </div>
+
+              <motion.a
+                href="https://www.raidtanjalagouira.ma"
+                target="_blank"
+                rel="noreferrer"
+                className="block w-[80%] flex-shrink-0 lg:ml-auto"
                 variants={fadeUp}
-              />
-            </motion.a>
+                whileHover={{ scale: 1.01 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
+              >
+                <motion.img
+                  src="/banner_1.png"
+                  alt="Advertisement"
+                  className="h-auto w-full rounded-lg border border-primary-100 object-contain shadow-sm"
+                  variants={fadeUp}
+                />
+              </motion.a>
+            </div>
           </MotionDiv>
         </div>
       </div>

@@ -103,7 +103,9 @@ function HomePage() {
 
   return (
     <div>
-      <SectionContainer className="pb-3 pt-0 lg:pt-0">
+      <div className="flex flex-col">
+      {/* order number three  */}
+      <SectionContainer className="order-2 lg:order-1 pb-3 pt-0 lg:pt-0">
         <MotionDiv
           className="w-full"
           variants={fadeUp}
@@ -114,18 +116,19 @@ function HomePage() {
           <AdvertisementsTable advertisements={staticAdvertisements} />
         </MotionDiv>
       </SectionContainer>
-
-      <SectionContainer className="pb-6 pt-2 md:pt-4 lg:-mt-4 lg:pt-0">
+      
+      <SectionContainer className="order-1 lg:order-2 pb-6 pt-2 md:pt-4 lg:-mt-4 lg:pt-0">
         <MotionDiv
           className="mx-auto grid w-full max-w-6xl items-start gap-8 lg:grid-cols-2"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={inViewViewport}
-        >
+        > 
+          {/* order number one  */}
           <MotionDiv
             style={{ y: heroImageY }}
-            className="order-2 mt-[10px] h-[260px] overflow-hidden rounded-[2rem] border border-primary-100 bg-gradient-to-br from-white via-primary-50 to-secondary-50 p-4 shadow-xl sm:h-[320px] md:h-[420px] lg:order-2"
+            className="order-1 mt-[10px] h-[260px] overflow-hidden rounded-[2rem] border border-primary-100 bg-gradient-to-br from-white via-primary-50 to-secondary-50 p-4 shadow-xl sm:h-[320px] md:h-[420px] lg:order-2"
           >
             <div className="mb-3 flex items-center justify-end px-1">
               <div className="flex items-center gap-2">
@@ -153,7 +156,8 @@ function HomePage() {
               transition={{ duration: 0.6, ease: 'easeOut' }}
             />
           </MotionDiv>
-          <div className="order-1 lg:order-1">
+          {/* order number two  */}
+          <div className="order-2 lg:order-1">
             {/* <p className="mb-4 inline-block rounded-full bg-secondary-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-secondary-600">
               NGO Platform
             </p> */}
@@ -179,6 +183,7 @@ function HomePage() {
           </div>
         </MotionDiv>
       </SectionContainer>
+      </div>
 
       {/* <SectionContainer className="bg-white/70">
           <MotionDiv
