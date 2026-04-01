@@ -85,8 +85,8 @@ function DakhlaWeather() {
 
   if (loading) {
     return (
-      <div className="font-mono text-white relative overflow-hidden bg-blue-200 w-[120px] h-[80px] rounded-2xl p-3 flex items-center justify-center">
-        <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-gray-400 border-t-transparent" />
+      <div className="font-mono text-primary-500 relative overflow-hidden bg-white w-[120px] h-[80px] rounded-2xl p-3 flex items-center justify-center">
+        <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-secondary-400 border-t-transparent" />
       </div>
     )
   }
@@ -100,7 +100,7 @@ function DakhlaWeather() {
   const rain = isRainy(data.weather_code)
 
   return (
-    <div className="font-mono text-white relative overflow-hidden bg-blue-200 w-[72px] h-[46px] lg:w-[145px] lg:h-[80px] rounded-xl px-1.5 py-1 lg:px-3 lg:py-2 flex items-center gap-1 lg:gap-2">
+    <div className="font-mono text-primary-500 relative overflow-hidden bg-white w-[72px] h-[46px] lg:w-[145px] lg:h-[80px] rounded-xl px-1.5 py-1 lg:px-3 lg:py-2 flex items-center gap-1 lg:gap-2">
       <div className="flex-shrink-0 w-5 lg:w-10">
         <SunCloudSvg showRain={rain} />
       </div>

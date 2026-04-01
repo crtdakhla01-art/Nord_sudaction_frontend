@@ -67,7 +67,7 @@ function ContactPage() {
           <MotionH1 className="text-4xl font-extrabold text-primary-500 md:text-5xl" variants={fadeLeft}>{t('contactTitle')}</MotionH1>
           <p className="mt-4 text-base leading-7 text-primary-400">{t('contactIntro')}</p>
 
-          <div className="mt-6 space-y-4 rounded-2xl border border-primary-100 bg-white p-6 shadow-sm">
+          <div className="mt-6 space-y-4 rounded-2xl border border-secondary-100 bg-primary-50 p-6 shadow-sm">
             <div className="flex items-center gap-3 text-primary-500">
               <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-secondary-100 text-secondary-600">
                 @
@@ -90,7 +90,7 @@ function ContactPage() {
         </MotionDiv>
 
         <MotionForm
-          className="space-y-5 rounded-2xl border border-primary-100 bg-white p-6 shadow-md"
+          className="space-y-5 rounded-2xl border border-secondary-100 bg-primary-50 p-6 shadow-md"
           onSubmit={handleSubmit}
           noValidate
           variants={fadeUp}

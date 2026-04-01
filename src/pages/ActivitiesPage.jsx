@@ -50,7 +50,7 @@ function ActivitiesPage() {
               {(activities || []).map((activity) => (
                 <MotionArticle
                   key={activity.id}
-                  className="interactive-card flex cursor-pointer flex-col overflow-hidden rounded-xl border border-primary-100 bg-white shadow transition-all duration-300"
+                  className="interactive-card flex cursor-pointer flex-col overflow-hidden rounded-xl border border-secondary-100 bg-primary-50 shadow transition-all duration-300"
                   variants={fadeUp}
                   whileHover={scaleHover.whileHover}
                   whileTap={scaleHover.whileTap}

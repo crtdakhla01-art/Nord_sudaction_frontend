@@ -105,7 +105,7 @@ function HomePage() {
     <div>
       <div className="flex flex-col">
       {/* order number three  */}
-      <SectionContainer className="order-2 lg:order-1 pb-3 pt-0 lg:pt-0">
+      <SectionContainer className="order-2 lg:order-1 pb-3 pt-0 lg:pt-0 bg-white">
         <MotionDiv
           className="w-full"
           variants={fadeUp}
@@ -128,7 +128,7 @@ function HomePage() {
           {/* order number one  */}
           <MotionDiv
             style={{ y: heroImageY }}
-            className="order-1 mt-[10px] h-[260px] overflow-hidden rounded-[2rem] border border-primary-100 bg-gradient-to-br from-white via-primary-50 to-secondary-50 p-4 shadow-xl sm:h-[320px] md:h-[420px] lg:order-2"
+            className="order-1 mt-[10px] h-[260px] overflow-hidden rounded-[2rem] border border-secondary-100 bg-gradient-to-br from-primary-50 via-primary-50 to-secondary-50 p-4 shadow-xl sm:h-[320px] md:h-[420px] lg:order-2"
           >
             <div className="mb-3 flex items-center justify-end px-1">
               <div className="flex items-center gap-2">
@@ -173,8 +173,8 @@ function HomePage() {
             <p className="mt-5 max-w-2xl text-base leading-7 text-primary-400">
               {t('heroSubtitle')}<strong className="font-bold italic">{t('heroSubtitleBold')}</strong>{t('heroSubtitlePost')}
             </p>
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-primary-400">{t('heroSubtitle2')}</p>
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-primary-400">{t('heroSubtitle3')}</p>
+            <p className="mt-3 max-w-2xl text-base leading-7 text-primary-400">{t('heroSubtitle2')}</p>
+            <p className="mt-3 max-w-2xl text-base leading-7 text-primary-400">{t('heroSubtitle3')}</p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Button as={Link} to="/a-propos">
                 {t('heroCtaMore')}
@@ -215,9 +215,9 @@ function HomePage() {
             </div>
           </MotionDiv>
       </SectionContainer> */}
-        <SectionContainer className="bg-white/70 pb-4 pt-0">
+        <SectionContainer className="bg-secondary-50/40 pb-4 pt-0">
           <MotionDiv
-            className="mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-primary-100 bg-white p-6 shadow-md md:grid-cols-2 md:p-10"
+            className="mx-auto grid w-full max-w-6xl items-center gap-8 rounded-3xl border border-secondary-100 bg-primary-50 p-6 shadow-md md:grid-cols-2 md:p-10"
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
@@ -294,7 +294,7 @@ function HomePage() {
               {homePosts.map((post, index) => (
                 <MotionArticle
                   key={post.id}
-                  className={`interactive-card flex cursor-pointer flex-col overflow-hidden rounded-xl border border-primary-100 bg-white shadow transition-all duration-300 ${index >= 3 ? 'hidden lg:flex' : ''}`}
+                  className={`interactive-card flex cursor-pointer flex-col overflow-hidden rounded-xl border border-secondary-100 bg-primary-50 shadow transition-all duration-300 ${index >= 3 ? 'hidden lg:flex' : ''}`}
                   variants={fadeUp}
                   whileHover={scaleHover.whileHover}
                   whileTap={scaleHover.whileTap}
@@ -332,7 +332,7 @@ function HomePage() {
 
       <SectionContainer className="pb-4 pt-2">
         <MotionDiv
-          className="mx-auto w-full max-w-6xl rounded-2xl border border-primary-100 bg-white px-4 py-6 shadow-sm sm:px-6"
+          className="mx-auto w-full max-w-6xl rounded-2xl border border-secondary-100 bg-white px-4 py-6 shadow-sm sm:px-6"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -357,7 +357,7 @@ function HomePage() {
                 <div className="partners-track gap-4">
                   {firstRowItems.map((partner, index) => (
                     <div key={`r1-${partner}-${index}`} className="flex min-w-[120px] flex-col items-center text-center sm:min-w-[180px]">
-                      <div className="flex h-16 w-24 items-center justify-center rounded-2xl border border-primary-100 bg-white p-2 shadow-sm sm:h-28 sm:w-36 sm:rounded-3xl">
+                      <div className="flex h-16 w-24 items-center justify-center rounded-2xl border border-secondary-100 bg-white p-2 shadow-sm sm:h-28 sm:w-36 sm:rounded-3xl">
                         <img
                           src={partner}
                           alt={`Partenaire ${(index % firstRowPartners.length) + 1}`}
@@ -375,7 +375,7 @@ function HomePage() {
                 <div className="partners-track partners-track-reverse gap-4">
                   {secondRowItems.map((partner, index) => (
                     <div key={`r2-${partner}-${index}`} className="flex min-w-[120px] flex-col items-center text-center sm:min-w-[180px]">
-                      <div className="flex h-16 w-24 items-center justify-center rounded-2xl border border-primary-100 bg-white p-2 shadow-sm sm:h-28 sm:w-36 sm:rounded-3xl">
+                      <div className="flex h-16 w-24 items-center justify-center rounded-2xl border border-secondary-100 bg-white p-2 shadow-sm sm:h-28 sm:w-36 sm:rounded-3xl">
                         <img
                           src={partner}
                           alt={`Partenaire ${(index % secondRowPartners.length) + 1}`}
@@ -393,7 +393,7 @@ function HomePage() {
             <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-4">
               {partners.map((partner, index) => (
                 <div key={partner} className="flex flex-col items-center text-center">
-                  <div className="flex h-16 w-24 items-center justify-center rounded-2xl border border-primary-100 bg-white p-2 shadow-sm sm:h-28 sm:w-36 sm:rounded-3xl">
+                  <div className="flex h-16 w-24 items-center justify-center rounded-2xl border border-secondary-100 bg-white p-2 shadow-sm sm:h-28 sm:w-36 sm:rounded-3xl">
                     <img
                       src={partner}
                       alt={`Partenaire ${index + 1}`}

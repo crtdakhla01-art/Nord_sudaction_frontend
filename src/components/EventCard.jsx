@@ -12,7 +12,7 @@ const EventCard = memo(function EventCard({ event }) {
   return (
     <Link
       to={`/events/${event.id}`}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-primary-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-secondary-100 bg-primary-50 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
     >
         {/* Thumbnail */}
         <div className="flex h-32 w-full flex-shrink-0 items-center justify-center overflow-hidden bg-primary-50">

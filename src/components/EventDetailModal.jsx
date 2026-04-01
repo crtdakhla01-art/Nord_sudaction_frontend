@@ -40,7 +40,7 @@ function EventDetailModal({ event, onClose }) {
         if (e.target === e.currentTarget) onClose()
       }}
     >
-      <div className="relative flex w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+      <div className="relative flex w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-primary-50 shadow-2xl">
         {/* ─── Close button ─────────────────────────────── */}
         <button
           onClick={onClose}
@@ -51,7 +51,7 @@ function EventDetailModal({ event, onClose }) {
         </button>
 
         {/* ─── Gallery viewer ───────────────────────────── */}
-        <div className="relative flex h-64 w-full flex-shrink-0 items-center justify-center overflow-hidden bg-primary-50 sm:h-80">
+        <div className="relative flex h-64 w-full flex-shrink-0 items-center justify-center overflow-hidden bg-secondary-50 sm:h-80">
           {activeItem?.image ? (
             <img
               src={getImageUrl(activeItem.image)}
@@ -111,7 +111,7 @@ function EventDetailModal({ event, onClose }) {
 
         {/* ─── Thumbnail strip ──────────────────────────── */}
         {gallery.length > 1 && (
-          <div className="flex gap-2 overflow-x-auto bg-primary-50 px-4 py-3">
+          <div className="flex gap-2 overflow-x-auto bg-secondary-50 px-4 py-3">
             {gallery.map((item, index) => (
               <button
                 key={index}

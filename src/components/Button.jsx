@@ -6,8 +6,8 @@ function Button({ as = 'button', variant = 'primary', className = '', ...props }
 
   const variantClass =
     variant === 'secondary'
-      ? 'border border-secondary-500 bg-white text-secondary-500 md:hover:bg-secondary-50'
-      : 'bg-secondary-500 text-white shadow-sm md:hover:bg-secondary-600 active:bg-accent-500'
+      ? 'border border-secondary-500 bg-white text-secondary-500 md:hover:bg-secondary-100'
+      : 'bg-secondary-500 text-white shadow-sm md:hover:bg-secondary-700 active:bg-secondary-700'
 
   return createElement(as, {
     className: `${baseClass} ${variantClass} ${className}`,

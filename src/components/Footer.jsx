@@ -32,7 +32,7 @@ function Footer() {
           <p className="text-sm font-semibold text-white">{t('footerSocial')}</p>
           <div className="mt-3 flex items-center gap-3 text-primary-300">
             <a
-              className="icon-float rounded-full border border-primary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
+              className="icon-float rounded-full border border-secondary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
               href="https://www.facebook.com/nordsudaction"
               target="_blank"
               rel="noreferrer"
@@ -45,7 +45,7 @@ function Footer() {
             </a>
 
             <a
-              className="icon-float rounded-full border border-primary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
+              className="icon-float rounded-full border border-secondary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
               href="https://instagram.com"
               target="_blank"
               rel="noreferrer"
@@ -58,7 +58,7 @@ function Footer() {
             </a>
 
             <a
-              className="icon-float rounded-full border border-primary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
+              className="icon-float rounded-full border border-secondary-600 p-2 transition-all duration-300 hover:border-secondary-500 hover:text-secondary-500"
               href="https://www.linkedin.com/company/association-nord-sud-action/"
               target="_blank"
               rel="noreferrer"
@@ -72,7 +72,7 @@ function Footer() {
           </div>
         </div>
       </div>
-      <div className="border-t border-primary-700 px-4 py-4 text-center text-xs leading-5 text-primary-400 sm:px-6">
+      <div className="border-t border-secondary-700 px-4 py-4 text-center text-xs leading-5 text-primary-400 sm:px-6">
         &copy; {new Date().getFullYear()} Nord Sud Action. {t('footerCopyright')}
       </div>
     </footer>

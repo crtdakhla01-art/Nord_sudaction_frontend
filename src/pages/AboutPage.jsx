@@ -46,7 +46,7 @@ function AboutPage() {
       </MotionDiv>
 
       {/* ── Mission ── */}
-      <MotionDiv className="mt-6 rounded-3xl border border-primary-100 bg-white px-6 py-8 shadow-sm sm:px-8" variants={fadeUp}>
+      <MotionDiv className="mt-6 rounded-3xl border border-secondary-100 bg-primary-50 px-6 py-8 shadow-sm sm:px-8" variants={fadeUp}>
         <div className="flex items-center gap-3">
           <span className="h-6 w-1.5 rounded-full bg-secondary-500" />
           <MotionH2 className="text-xl font-bold text-primary-500" variants={fadeLeft}>{t('introTitle')}</MotionH2>
@@ -55,20 +55,20 @@ function AboutPage() {
           {t('heroSubtitle')}<strong className="font-semibold text-primary-500">{t('heroSubtitleBold')}</strong>{t('heroSubtitlePost')}
         </p>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
-          <p className="rounded-2xl bg-primary-50 px-5 py-4 text-sm leading-7 text-primary-400">{t('heroSubtitle2')}</p>
-          <p className="rounded-2xl bg-primary-50 px-5 py-4 text-sm leading-7 text-primary-400">{t('heroSubtitle3')}</p>
+          <p className="rounded-2xl bg-secondary-50 px-5 py-4 text-sm leading-7 text-primary-400">{t('heroSubtitle2')}</p>
+          <p className="rounded-2xl bg-secondary-50 px-5 py-4 text-sm leading-7 text-primary-400">{t('heroSubtitle3')}</p>
         </div>
       </MotionDiv>
 
       {/* ── Flagship events ── */}
-      <MotionDiv className="mt-6 rounded-3xl border border-primary-100 bg-white px-6 py-8 shadow-sm sm:px-8" variants={fadeUp}>
+      <MotionDiv className="mt-6 rounded-3xl border border-secondary-100 bg-primary-50 px-6 py-8 shadow-sm sm:px-8" variants={fadeUp}>
         <div className="flex items-center gap-3">
           <span className="h-6 w-1.5 rounded-full bg-secondary-500" />
           <MotionH2 className="text-xl font-bold text-primary-500" variants={fadeLeft}>{t('aboutPageSectionTitle')}</MotionH2>
         </div>
         <p className="mt-4 text-sm leading-7 text-primary-400">{t('aboutPageSectionIntro')}</p>
 
-        <MotionDiv className="mt-6 space-y-0 divide-y divide-primary-100" variants={staggerContainer}>
+        <MotionDiv className="mt-6 space-y-0 divide-y divide-secondary-100" variants={staggerContainer}>
           {events.map(({ titleKey, textKey }, i) => (
             <motion.div key={titleKey} className="flex gap-4 py-5 first:pt-0 last:pb-0" variants={fadeUp}>
               <span className="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-secondary-500 text-xs font-bold text-white">

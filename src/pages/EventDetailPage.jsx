@@ -178,7 +178,7 @@ function EventDetailPage() {
   if (isError || !event) {
     return (
       <SectionContainer>
-        <div className="mx-auto flex min-h-[50vh] w-full max-w-3xl flex-col items-center justify-center gap-5 rounded-[28px] border border-primary-100 bg-white px-6 py-12 text-center shadow-md">
+        <div className="mx-auto flex min-h-[50vh] w-full max-w-3xl flex-col items-center justify-center gap-5 rounded-[28px] border border-secondary-100 bg-primary-50 px-6 py-12 text-center shadow-md">
           <ErrorState message={error?.message} />
           <Link
             to="/events"
@@ -246,7 +246,7 @@ function EventDetailPage() {
             </MotionSection>
           ) : null}
 
-          <MotionDiv className="relative overflow-hidden rounded-[32px] border border-primary-100 bg-white p-6 shadow-[0_20px_60px_rgba(20,20,20,0.07)] sm:p-8 lg:p-10" variants={fadeUp}>
+          <MotionDiv className="relative overflow-hidden rounded-[32px] border border-secondary-100 bg-primary-50 p-6 shadow-[0_20px_60px_rgba(20,20,20,0.07)] sm:p-8 lg:p-10" variants={fadeUp}>
             <div className="absolute -right-16 -top-12 h-40 w-40 rounded-full bg-secondary-100 blur-3xl" />
             <div className="absolute -bottom-16 left-10 h-32 w-32 rounded-full bg-primary-100 blur-3xl" />
 
@@ -279,7 +279,7 @@ function EventDetailPage() {
                 </div>
               </MotionSection>
 
-              <MotionSection className="rounded-[28px] border border-primary-100 bg-white p-5 shadow-[0_14px_34px_rgba(20,20,20,0.05)] sm:p-6" variants={fadeUp} style={{ y: mediaY }}>
+              <MotionSection className="rounded-[28px] border border-secondary-100 bg-primary-50 p-5 shadow-[0_14px_34px_rgba(20,20,20,0.05)] sm:p-6" variants={fadeUp} style={{ y: mediaY }}>
                 <div className="mb-5 flex items-center justify-between gap-4">
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.24em] text-secondary-500">{t('gallerySection')}</p>

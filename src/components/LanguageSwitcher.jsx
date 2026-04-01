@@ -12,7 +12,7 @@ function LanguageSwitcher() {
 
   return (
     <div
-      className="inline-flex max-w-full items-center gap-1 rounded-lg border border-gray-200 bg-white p-1 shadow-sm"
+      className="inline-flex max-w-full items-center gap-1 rounded-lg border border-secondary-100 bg-primary-50 p-1 shadow-sm"
       aria-label="Language Switcher"
     >
       {langs.map((lang) => (

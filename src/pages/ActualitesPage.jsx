@@ -72,7 +72,7 @@ function ActualitesPage({ forcedType = 'article' }) {
               setPage(1)
             }}
             placeholder="Search by title..."
-            className="w-full rounded-xl border border-primary-200 bg-white px-4 py-2.5 text-sm text-primary-500 shadow-sm outline-none transition focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20 md:max-w-xs"
+            className="w-full rounded-xl border border-secondary-100 bg-primary-50 px-4 py-2.5 text-sm text-primary-500 shadow-sm outline-none transition focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20 md:max-w-xs"
           />
         </MotionDiv>
 
@@ -87,7 +87,7 @@ function ActualitesPage({ forcedType = 'article' }) {
               className={`cursor-pointer rounded-xl border px-4 py-2 text-sm font-semibold transition ${
                 selectedType === type.value
                   ? 'border-secondary-500 bg-secondary-500 text-white'
-                  : 'border-primary-200 bg-white text-primary-500 hover:border-secondary-300 hover:text-secondary-500'
+                  : 'border-secondary-100 bg-primary-50 text-primary-500 hover:border-secondary-300 hover:text-secondary-500'
               }`}
             >
               {type.label}
@@ -96,7 +96,7 @@ function ActualitesPage({ forcedType = 'article' }) {
         </MotionDiv>
 
         {featured ? (
-          <MotionArticle className="overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-md" variants={fadeUp} whileHover={{ scale: 1.01 }} transition={{ duration: 0.25, ease: 'easeOut' }}>
+          <MotionArticle className="overflow-hidden rounded-3xl border border-secondary-100 bg-primary-50 shadow-md" variants={fadeUp} whileHover={{ scale: 1.01 }} transition={{ duration: 0.25, ease: 'easeOut' }}>
             <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr]">
               <div className="h-72 md:h-full">
                 {featured.image ? (
@@ -130,7 +130,7 @@ function ActualitesPage({ forcedType = 'article' }) {
                 <motion.div key={post.id} variants={fadeUp} whileHover={{ scale: 1.03, boxShadow: '0 16px 36px rgba(20, 20, 20, 0.12)' }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.3, ease: 'easeOut' }}>
                   <Link
                     to={`/actualites/${post.slug}`}
-                    className="group interactive-card flex h-full flex-col overflow-hidden rounded-2xl border border-primary-100 bg-white shadow-sm transition-all duration-300"
+                    className="group interactive-card flex h-full flex-col overflow-hidden rounded-2xl border border-secondary-100 bg-primary-50 shadow-sm transition-all duration-300"
                   >
                     <div className="h-32 w-full flex-shrink-0 overflow-hidden bg-primary-50">
                       {post.media ? (
@@ -165,7 +165,7 @@ function ActualitesPage({ forcedType = 'article' }) {
             </MotionDiv>
 
             {posts.length === 0 ? (
-              <p className="rounded-2xl border border-primary-100 bg-white px-4 py-5 text-sm text-primary-400 shadow-md">
+              <p className="rounded-2xl border border-secondary-100 bg-primary-50 px-4 py-5 text-sm text-primary-400 shadow-md">
                 No posts found.
               </p>
             ) : null}
@@ -176,7 +176,7 @@ function ActualitesPage({ forcedType = 'article' }) {
                   type="button"
                   onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
                   disabled={currentPage <= 1}
-                  className="cursor-pointer rounded-lg border border-primary-200 px-3 py-1.5 text-xs font-semibold text-primary-500 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="cursor-pointer rounded-lg border border-secondary-100 px-3 py-1.5 text-xs font-semibold text-primary-500 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Prev
                 </button>
@@ -185,7 +185,7 @@ function ActualitesPage({ forcedType = 'article' }) {
                   type="button"
                   onClick={() => setPage((prev) => Math.min(prev + 1, lastPage))}
                   disabled={currentPage >= lastPage}
-                  className="cursor-pointer rounded-lg border border-primary-200 px-3 py-1.5 text-xs font-semibold text-primary-500 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="cursor-pointer rounded-lg border border-secondary-100 px-3 py-1.5 text-xs font-semibold text-primary-500 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Next
                 </button>
