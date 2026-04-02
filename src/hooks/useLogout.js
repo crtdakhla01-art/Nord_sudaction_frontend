@@ -8,7 +8,7 @@ export const useLogout = () => {
 
   return useMutation({
     mutationFn: adminLogout,
-    onSuccess: async () => {
+    onSettled: async () => {
       await queryClient.clear()
       navigate('/admin/login', { replace: true })
     },
