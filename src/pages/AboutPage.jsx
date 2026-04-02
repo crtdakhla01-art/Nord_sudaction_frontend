@@ -31,14 +31,13 @@ function AboutPage() {
       >
 
       {/* ── Hero banner ── */}
-      <MotionDiv className="relative overflow-hidden rounded-3xl bg-secondary-500 px-6 py-10 shadow-lg sm:px-10 sm:py-14" variants={fadeUp}>
-        <div className="relative z-10 flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="max-w-xl">
+      <MotionDiv className="relative overflow-hidden rounded-3xl bg-secondary-500 px-6 py-6 shadow-lg sm:px-10 sm:py-8" variants={fadeUp}>
+        <div className="relative z-10">
+          <div>
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-white/70">{t('aboutPageEyebrow')}</p>
             <MotionH1 className="mt-3 text-3xl font-extrabold leading-tight text-white sm:text-4xl" variants={fadeLeft}>{t('brand')}</MotionH1>
-            <p className="mt-4 text-sm leading-7 text-white/80">{t('heroSubtitleBold')}</p>
+            <p className="mt-4 text-sm leading-7 text-white/80 whitespace-nowrap">{t('heroSubtitleBold')}</p>
           </div>
-          <img src={logo} alt={t('brand')} className="hidden lg:block h-32 w-48 flex-shrink-0 rounded-2xl bg-white object-contain p-3 shadow-md sm:h-40 sm:w-60" loading="lazy" decoding="async" />
         </div>
         {/* decorative circle */}
         <span className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/5" />
