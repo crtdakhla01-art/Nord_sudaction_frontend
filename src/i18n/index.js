@@ -37,6 +37,8 @@ const resources = {
       aboutPageTitle: 'À propos de NORD SUD ACTION',
       aboutPageIntro:
         'Association marocaine pour la communication, le développement socio-économique et l\'incitation à l\'investissement.',
+      aboutPageOrigins:
+        'L\'Association NORD SUD ACTION est une organisation marocaine fondée par la volonté conjointe de chefs d\'entreprises issus du nord du Royaume et de notables et acteurs socio-économiques de la région Dakhla Oued Eddahab, unis autour d\'une ambition commune : promouvoir les provinces du Sud du Maroc, au niveau national comme international, et contribuer à leur rayonnement dans tous les domaines.',
       aboutPageSectionTitle: 'Événements majeurs organisés par l\'association',
       aboutPageSectionIntro:
         'NORD SUD ACTION a initié et organisé de nombreux forums, congrès, salons et voyages de presse, réunissant décideurs, investisseurs, médias internationaux et personnalités politiques. Parmi les événements phares :',
@@ -269,6 +271,8 @@ const resources = {
       aboutPageTitle: 'About NORD SUD ACTION',
       aboutPageIntro:
         'A Moroccan association dedicated to communication, socio-economic development, and investment promotion.',
+      aboutPageOrigins:
+        'NORD SUD ACTION is a Moroccan organization founded through the joint will of business leaders from the north of the Kingdom and notable socio-economic actors from the Dakhla Oued Eddahab region, united around a common ambition: to promote Morocco\'s southern provinces nationally and internationally, and to contribute to their influence in all fields.',
       aboutPageSectionTitle: 'Major events organized by the association',
       aboutPageSectionIntro:
         'NORD SUD ACTION has initiated and organized numerous forums, congresses, fairs, and press trips, bringing together decision-makers, investors, international media, and political figures. Its flagship events include:',
@@ -500,6 +504,8 @@ const resources = {
       aboutPageTitle: 'Sobre NORD SUD ACTION',
       aboutPageIntro:
         'Una asociacion marroqui dedicada a la comunicacion, el desarrollo socioeconomico y el fomento de la inversion.',
+      aboutPageOrigins:
+        'NORD SUD ACTION es una organizacion marroqui fundada por la voluntad conjunta de empresarios del norte del Reino y de notables y actores socioeconomicos de la region de Dajla Oued Eddahab, unidos en torno a una ambicion comun: promover las provincias del sur de Marruecos a nivel nacional e internacional y contribuir a su proyeccion en todos los ambitos.',
       aboutPageSectionTitle: 'Eventos principales organizados por la asociacion',
       aboutPageSectionIntro:
         'NORD SUD ACTION ha iniciado y organizado numerosos foros, congresos, ferias y viajes de prensa, reuniendo a responsables, inversores, medios internacionales y personalidades politicas. Entre los eventos mas destacados se encuentran:',

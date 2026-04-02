@@ -44,6 +44,10 @@ function AboutPage() {
         <span className="pointer-events-none absolute -bottom-10 -left-10 h-48 w-48 rounded-full bg-white/5" />
       </MotionDiv>
 
+      <MotionDiv className="rounded-3xl border border-secondary-100 bg-primary-50 px-6 py-6 shadow-sm sm:px-8" variants={fadeUp}>
+        <p className="text-base leading-8 text-primary-400">{t('aboutPageOrigins')}</p>
+      </MotionDiv>
+
       {/* ── Mission ── */}
       <MotionDiv className="mt-6 rounded-3xl border border-secondary-100 bg-primary-50 px-6 py-8 shadow-sm sm:px-8" variants={fadeUp}>
         <div className="flex items-center gap-3">
