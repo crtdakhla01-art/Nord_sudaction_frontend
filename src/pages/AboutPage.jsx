@@ -36,7 +36,7 @@ function AboutPage() {
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-white/70">{t('aboutPageEyebrow')}</p>
             <MotionH1 className="mt-3 text-3xl font-extrabold leading-tight text-white sm:text-4xl" variants={fadeLeft}>{t('brand')}</MotionH1>
-            <p className="mt-4 text-sm leading-7 text-white/80 whitespace-nowrap">{t('heroSubtitleBold')}</p>
+            <p className="mt-4 text-sm leading-7 text-white/80">{t('heroSubtitleBold')}</p>
           </div>
         </div>
         {/* decorative circle */}
