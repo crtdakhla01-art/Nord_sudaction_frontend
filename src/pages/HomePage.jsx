@@ -45,7 +45,7 @@ const staticAdvertisements = [
   {
     id: 'ad-1',
     image: '/banner_3.png',
-    link: 'https://www.raidtanjalagouira.ma',
+    link: 'https://padeleventmaroc.com/',
     begin_date: '2026-01-01',
     end_date: '2030-12-31',
   },

@@ -24,7 +24,7 @@ function Navbar() {
 
   return (
     <MotionHeader
-      className="sticky top-0 z-20 mb-[10px] bg-[#939392] shadow-lg border-b border-gray-100"
+      className="sticky top-0 z-20 mb-[10px] bg-[#C36862] shadow-lg border-b border-gray-100"
       variants={staggerContainer}
       initial="hidden"
       animate="visible"
@@ -56,7 +56,7 @@ function Navbar() {
           </MotionDiv>
         </div>
       </div>
-      <div className="border-y border-gray-100 bg-[#939392]">
+      <div className="border-y border-gray-100 bg-[#C36862]">
         <div className="px-4 sm:px-5 md:px-7 lg:px-8">
           <MotionDiv className="mx-auto w-full max-w-6xl py-3 lg:flex lg:items-center lg:justify-between lg:gap-8" variants={fadeUp}>
             <NavLink to="/" className="hidden lg:flex lg:flex-shrink-0 lg:items-center gap-3" onClick={() => setIsOpen(false)}>
@@ -77,7 +77,7 @@ function Navbar() {
               </div>
 
               <motion.a
-                href="https://www.raidtanjalagouira.ma"
+                href="https://visitedakhla.com"
                 target="_blank"
                 rel="noreferrer"
                 className="block w-[80%] flex-shrink-0 lg:ml-auto"
@@ -97,7 +97,7 @@ function Navbar() {
         </div>
       </div>
 
-      <div className="border-t border-gray-100 bg-[#939392]">
+      <div className="border-t border-gray-100 bg-[#C36862]">
         <div className="px-4 sm:px-5 md:px-7 lg:px-8">
           <MotionDiv className="mx-auto flex w-full max-w-6xl items-center justify-between gap-2 py-3" variants={fadeUp}>
             <MotionNav className="hidden flex-row items-center gap-1 lg:flex" variants={staggerContainer}>
@@ -118,7 +118,7 @@ function Navbar() {
       {/* Mobile navigation menu */}
       {isOpen && (
         <motion.nav
-          className="flex flex-col gap-2 border-t border-gray-100 bg-[#939392] px-3 py-2 sm:px-4 lg:hidden"
+          className="flex flex-col gap-2 border-t border-gray-100 bg-[#C36862] px-3 py-2 sm:px-4 lg:hidden"
           variants={fadeUp}
           initial="hidden"
           animate="visible"
