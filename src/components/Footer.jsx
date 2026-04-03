@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import logo from '../assets/logo.jpeg'
+import logo from '../assets/blanc_logo.png'
 
 function Footer() {
   const { t } = useTranslation()
@@ -13,7 +13,7 @@ function Footer() {
           <p className="mt-2 max-w-sm text-sm leading-6 text-primary-300">{t('footerText')}</p>
         </div>
         <div>
-          <p className="text-sm font-semibold text-white">Pages</p>
+          <p className="text-sm font-semibold text-white">{t('footerPages')}</p>
           <div className="mt-2 flex flex-col gap-2">
             <Link to="/" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navHome')}</Link>
             <Link to="/events" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navEvents')}</Link>
