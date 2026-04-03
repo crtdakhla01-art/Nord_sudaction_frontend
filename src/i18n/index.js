@@ -6,6 +6,7 @@ const resources = {
     translation: {
       brand: 'Nord Sud Action',
       navHome: 'Accueil',
+      navAbout: 'À propos',
       navEvents: 'Événements',
       navActivites: 'Activités',
       navAdvertisements: 'Publicités',
@@ -240,6 +241,7 @@ const resources = {
     translation: {
       brand: 'Nord Sud Action',
       navHome: 'Home',
+      navAbout: 'About',
       navEvents: 'Events',
       navActivites: 'Activities',
       navActualites: 'News',
@@ -474,6 +476,7 @@ const resources = {
     translation: {
       brand: 'Nord Sud Action',
       navHome: 'Inicio',
+      navAbout: 'Sobre nosotros',
       navEvents: 'Eventos',
       navActivites: 'Actividades',
       navActualites: 'Noticias',

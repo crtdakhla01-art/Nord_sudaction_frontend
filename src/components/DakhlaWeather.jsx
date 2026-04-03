@@ -100,7 +100,13 @@ function DakhlaWeather() {
   const rain = isRainy(data.weather_code)
 
   return (
-    <div className="font-mono text-primary-500 relative overflow-hidden bg-white w-[72px] h-[46px] lg:w-[145px] lg:h-[80px] rounded-xl px-1.5 py-1 lg:px-3 lg:py-2 flex items-center gap-1 lg:gap-2">
+    <a
+      href="https://www.windy.com/?23.684,-15.957,12"
+      target="_blank"
+      rel="noreferrer"
+      title="Voir la météo de Dakhla"
+      className="font-mono text-primary-500 relative overflow-hidden bg-white w-[72px] h-[46px] lg:w-[145px] lg:h-[80px] rounded-xl px-1.5 py-1 lg:px-3 lg:py-2 flex items-center gap-1 lg:gap-2 transition-shadow duration-200 hover:shadow-md hover:ring-1 hover:ring-secondary-400"
+    >
       <div className="flex-shrink-0 w-5 lg:w-10">
         <SunCloudSvg showRain={rain} />
       </div>
@@ -110,7 +116,7 @@ function DakhlaWeather() {
           {temp}°
         </h4>
       </div>
-    </div>
+    </a>
   )
 }
 
