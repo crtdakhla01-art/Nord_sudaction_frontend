@@ -32,14 +32,17 @@ function Navbar() {
       <div className="px-4 sm:px-5 md:px-7 lg:px-8">
         <div className="mx-auto w-full max-w-6xl py-2 lg:hidden">
           <MotionDiv className="flex items-center justify-between" variants={fadeUp}>
-            <NavLink to="/" className="flex items-center" onClick={() => setIsOpen(false)}>
-              <motion.img
-                src={logo}
-                alt={t('brand')}
-                className="h-14 w-auto object-contain sm:h-16"
-                variants={fadeLeft}
-              />
-            </NavLink>
+            <div className="flex items-center gap-2">
+              <NavLink to="/" className="flex items-center" onClick={() => setIsOpen(false)}>
+                <motion.img
+                  src={logo}
+                  alt={t('brand')}
+                  className="h-14 w-auto object-contain sm:h-16"
+                  variants={fadeLeft}
+                />
+              </NavLink>
+              <DakhlaWeather />
+            </div>
 
             <div className="flex items-center gap-3">
               <LanguageSwitcher />
@@ -72,7 +75,7 @@ function Navbar() {
             </NavLink>
 
             <div className="flex items-center gap-3 w-full lg:w-auto">
-              <div className="flex-shrink-0">
+              <div className="hidden lg:block flex-shrink-0">
                 <DakhlaWeather />
               </div>
 
@@ -80,15 +83,21 @@ function Navbar() {
                 href="https://visitedakhla.ma"
                 target="_blank"
                 rel="noreferrer"
-                className="block w-[80%] flex-shrink-0 lg:ml-auto"
+                className="block w-full lg:w-[80%] flex-shrink-0 lg:ml-auto"
                 variants={fadeUp}
                 whileHover={{ scale: 1.01 }}
                 transition={{ duration: 0.25, ease: 'easeOut' }}
               >
                 <motion.img
+                  src="/banner_1_mobile.png"
+                  alt="Advertisement"
+                  className="h-auto w-full rounded-lg border border-primary-100 object-contain shadow-sm lg:hidden"
+                  variants={fadeUp}
+                />
+                <motion.img
                   src="/banner_1.png"
                   alt="Advertisement"
-                  className="h-auto w-full rounded-lg border border-primary-100 object-contain shadow-sm"
+                  className="hidden h-auto w-full rounded-lg border border-primary-100 object-contain shadow-sm lg:block"
                   variants={fadeUp}
                 />
               </motion.a>
