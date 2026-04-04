@@ -89,7 +89,7 @@ function Navbar() {
                 transition={{ duration: 0.25, ease: 'easeOut' }}
               >
                 <motion.img
-                  src="/banner_1_mobile.png"
+                  src="/mobile.png"
                   alt="Advertisement"
                   className="h-auto w-full rounded-lg border border-primary-100 object-contain shadow-sm lg:hidden"
                   variants={fadeUp}
