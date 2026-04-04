@@ -94,7 +94,7 @@ function ActualitesPage() {
         ) : null}
 
         {isLoading ? <LoadingState /> : null}
-        {isError ? <ErrorState message={error?.message} /> : null}
+        {isError ? <ErrorState message={error?.message} error={error} /> : null}
 
         {!isLoading && !isError ? (
           <>

@@ -1,15 +1,13 @@
 import { Link, useParams } from 'react-router-dom'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
 import SectionContainer from '../components/SectionContainer'
 import { getImageUrl } from '../api/client'
-import { usePost } from '../hooks/usePost'
 import { usePosts } from '../hooks/usePosts'
 import { formatDateLabel } from '../utils/date'
-import { useTranslation } from 'react-i18next'
-import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
+import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
 function SidebarWidget({ title, children }) {
   return (
@@ -46,16 +44,15 @@ function SidebarPost({ post }) {
 function PostDetailPage() {
   const MotionDiv = motion.div
   const MotionH1 = motion.h1
-  const { t } = useTranslation()
 
   const { slug } = useParams()
-  const { data, isLoading, isError, error } = usePost(slug)
 
-  const post = data?.post
-  const related = data?.related || []
+  const { data, isLoading, isError, error } = usePosts()
+  const posts = data?.data || []
 
-  const { data: latestData } = usePosts(useMemo(() => ({ page: 1, per_page: 7 }), []))
-  const sidebarPosts = (latestData?.data || []).filter((p) => p.slug !== slug)
+  const post = posts.find((p) => p.slug === slug)
+  const related = posts.filter((p) => p.slug !== slug).slice(0, 3)
+  const sidebarPosts = posts.filter((p) => p.slug !== slug).slice(0, 7)
 
   useEffect(() => {
     if (!post) return
@@ -65,8 +62,8 @@ function PostDetailPage() {
   }, [post])
 
   if (isLoading) return <SectionContainer><LoadingState /></SectionContainer>
-  if (isError) return <SectionContainer><ErrorState message={error?.message} /></SectionContainer>
-  if (!post) return null
+  if (isError) return <SectionContainer><ErrorState message={error?.message} error={error} /></SectionContainer>
+  if (!post) return <SectionContainer><ErrorState message="Article introuvable." /></SectionContainer>
 
   return (
     <SectionContainer>
@@ -105,8 +102,6 @@ function PostDetailPage() {
                 {/* Meta row */}
                 <div className="flex flex-wrap items-center gap-2 text-xs">
                   <span className="font-semibold text-primary-400">{formatDateLabel(post.published_at || post.created_at, 'fr')}</span>
-                  <span className="text-primary-300">•</span>
-                  <span className="font-semibold text-primary-400">{post.view_count} vues</span>
                 </div>
 
                 {/* Title */}
