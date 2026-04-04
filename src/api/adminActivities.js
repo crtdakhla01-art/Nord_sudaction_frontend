@@ -37,17 +37,18 @@ export const fetchAdminActivities = async () => {
 export const createActivity = async (payload) => {
   const res = await fetch(`${getBaseUrl()}/admin/activities`, {
     method: 'POST',
-    headers: authHeaders({ json: true }),
-    body: JSON.stringify(payload),
+    headers: authHeaders(),
+    body: payload,
   })
   return handleResponse(res)
 }
 
-export const updateActivity = async ({ id, values }) => {
+export const updateActivity = async ({ id, formData }) => {
+  formData.append('_method', 'PUT')
   const res = await fetch(`${getBaseUrl()}/admin/activities/${id}`, {
-    method: 'PUT',
-    headers: authHeaders({ json: true }),
-    body: JSON.stringify(values),
+    method: 'POST',
+    headers: authHeaders(),
+    body: formData,
   })
   return handleResponse(res)
 }

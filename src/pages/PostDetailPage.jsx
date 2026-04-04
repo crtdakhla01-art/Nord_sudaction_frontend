@@ -113,7 +113,7 @@ function PostDetailPage() {
                 {/* Rich content */}
                 {post.content ? (
                   <div
-                    className="prose max-w-none border-t border-primary-100 pt-5 prose-headings:text-primary-500 prose-p:leading-8 prose-p:text-primary-400 prose-a:text-secondary-500 prose-a:no-underline hover:prose-a:underline"
+                    className="post-content prose max-w-none border-t border-primary-100 pt-5 prose-headings:text-primary-500 prose-p:leading-8 prose-p:text-primary-400 prose-a:text-secondary-500 prose-a:no-underline hover:prose-a:underline"
                     dangerouslySetInnerHTML={{ __html: post.content }}
                   />
                 ) : null}

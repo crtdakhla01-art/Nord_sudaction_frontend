@@ -4,6 +4,7 @@ import SectionContainer from '../components/SectionContainer'
 import { useActivities } from '../hooks/useActivities'
 import { motion } from 'framer-motion'
 import { fadeLeft, fadeUp, inViewViewport, scaleHover, staggerContainer } from '../utils/animations'
+import { getImageUrl } from '../api/client'
 
 function ActivitiesPage() {
   const MotionDiv = motion.div
@@ -56,6 +57,16 @@ function ActivitiesPage() {
                   whileTap={scaleHover.whileTap}
                   transition={scaleHover.transition}
                 >
+                  {activity.image ? (
+                    <div className="h-40 w-full overflow-hidden">
+                      <img
+                        src={getImageUrl(activity.image)}
+                        alt={activity.title}
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  ) : null}
                   <div className="flex flex-1 flex-col justify-between p-5">
                     <h3 className="text-base font-bold leading-snug text-primary-500">{activity.title}</h3>
                     <MotionLink

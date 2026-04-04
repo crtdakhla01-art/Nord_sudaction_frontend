@@ -79,6 +79,14 @@ body {
   transform: translateY(-2px);
 }
 
+/* Force consistent font inside rich-text post content,
+   overriding any inline font-family or font-size injected by the editor */
+.post-content,
+.post-content * {
+  font-family: inherit !important;
+  font-size: inherit !important;
+}
+
 .partners-marquee {
   overflow: hidden;
   width: 100%;
