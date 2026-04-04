@@ -224,10 +224,12 @@ function AdminEventsPage() {
         {(createMutation.isError || updateMutation.isError) ? (
           <ErrorState
             message={
-              createMutation.error?.response?.data?.message ||
-              updateMutation.error?.response?.data?.message ||
-              createMutation.error?.message ||
-              updateMutation.error?.message
+              updateMutation.error?.response?.status === 404
+                ? 'Cet événement n\'existe plus dans la base de données. Veuillez rafraîchir la page.'
+                : (createMutation.error?.response?.data?.message ||
+                  updateMutation.error?.response?.data?.message ||
+                  createMutation.error?.message ||
+                  updateMutation.error?.message)
             }
           />
         ) : null}
