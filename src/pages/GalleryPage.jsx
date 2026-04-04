@@ -65,7 +65,8 @@ export default function GalleryPage() {
   })
 
   const images = data?.pages.flatMap((page) => page.images) ?? []
-  const categories = ['all', ...Array.from(new Set(images.map((img) => img.categoryName).filter(Boolean)))]
+  const categoryNames = Array.from(new Set(images.map((img) => img.categoryName).filter(Boolean)))
+  const categories = categoryNames.length > 0 ? ['all', ...categoryNames] : []
   const filteredImages =
     activeCategory === 'all' ? images : images.filter((img) => img.categoryName === activeCategory)
 

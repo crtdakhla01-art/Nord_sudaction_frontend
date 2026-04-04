@@ -224,7 +224,7 @@ function AdminGalleryPage() {
                         disabled={updateCategoryMutation.isPending}
                         className="w-full rounded-lg border border-primary-200 px-2 py-1 text-xs text-primary-500"
                       >
-                        <option value="">Sans categorie</option>
+                        <option value="" disabled>Choisir une categorie</option>
                         {categories.map((category) => (
                           <option key={category.id} value={category.id}>
                             {category.name}

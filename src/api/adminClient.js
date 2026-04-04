@@ -69,36 +69,7 @@ export const adminApi = axios.create({
   },
 })
 
-const sanitizePayload = (payload) => {
-  if (!payload || typeof payload !== 'object' || Array.isArray(payload) || payload instanceof FormData) {
-    return payload ?? null
-  }
-
-  const safePayload = { ...payload }
-
-  if ('password' in safePayload) {
-    safePayload.password = '***'
-  }
-
-  if ('code' in safePayload) {
-    safePayload.code = '***'
-  }
-
-  return safePayload
-}
-
 adminApi.interceptors.request.use((config) => {
-  if (import.meta.env.DEV) {
-    const safePayload = sanitizePayload(config.data)
-
-    console.log('[API Request]', {
-      method: config.method?.toUpperCase(),
-      url: `${config.baseURL || ''}${config.url || ''}`,
-      params: config.params || null,
-      data: safePayload ?? null,
-    })
-  }
-
   const token = getAdminToken()
 
   if (token) {
@@ -110,26 +81,5 @@ adminApi.interceptors.request.use((config) => {
 
 adminApi.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (import.meta.env.DEV) {
-      const config = error?.config || {}
-      const response = error?.response
-
-      console.error('[API Error]', {
-        message: error?.message,
-        code: error?.code || null,
-        status: response?.status || null,
-        statusText: response?.statusText || null,
-        method: config.method?.toUpperCase() || null,
-        url: `${config.baseURL || ''}${config.url || ''}`,
-        params: config.params || null,
-        requestData: sanitizePayload(config.data),
-        responseData: response?.data || null,
-        responseHeaders: response?.headers || null,
-        stack: error?.stack || null,
-      })
-    }
-
-    return Promise.reject(error)
-  },
+  (error) => Promise.reject(error),
 )
