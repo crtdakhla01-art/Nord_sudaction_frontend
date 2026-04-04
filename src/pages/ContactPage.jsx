@@ -12,6 +12,7 @@ import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 const initialForm = {
   name: '',
   email: '',
+  phone: '',
   object: '',
   message: '',
 }
@@ -98,6 +99,7 @@ function ContactPage() {
           <InputField
             label={t('formName')}
             name="name"
+            required
             value={formValues.name}
             onChange={handleChange}
             error={formErrors.name}
@@ -107,14 +109,30 @@ function ContactPage() {
             label={t('formEmail')}
             name="email"
             type="email"
+            required
             value={formValues.email}
             onChange={handleChange}
             error={formErrors.email}
           />
 
           <InputField
+            label={(
+              <>
+                {t('formPhone')}
+                <span className="ml-1 text-xs font-normal text-primary-300">(optionnel)</span>
+              </>
+            )}
+            name="phone"
+            type="tel"
+            value={formValues.phone}
+            onChange={handleChange}
+            error={formErrors.phone}
+          />
+
+          <InputField
             label={t('formObject')}
             name="object"
+            required
             value={formValues.object}
             onChange={handleChange}
             error={formErrors.object}
@@ -124,6 +142,7 @@ function ContactPage() {
             label={t('formMessage')}
             name="message"
             rows={6}
+            required
             value={formValues.message}
             onChange={handleChange}
             error={formErrors.message}
