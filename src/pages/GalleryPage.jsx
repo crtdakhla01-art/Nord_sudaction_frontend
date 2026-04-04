@@ -46,6 +46,7 @@ export default function GalleryPage() {
 
   const { t } = useTranslation()
   const [lightbox, setLightbox] = useState(null)
+  const [activeCategory, setActiveCategory] = useState('all')
 
   const {
     data,
@@ -64,6 +65,9 @@ export default function GalleryPage() {
   })
 
   const images = data?.pages.flatMap((page) => page.images) ?? []
+  const categories = ['all', ...Array.from(new Set(images.map((img) => img.categoryName).filter(Boolean)))]
+  const filteredImages =
+    activeCategory === 'all' ? images : images.filter((img) => img.categoryName === activeCategory)
 
   const handleOpen = useCallback((img) => setLightbox(img), [])
 
@@ -127,8 +131,27 @@ export default function GalleryPage() {
             </div>
           ) : null}
 
+          {!isLoading && categories.length > 1 ? (
+            <div className="mb-4 flex flex-wrap gap-2">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => setActiveCategory(category)}
+                  className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+                    activeCategory === category
+                      ? 'bg-secondary-500 text-white'
+                      : 'border border-primary-200 bg-white text-primary-500 hover:bg-primary-50'
+                  }`}
+                >
+                  {category === 'all' ? 'Toutes' : category}
+                </button>
+              ))}
+            </div>
+          ) : null}
+
           <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-            {images.map((img) => (
+            {filteredImages.map((img) => (
               <ImageCard key={img.id ?? img.src} img={img} onOpen={handleOpen} />
             ))}
           </div>

@@ -22,6 +22,8 @@ export const fetchGalleryPage = async ({ pageParam = 1 }) => {
       thumb: resolveStorageUrl(item.url),
       full: resolveStorageUrl(item.url),
       alt: item.filename || 'Gallery image',
+      categoryId: item.gallery_categorie_id ?? null,
+      categoryName: item?.category?.name || 'Sans categorie',
     }))
 
   const currentPage = Number(payload.current_page || pageParam)
