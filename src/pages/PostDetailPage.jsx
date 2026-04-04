@@ -11,11 +11,6 @@ import { formatDateLabel } from '../utils/date'
 import { useTranslation } from 'react-i18next'
 import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
 
-const typeBadge = {
-  article: 'bg-blue-100 text-blue-700',
-  communique: 'bg-secondary-500 text-white',
-}
-
 function SidebarWidget({ title, children }) {
   return (
     <div className="rounded-xl bg-white p-4 shadow">
@@ -59,7 +54,7 @@ function PostDetailPage() {
   const post = data?.post
   const related = data?.related || []
 
-  const { data: latestData } = usePosts(useMemo(() => ({ page: 1, per_page: 7, type: post?.type }), [post?.type]))
+  const { data: latestData } = usePosts(useMemo(() => ({ page: 1, per_page: 7 }), []))
   const sidebarPosts = (latestData?.data || []).filter((p) => p.slug !== slug)
 
   useEffect(() => {
@@ -109,10 +104,6 @@ function PostDetailPage() {
 
                 {/* Meta row */}
                 <div className="flex flex-wrap items-center gap-2 text-xs">
-                  <span className={`inline-block rounded px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide ${typeBadge[post.type] || 'bg-primary-100 text-primary-500'}`}>
-                    {post.type === 'communique' ? t('postTypeCommunique') : t('postTypeArticle')}
-                  </span>
-                  <span className="text-primary-300">•</span>
                   <span className="font-semibold text-primary-400">{formatDateLabel(post.published_at || post.created_at, 'fr')}</span>
                   <span className="text-primary-300">•</span>
                   <span className="font-semibold text-primary-400">{post.view_count} vues</span>
@@ -177,9 +168,6 @@ function PostDetailPage() {
                         </div>
                       )}
                       <div className="space-y-1 p-3">
-                        <span className={`inline-block rounded px-2 py-0.5 text-[10px] font-bold uppercase ${typeBadge[item.type] || 'bg-primary-100 text-primary-500'}`}>
-                          {item.type === 'communique' ? t('postTypeCommunique') : t('postTypeArticle')}
-                        </span>
                         <h3 className="line-clamp-2 text-sm font-bold leading-snug text-primary-500 group-hover:text-secondary-500 transition-colors">{item.title}</h3>
                         <p className="text-[11px] text-primary-300">{formatDateLabel(item.published_at || item.created_at, 'fr')}</p>
                       </div>
@@ -194,7 +182,7 @@ function PostDetailPage() {
           {/* ── Sidebar — col-span-4 ── */}
           <aside className="col-span-12 space-y-5 lg:col-span-4">
 
-            <SidebarWidget title={`Autres ${post.type === 'communique' ? t('postTypeCommunique') : t('postTypeArticle')}`}>
+            <SidebarWidget title="Autres actualités">
               {sidebarPosts.length > 0 ? (
                 <div className="divide-y divide-primary-100">
                   {sidebarPosts.map((p) => <SidebarPost key={p.id} post={p} />)}

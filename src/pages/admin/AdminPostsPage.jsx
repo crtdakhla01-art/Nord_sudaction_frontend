@@ -13,7 +13,6 @@ const initialValues = {
   title: '',
   description: '',
   content: '',
-  type: 'article',
   external_link: '',
   status: 'draft',
   is_featured: false,
@@ -25,19 +24,17 @@ function AdminPostsPage() {
   const [values, setValues] = useState(initialValues)
   const [editingId, setEditingId] = useState(null)
   const [search, setSearch] = useState('')
-  const [typeFilter, setTypeFilter] = useState('all')
   const [statusFilter, setStatusFilter] = useState('all')
   const [page, setPage] = useState(1)
 
   const filters = useMemo(
     () => ({
       search: search || undefined,
-      type: typeFilter === 'all' ? undefined : typeFilter,
       status: statusFilter === 'all' ? undefined : statusFilter,
       page,
       per_page: 10,
     }),
-    [search, typeFilter, statusFilter, page],
+    [search, statusFilter, page],
   )
 
   const { postsQuery, createMutation, updateMutation, deleteMutation } = useAdminPostsCRUD(filters)
@@ -61,7 +58,6 @@ function AdminPostsPage() {
       title: item.title || '',
       description: item.description || '',
       content: item.content || '',
-      type: item.type || 'article',
       external_link: item.external_link || '',
       status: item.status || 'draft',
       is_featured: Boolean(item.is_featured),
@@ -108,20 +104,6 @@ function AdminPostsPage() {
         <RichTextEditor label="Content" value={values.content} onChange={(content) => setValues((prev) => ({ ...prev, content }))} />
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          <label className="block text-sm font-medium text-primary-500">
-            <span>Type</span>
-            <select
-              className="mt-2 block w-full rounded-xl border border-primary-200 bg-white px-4 py-2.5 text-primary-500 shadow-sm outline-none transition focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20"
-              name="type"
-              value={values.type}
-              onChange={onChange}
-            >
-              <option value="article">Article</option>
-              <option value="communique">Communique</option>
-              <option value="media">Media</option>
-            </select>
-          </label>
-
           <label className="block text-sm font-medium text-primary-500">
             <span>Status</span>
             <select
@@ -182,22 +164,8 @@ function AdminPostsPage() {
       </form>
 
       <div className="w-full rounded-2xl border border-primary-100 bg-white p-6 shadow-md">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <InputField label="Search" name="search" value={search} onChange={(event) => { setSearch(event.target.value); setPage(1) }} />
-
-          <label className="block text-sm font-medium text-primary-500">
-            <span>Type filter</span>
-            <select
-              className="mt-2 block w-full rounded-xl border border-primary-200 bg-white px-4 py-2.5 text-primary-500 shadow-sm outline-none"
-              value={typeFilter}
-              onChange={(event) => { setTypeFilter(event.target.value); setPage(1) }}
-            >
-              <option value="all">All</option>
-              <option value="article">Article</option>
-              <option value="communique">Communique</option>
-              <option value="media">Media</option>
-            </select>
-          </label>
 
           <label className="block text-sm font-medium text-primary-500">
             <span>Status filter</span>
@@ -242,7 +210,7 @@ function AdminPostsPage() {
 
                 <div>
                   <h3 className="text-lg font-bold text-primary-500">{item.title}</h3>
-                  <p className="mt-1 text-xs uppercase text-secondary-500">{item.type} · {item.status}</p>
+                  <p className="mt-1 text-xs uppercase text-secondary-500">{item.status}</p>
                   <p className="mt-1 text-sm text-primary-400">{item.description}</p>
                   <p className="mt-2 text-xs text-primary-400">{formatDateLabel(item.published_at || item.created_at, 'fr')}</p>
                 </div>

@@ -69,7 +69,7 @@ function HomePage() {
   const MotionLink = motion.a
 
   const { t } = useTranslation()
-  const { data: postsData, isLoading, isError, error } = usePosts({ per_page: 5, type: 'article' })
+  const { data: postsData, isLoading, isError, error } = usePosts({ per_page: 5 })
   const [currentHeroImageIndex, setCurrentHeroImageIndex] = useState(0)
 
   const prefersReducedMotion = useReducedMotion()

@@ -74,8 +74,8 @@ function App() {
             <Route path="/opportunities" element={<OpportunitiesPage />} />
             <Route path="/opportunities/:id" element={<OpportunityDetailPage />} />
             <Route path="/actualites" element={<ActualitesPage />} />
-            <Route path="/actualites/articles" element={<ActualitesPage forcedType="article" />} />
-            <Route path="/actualites/communiques" element={<ActualitesPage forcedType="communique" />} />
+            <Route path="/actualites/articles" element={<Navigate to="/actualites" replace />} />
+            <Route path="/actualites/communiques" element={<Navigate to="/actualites" replace />} />
             <Route path="/actualites/:slug" element={<PostDetailPage />} />
             <Route path="/galerie" element={<GalleryPage />} />
             <Route path="/contact" element={<ContactPage />} />

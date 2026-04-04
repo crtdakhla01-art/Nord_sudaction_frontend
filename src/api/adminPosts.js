@@ -10,7 +10,6 @@ export const createAdminPost = async (payload) => {
   formData.append('title', payload.title)
   formData.append('description', payload.description)
   formData.append('content', payload.content)
-  formData.append('type', payload.type)
   formData.append('status', payload.status)
   formData.append('is_featured', payload.is_featured ? '1' : '0')
 
@@ -36,7 +35,6 @@ export const updateAdminPost = async ({ id, values }) => {
   formData.append('title', values.title)
   formData.append('description', values.description)
   formData.append('content', values.content)
-  formData.append('type', values.type)
   formData.append('status', values.status)
   formData.append('is_featured', values.is_featured ? '1' : '0')
 

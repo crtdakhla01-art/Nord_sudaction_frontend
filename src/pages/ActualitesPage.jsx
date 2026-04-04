@@ -7,11 +7,9 @@ import SectionContainer from '../components/SectionContainer'
 import { getImageUrl } from '../api/client'
 import { usePosts } from '../hooks/usePosts'
 import { formatDateLabel } from '../utils/date'
-import { useTranslation } from 'react-i18next'
 import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
-function ActualitesPage({ forcedType = 'article' }) {
-  const { t } = useTranslation()
+function ActualitesPage() {
   const MotionDiv = motion.div
   const MotionH1 = motion.h1
   const MotionArticle = motion.article
@@ -19,7 +17,6 @@ function ActualitesPage({ forcedType = 'article' }) {
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
-  const [selectedType, setSelectedType] = useState(forcedType || 'article')
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 400)
@@ -31,9 +28,8 @@ function ActualitesPage({ forcedType = 'article' }) {
       page,
       per_page: 16,
       search: debouncedSearch || undefined,
-      type: selectedType,
     }),
-    [selectedType, page, debouncedSearch],
+    [page, debouncedSearch],
   )
 
   const { data, isLoading, isError, error } = usePosts(params)
@@ -46,10 +42,6 @@ function ActualitesPage({ forcedType = 'article' }) {
   const featured = posts.find((item) => item.is_featured)
 
   const pageTitle = 'Actualités'
-  const typeOptions = [
-    { value: 'article', label: t('postTypeArticle') },
-    { value: 'communique', label: t('postTypeCommunique') },
-  ]
 
   return (
     <SectionContainer>
@@ -74,25 +66,6 @@ function ActualitesPage({ forcedType = 'article' }) {
             placeholder="Search by title..."
             className="w-full rounded-xl border border-secondary-100 bg-primary-50 px-4 py-2.5 text-sm text-primary-500 shadow-sm outline-none transition focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20 md:max-w-xs"
           />
-        </MotionDiv>
-
-        <MotionDiv className="flex flex-wrap gap-2" variants={fadeUp}>
-          {typeOptions.map((type) => (
-            <button
-              key={type.value}
-              onClick={() => {
-                setSelectedType(type.value)
-                setPage(1)
-              }}
-              className={`cursor-pointer rounded-xl border px-4 py-2 text-sm font-semibold transition ${
-                selectedType === type.value
-                  ? 'border-secondary-500 bg-secondary-500 text-white'
-                  : 'border-secondary-100 bg-primary-50 text-primary-500 hover:border-secondary-300 hover:text-secondary-500'
-              }`}
-            >
-              {type.label}
-            </button>
-          ))}
         </MotionDiv>
 
         {featured ? (
@@ -147,7 +120,6 @@ function ActualitesPage({ forcedType = 'article' }) {
                     </div>
                     <div className="flex flex-1 flex-col justify-between gap-2 p-3">
                       <div className="space-y-1">
-                        <p className="text-xs font-semibold uppercase text-secondary-500">{post.type === 'communique' ? t('postTypeCommunique') : t('postTypeArticle')}</p>
                         <h3 className="text-sm font-bold text-primary-500 line-clamp-2">{post.title}</h3>
                         <p className="line-clamp-2 text-xs text-primary-400">{post.description}</p>
                         <p className="text-xs font-semibold uppercase text-primary-400">{formatDateLabel(post.published_at || post.created_at, 'fr')}</p>
