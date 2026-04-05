@@ -301,11 +301,11 @@ function HomePage() {
                   whileTap={scaleHover.whileTap}
                   transition={scaleHover.transition}
                 >
-                  <div className="h-28 w-full overflow-hidden bg-primary-50">
+                  <div className="w-full overflow-hidden">
                     {post.media ? (
-                      <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-cover" loading="lazy" decoding="async" />
+                      <img src={getImageUrl(post.media)} alt={post.title} className="w-full md:h-28 md:object-cover" loading="lazy" decoding="async" />
                     ) : (
-                      <div className="flex h-full items-center justify-center">
+                      <div className="flex h-28 w-full items-center justify-center">
                         <span className="text-2xl font-black text-secondary-500 opacity-20">NSA</span>
                       </div>
                     )}

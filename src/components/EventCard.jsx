@@ -15,22 +15,22 @@ const EventCard = memo(function EventCard({ event }) {
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-secondary-100 bg-primary-50 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
     >
         {/* Thumbnail */}
-        <div className="flex h-32 w-full flex-shrink-0 items-center justify-center overflow-hidden bg-primary-50">
+        <div className="flex w-full flex-shrink-0 items-center justify-center overflow-hidden">
           {featuredMedia.type === 'image' ? (
             <img
               src={getImageUrl(featuredMedia.path)}
               alt={event.title}
-              className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+              className="w-full transition duration-300 group-hover:scale-105 md:h-40 md:object-cover"
               loading="lazy"
               decoding="async"
             />
           ) : null}
 
           {featuredMedia.type === 'video' ? (
-            <div className="relative h-full w-full bg-black">
+            <div className="relative w-full bg-black md:h-40">
               <video
                 src={getImageUrl(featuredMedia.path)}
-                className="h-full w-full object-cover"
+                className="w-full md:h-full md:object-cover"
                 preload="metadata"
                 muted
                 playsInline

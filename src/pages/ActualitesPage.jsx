@@ -107,15 +107,15 @@ function ActualitesPage() {
                     to={`/actualites/${post.slug}`}
                     className="group interactive-card flex h-full flex-col overflow-hidden rounded-2xl border border-secondary-100 bg-primary-50 shadow-sm transition-all duration-300"
                   >
-                    <div className="h-32 w-full flex-shrink-0 overflow-hidden bg-primary-50">
+                    <div className="w-full flex-shrink-0 overflow-hidden">
                       {post.media ? (
                         /\.(mp4|webm|ogg|mov|avi|mkv)$/i.test(post.media) ? (
-                          <video src={getImageUrl(post.media)} className="h-full w-full object-cover" muted />
+                          <video src={getImageUrl(post.media)} className="w-full md:h-32 md:object-cover" muted />
                         ) : (
-                          <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
+                          <img src={getImageUrl(post.media)} alt={post.title} className="w-full transition duration-500 group-hover:scale-105 md:h-32 md:object-cover" loading="lazy" decoding="async" />
                         )
                       ) : (
-                        <div className="flex h-full items-center justify-center">
+                        <div className="flex h-32 w-full items-center justify-center">
                           <span className="text-4xl font-black text-secondary-500 opacity-20">NSA</span>
                         </div>
                       )}

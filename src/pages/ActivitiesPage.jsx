@@ -60,11 +60,11 @@ function ActivitiesPage() {
                   transition={scaleHover.transition}
                 >
                   {activity.image ? (
-                    <div className="h-40 w-full overflow-hidden">
+                    <div className="w-full overflow-hidden">
                       <img
                         src={getImageUrl(activity.image)}
                         alt={activity.title}
-                        className="h-full w-full object-cover"
+                        className="w-full md:h-40 md:object-cover"
                         loading="lazy"
                       />
                     </div>

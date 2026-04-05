@@ -51,12 +51,12 @@ function EventDetailModal({ event, onClose }) {
         </button>
 
         {/* ─── Gallery viewer ───────────────────────────── */}
-        <div className="relative flex h-64 w-full flex-shrink-0 items-center justify-center overflow-hidden bg-secondary-50 sm:h-80">
+        <div className="relative flex h-72 w-full flex-shrink-0 items-center justify-center overflow-hidden bg-secondary-50 p-3 sm:h-80 sm:p-0">
           {activeItem?.image ? (
             <img
               src={getImageUrl(activeItem.image)}
               alt={`${event.title} ${activeIndex + 1}`}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-contain sm:object-cover"
               loading="lazy"
               decoding="async"
             />
@@ -64,7 +64,7 @@ function EventDetailModal({ event, onClose }) {
             <video
               key={activeItem.vedio}
               src={getImageUrl(activeItem.vedio)}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-contain sm:object-cover"
               controls
               preload="metadata"
             />
@@ -126,14 +126,14 @@ function EventDetailModal({ event, onClose }) {
                   <img
                     src={getImageUrl(item.image)}
                     alt=""
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-contain sm:object-cover"
                     loading="lazy"
                     decoding="async"
                   />
                 ) : item?.vedio ? (
                   <video
                     src={getImageUrl(item.vedio)}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-contain sm:object-cover"
                     preload="metadata"
                     muted
                   />

@@ -24,7 +24,7 @@ function MediaThumb({ item, isActive, onSelect }) {
       }`}
       aria-pressed={isActive}
     >
-      <img src={getImageUrl(item.image)} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" />
+      <img src={getImageUrl(item.image)} alt="" className="h-full w-full object-contain sm:object-cover" loading="lazy" decoding="async" />
 
       <span className="absolute bottom-1 left-1 rounded-full bg-black/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-white">{t('imageLabel')}</span>
     </button>
@@ -309,9 +309,9 @@ function EventDetailPage() {
                 </div>
 
                 <div className="overflow-hidden rounded-[24px] bg-primary-50">
-                  <div className="relative flex min-h-[280px] items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(217,36,43,0.12),_transparent_55%)] sm:min-h-[380px]">
+                  <div className="relative flex min-h-[280px] items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(217,36,43,0.12),_transparent_55%)] p-3 sm:min-h-[380px] sm:p-0">
                     {activeImage?.image ? (
-                      <img src={getImageUrl(activeImage.image)} alt={event.title} className="h-full w-full object-cover" loading="lazy" decoding="async" />
+                      <img src={getImageUrl(activeImage.image)} alt={event.title} className="h-full w-full object-contain sm:object-cover" loading="lazy" decoding="async" />
                     ) : null}
 
                     {!activeImage?.image ? (
@@ -355,7 +355,7 @@ function EventDetailPage() {
                         <div className="relative aspect-video bg-black">
                           <video
                             src={getImageUrl(item.vedio)}
-                            className="h-full w-full object-cover"
+                            className="h-full w-full object-contain sm:object-cover"
                             controls
                             playsInline
                             preload="metadata"

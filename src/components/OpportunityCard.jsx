@@ -13,10 +13,10 @@ const OpportunityCard = memo(function OpportunityCard({ opportunity }) {
       to={`/opportunities/${opportunity.id}`}
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-primary-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
     >
-      <div className="h-32 w-full flex-shrink-0 overflow-hidden bg-primary-50">
+      <div className="w-full flex-shrink-0 overflow-hidden">
         {primaryImage ? (
           <img
-            className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+            className="w-full transition duration-500 group-hover:scale-105 md:h-40 md:object-cover"
             src={getImageUrl(primaryImage)}
             alt={opportunity.titre || `${opportunity.first_name || ''} ${opportunity.last_name || ''}`.trim() || 'Opportunity'}
             loading="lazy"

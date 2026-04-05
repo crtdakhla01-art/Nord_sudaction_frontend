@@ -24,9 +24,9 @@ function SidebarWidget({ title, children }) {
 function SidebarPost({ post }) {
   return (
     <Link to={`/actualites/${post.slug}`} className="group flex items-start gap-3 py-3 transition">
-      <div className="h-14 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-primary-100">
+      <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-primary-100 p-1 sm:h-14 sm:p-0">
         {post.media && !/\.(mp4|webm|ogg|mov|avi|mkv)$/i.test(post.media) ? (
-          <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" loading="lazy" decoding="async" />
+          <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-contain transition duration-300 group-hover:scale-105 sm:object-cover" loading="lazy" decoding="async" />
         ) : (
           <div className="flex h-full items-center justify-center">
             <span className="text-[10px] font-black text-secondary-500 opacity-40">NSA</span>
@@ -88,11 +88,11 @@ function PostDetailPage() {
 
               {/* Hero image */}
               {post.media ? (
-                <div className="h-64 w-full overflow-hidden sm:h-80 md:h-[420px]">
+                <div className="h-72 w-full overflow-hidden bg-primary-100 p-3 sm:h-80 sm:bg-transparent sm:p-0 md:h-[420px]">
                   {/\.(mp4|webm|ogg|mov|avi|mkv)$/i.test(post.media) ? (
-                    <video src={getImageUrl(post.media)} className="h-full w-full object-cover" controls />
+                    <video src={getImageUrl(post.media)} className="h-full w-full object-contain sm:object-cover" controls />
                   ) : (
-                    <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-cover" loading="lazy" decoding="async" />
+                    <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-contain sm:object-cover" loading="lazy" decoding="async" />
                   )}
                 </div>
               ) : null}
@@ -150,11 +150,11 @@ function PostDetailPage() {
                         className="group interactive-card flex flex-col overflow-hidden rounded-xl bg-white shadow transition-all duration-300"
                       >
                       {item.media ? (
-                        <div className="h-32 w-full overflow-hidden bg-primary-50">
+                        <div className="w-full overflow-hidden">
                           {/\.(mp4|webm|ogg|mov|avi|mkv)$/i.test(item.media) ? (
-                            <video src={getImageUrl(item.media)} className="h-full w-full object-cover" muted />
+                            <video src={getImageUrl(item.media)} className="w-full md:h-40 md:object-cover" muted />
                           ) : (
-                            <img src={getImageUrl(item.media)} alt={item.title} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" loading="lazy" decoding="async" />
+                            <img src={getImageUrl(item.media)} alt={item.title} className="w-full transition duration-300 group-hover:scale-105 md:h-40 md:object-cover" loading="lazy" decoding="async" />
                           )}
                         </div>
                       ) : (
