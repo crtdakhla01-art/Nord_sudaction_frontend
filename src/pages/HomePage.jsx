@@ -319,7 +319,7 @@ function HomePage() {
                       to={`/actualites/${post.slug}`}
                       className="mt-3 block w-full rounded-xl bg-secondary-500 px-4 py-2 text-center text-xs font-semibold text-white transition hover:bg-secondary-600"
                     >
-                      Lire la suite
+                      {t('readMore')}
                     </Link>
                   </div>
                 </MotionArticle>

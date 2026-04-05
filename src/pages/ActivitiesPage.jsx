@@ -5,8 +5,10 @@ import { useActivities } from '../hooks/useActivities'
 import { motion } from 'framer-motion'
 import { fadeLeft, fadeUp, inViewViewport, scaleHover, staggerContainer } from '../utils/animations'
 import { getImageUrl } from '../api/client'
+import { useTranslation } from 'react-i18next'
 
 function ActivitiesPage() {
+  const { t } = useTranslation()
   const MotionDiv = motion.div
   const MotionH1 = motion.h1
   const MotionArticle = motion.article
@@ -78,7 +80,7 @@ function ActivitiesPage() {
                       whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2, ease: 'easeOut' }}
                     >
-                      Voir l'activité
+                      {t('viewArticle')}
                     </MotionLink>
                   </div>
                 </MotionArticle>

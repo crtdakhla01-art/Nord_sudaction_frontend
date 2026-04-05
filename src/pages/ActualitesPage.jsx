@@ -8,8 +8,10 @@ import { getImageUrl } from '../api/client'
 import { usePosts } from '../hooks/usePosts'
 import { formatDateLabel } from '../utils/date'
 import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
+import { useTranslation } from 'react-i18next'
 
 function ActualitesPage() {
+  const { t } = useTranslation()
   const MotionDiv = motion.div
   const MotionH1 = motion.h1
   const MotionArticle = motion.article
@@ -86,7 +88,7 @@ function ActualitesPage() {
                 <p className="mt-3 text-sm leading-7 text-primary-400">{featured.description}</p>
                 <p className="mt-3 text-xs font-semibold uppercase text-primary-400">{formatDateLabel(featured.published_at || featured.created_at, 'fr')}</p>
                 <Link to={`/actualites/${featured.slug}`} className="mt-5 inline-flex cursor-pointer rounded-lg bg-secondary-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-secondary-600 active:scale-95">
-                  Read details
+                  {t('readMore')}
                 </Link>
               </div>
             </div>
@@ -128,7 +130,7 @@ function ActualitesPage() {
                         type="button"
                         className="mt-1 inline-flex w-full cursor-pointer items-center justify-center rounded-lg bg-secondary-500 px-3 py-2 text-xs font-semibold text-white shadow-sm transition-all duration-300 ease-out hover:bg-accent-500 hover:shadow-lg hover:shadow-secondary-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-500 focus-visible:ring-offset-2"
                       >
-                        View Details
+                        {t('readMore')}
                       </button>
                     </div>
                   </Link>
