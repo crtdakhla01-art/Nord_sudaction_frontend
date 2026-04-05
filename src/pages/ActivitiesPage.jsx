@@ -30,7 +30,7 @@ function ActivitiesPage() {
           whileInView="visible"
           viewport={inViewViewport}
         >
-          Activités
+          Presse et medias
         </MotionH1>
 
         <div className="mt-8">

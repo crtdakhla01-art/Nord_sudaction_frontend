@@ -18,6 +18,81 @@ const createInitialValues = () => ({
   gallery: [createEmptyGalleryItem()],
 })
 
+const galleryFieldLabels = {
+  image: 'Image',
+  vedio: 'Video',
+  link: 'Lien',
+  existing_image: 'Image existante',
+  existing_vedio: 'Video existante',
+}
+
+const baseFieldLabels = {
+  title: 'Titre',
+  description: 'Description',
+  date: 'Date',
+  location: 'Localisation',
+  is_it_passed: 'Statut evenement passe',
+}
+
+const getFriendlyFieldLabel = (field) => {
+  const galleryMatch = field.match(/^gallery\.(\d+)\.(\w+)$/)
+
+  if (galleryMatch) {
+    const itemNumber = Number(galleryMatch[1]) + 1
+    const mediaField = galleryFieldLabels[galleryMatch[2]] || galleryMatch[2]
+    return `${mediaField} du media #${itemNumber}`
+  }
+
+  return baseFieldLabels[field] || field
+}
+
+const buildFriendlyValidationMessage = (field, rawMessage) => {
+  const label = getFriendlyFieldLabel(field)
+  const message = String(rawMessage || '').toLowerCase()
+
+  if (message.includes('valid url') || message.includes('url')) {
+    return `${label}: veuillez saisir un lien complet qui commence par http:// ou https://.`
+  }
+
+  if (message.includes('required')) {
+    return `${label} est obligatoire.`
+  }
+
+  if (message.includes('must be a file')) {
+    return `${label}: le fichier envoye est invalide.`
+  }
+
+  if (message.includes('mimes') || message.includes('mimetypes')) {
+    return `${label}: format de fichier non supporte.`
+  }
+
+  if (message.includes('may not be greater') || message.includes('max')) {
+    return `${label}: la valeur depasse la limite autorisee.`
+  }
+
+  return `${label}: ${rawMessage}`
+}
+
+const getFriendlyMutationError = (error, isNotFoundMessage = null) => {
+  if (isNotFoundMessage) {
+    return isNotFoundMessage
+  }
+
+  const data = error?.response?.data
+  const validationErrors = data?.errors
+
+  if (validationErrors && typeof validationErrors === 'object') {
+    const friendlyMessages = Object.entries(validationErrors).flatMap(([field, messages]) => {
+      const firstMessage = Array.isArray(messages) ? messages[0] : messages
+      return [buildFriendlyValidationMessage(field, firstMessage)]
+    })
+
+    return [...new Set(friendlyMessages)].join(' ')
+  }
+
+  return data?.message || error?.message || 'Une erreur est survenue. Verifiez les champs puis reessayez.'
+}
+
 function AdminEventsPage() {
   const { t, i18n } = useTranslation()
   const [values, setValues] = useState(createInitialValues)
@@ -25,6 +100,11 @@ function AdminEventsPage() {
   const { eventsQuery, createMutation, updateMutation, deleteMutation } = useEventsCRUD()
 
   const saveMutation = editingId ? updateMutation : createMutation
+  const isEventMissingError = updateMutation.error?.response?.status === 404
+  const submitErrorMessage = getFriendlyMutationError(
+    saveMutation.error,
+    isEventMissingError ? 'Cet evenement n\'existe plus dans la base de donnees. Veuillez rafraichir la page.' : null,
+  )
 
   const sortedEvents = useMemo(() => eventsQuery.data || [], [eventsQuery.data])
 
@@ -221,16 +301,9 @@ function AdminEventsPage() {
           {t('eventPassed')}
         </label>
 
-        {(createMutation.isError || updateMutation.isError) ? (
+        {saveMutation.isError ? (
           <ErrorState
-            message={
-              updateMutation.error?.response?.status === 404
-                ? 'Cet événement n\'existe plus dans la base de données. Veuillez rafraîchir la page.'
-                : (createMutation.error?.response?.data?.message ||
-                  updateMutation.error?.response?.data?.message ||
-                  createMutation.error?.message ||
-                  updateMutation.error?.message)
-            }
+            message={submitErrorMessage}
           />
         ) : null}
 

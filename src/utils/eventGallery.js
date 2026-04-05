@@ -6,6 +6,19 @@ export const createEmptyGalleryItem = () => ({
   link: '',
 })
 
+const isValidGalleryLink = (value) => {
+  if (!value) {
+    return false
+  }
+
+  try {
+    const parsed = new URL(value)
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:'
+  } catch {
+    return false
+  }
+}
+
 export const getGalleryItems = (event) => {
   const items = (event?.gallery || []).map((item) => ({
     image: null,
@@ -20,7 +33,9 @@ export const getGalleryItems = (event) => {
 
 export const appendGalleryItemsToFormData = (formData, galleryItems) => {
   galleryItems.forEach((item, index) => {
-    const hasData = item.image || item.existingImage || item.vedio || item.existingVedio || item.link?.trim()
+    const normalizedLink = typeof item.link === 'string' ? item.link.trim() : ''
+    const hasValidLink = isValidGalleryLink(normalizedLink)
+    const hasData = item.image || item.existingImage || item.vedio || item.existingVedio || hasValidLink
 
     if (!hasData) {
       return
@@ -38,8 +53,8 @@ export const appendGalleryItemsToFormData = (formData, galleryItems) => {
       formData.append(`gallery[${index}][existing_vedio]`, item.existingVedio)
     }
 
-    if (item.link?.trim()) {
-      formData.append(`gallery[${index}][link]`, item.link.trim())
+    if (hasValidLink) {
+      formData.append(`gallery[${index}][link]`, normalizedLink)
     }
   })
 }

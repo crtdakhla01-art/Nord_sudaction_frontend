@@ -37,6 +37,7 @@ function OpportunitiesPage() {
   const [page, setPage] = useState(1)
   const [formValues, setFormValues] = useState(initialForm)
   const [formErrors, setFormErrors] = useState({})
+  const [uploadInputKey, setUploadInputKey] = useState(0)
   const itemsPerPage = 16
 
   const { data: opportunities, isLoading, isError, error } = useOpportunities()
@@ -190,8 +191,9 @@ function OpportunitiesPage() {
 
     try {
       await submitMutation.mutateAsync(formValues)
-      setFormValues(initialForm)
+      setFormValues({ ...initialForm, images: [] })
       setFormErrors({})
+      setUploadInputKey((prev) => prev + 1)
     } catch {
       // error is displayed via submitMutation.isError
     }
@@ -423,6 +425,7 @@ function OpportunitiesPage() {
 
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <InputField
+                key={uploadInputKey}
                 label={t('formImage')}
                 type="file"
                 name="images"

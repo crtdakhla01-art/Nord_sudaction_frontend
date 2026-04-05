@@ -156,7 +156,7 @@ function AdminActivitiesPage() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-primary-500">Activités</h1>
+        <h1 className="text-2xl font-bold text-primary-500">Presse et medias</h1>
         <button
           type="button"
           onClick={openAdd}
