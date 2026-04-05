@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 
-const COUNTER_API_URL = './counter-proxy.php'
+const COUNTER_API_URL = 'https://api.nordsudaction.ma/counter-proxy.php'
 const SESSION_COUNT_KEY = 'nsa_visitor_counter_value'
 const VISIBILITY_THRESHOLD = 1000
 
 function toSafeCount(payload) {
   if (payload && typeof payload === 'object') {
-    const candidates = [payload.count, payload.value, payload.total]
+    const candidates = [payload.up_count, payload.count, payload.value, payload.total]
     for (const candidate of candidates) {
       const parsed = Number(candidate)
       if (Number.isFinite(parsed) && parsed >= 0) {
@@ -19,8 +18,33 @@ function toSafeCount(payload) {
   return null
 }
 
+function detectBrowserLanguage() {
+  const language = (navigator.language || '').toLowerCase()
+
+  if (language.startsWith('fr')) {
+    return 'fr'
+  }
+
+  if (language.startsWith('es')) {
+    return 'es'
+  }
+
+  return 'en'
+}
+
+function labelForLanguage(language) {
+  if (language === 'fr') {
+    return 'Visiteurs :'
+  }
+
+  if (language === 'es') {
+    return 'Visitantes:'
+  }
+
+  return 'Visitors:'
+}
+
 function VisitorCounter() {
-  const { t } = useTranslation()
   const [count, setCount] = useState(() => {
     const cached = sessionStorage.getItem(SESSION_COUNT_KEY)
     if (cached === null) {
@@ -53,6 +77,7 @@ function VisitorCounter() {
       try {
         const response = await fetch(COUNTER_API_URL, {
           method: 'GET',
+          mode: 'cors',
           headers: {
             Accept: 'application/json',
           },
@@ -86,7 +111,8 @@ function VisitorCounter() {
     }
   }, [count])
 
-  const label = t('visitorCounterLabel')
+  const browserLanguage = useMemo(() => detectBrowserLanguage(), [])
+  const label = useMemo(() => labelForLanguage(browserLanguage), [browserLanguage])
   const formattedCount = useMemo(() => {
     if (!Number.isFinite(count)) {
       return ''
