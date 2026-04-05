@@ -64,6 +64,8 @@ function App() {
                 <Route path="activities" element={<AdminActivitiesPage />} />
                 <Route path="gallery" element={<AdminGalleryPage />} />
               </Route>
+
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Route>
           </Route>
 

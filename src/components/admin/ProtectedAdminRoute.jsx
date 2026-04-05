@@ -8,11 +8,11 @@ function ProtectedAdminRoute({ allowedRoles }) {
   const role = user?.role?.name
 
   if (!token) {
-    return <Navigate to="/admin/login" replace state={{ from: location }} />
+    return <Navigate to="/" replace state={{ from: location }} />
   }
 
   if (Array.isArray(allowedRoles) && allowedRoles.length > 0 && !allowedRoles.includes(role)) {
-    return <Navigate to="/admin/opportunities" replace />
+    return <Navigate to="/" replace />
   }
 
   return <Outlet />
