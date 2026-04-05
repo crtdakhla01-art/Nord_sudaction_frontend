@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { getAdminUser } from './api/adminClient'
 import ProtectedAdminRoute from './components/admin/ProtectedAdminRoute'
 import ScrollToTopOnRouteChange from './components/ScrollToTopOnRouteChange'
+import VisitorCounter from './components/VisitorCounter'
 import AdminLayout from './layouts/AdminLayout'
 import MainLayout from './layouts/MainLayout'
 
@@ -45,6 +46,7 @@ function App() {
   return (
     <>
       <ScrollToTopOnRouteChange />
+      <VisitorCounter />
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           <Route path="/admin/login" element={<AdminLoginPage />} />
