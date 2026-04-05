@@ -84,6 +84,9 @@ function App() {
             <Route path="/galerie" element={<GalleryPage />} />
             <Route path="/contact" element={<ContactPage />} />
           </Route>
+
+          <Route path="/counter-proxy.php" element={<RouteFallback />} />
+
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
