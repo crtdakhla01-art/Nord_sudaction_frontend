@@ -97,6 +97,9 @@ function OpportunitiesPage() {
   const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage))
   const paginatedOpportunities = filteredOpportunities.slice((page - 1) * itemsPerPage, page * itemsPerPage)
 
+  const MAX_IMAGE_SIZE_MB = 20
+  const MAX_IMAGE_COUNT = 10
+
   const validate = () => {
     const errors = {}
     const requiredFields = ['titre', 'ville', 'first_name', 'last_name', 'description', 'email', 'type_key']
@@ -111,8 +114,37 @@ function OpportunitiesPage() {
       errors.email = t('invalidEmailError')
     }
 
+    if (formValues.images.length > MAX_IMAGE_COUNT) {
+      errors.images = t('imageCountError')
+    } else {
+      const oversized = formValues.images.find((f) => f.size > MAX_IMAGE_SIZE_MB * 1024 * 1024)
+      if (oversized) {
+        errors.images = t('imageSizeError', { name: oversized.name })
+      }
+    }
+
     setFormErrors(errors)
     return Object.keys(errors).length === 0
+  }
+
+  const getFriendlyServerError = (error) => {
+    const data = error?.response?.data
+    if (!data) return t('formSubmitError')
+    const { errors } = data
+    if (errors && typeof errors === 'object') {
+      const messages = Object.entries(errors).flatMap(([field, msgs]) => {
+        const raw = Array.isArray(msgs) ? msgs[0] : msgs
+        if (field === 'images' || field.startsWith('images.')) {
+          if (/size|kilobytes|megabytes|taille/i.test(raw)) return [t('imageGenericError')]
+          if (/count|max|nombre/i.test(raw)) return [t('imageCountError')]
+          return [t('imageGenericError')]
+        }
+        return [raw]
+      })
+      const unique = [...new Set(messages)]
+      return unique.join(' ')
+    }
+    return data.message || t('formSubmitError')
   }
 
   const handleChange = (event) => {
@@ -156,9 +188,13 @@ function OpportunitiesPage() {
 
     if (!validate()) return
 
-    await submitMutation.mutateAsync(formValues)
-    setFormValues(initialForm)
-    setFormErrors({})
+    try {
+      await submitMutation.mutateAsync(formValues)
+      setFormValues(initialForm)
+      setFormErrors({})
+    } catch {
+      // error is displayed via submitMutation.isError
+    }
   }
 
   const tabClass = (tab) =>
@@ -399,6 +435,10 @@ function OpportunitiesPage() {
               />
             </div>
 
+            {formErrors.images ? (
+              <span className="block text-xs text-secondary-600">{formErrors.images}</span>
+            ) : null}
+
             {formValues.images.length > 0 ? (
               <div className="space-y-2">
                 <p className="text-xs text-primary-400">
@@ -422,7 +462,7 @@ function OpportunitiesPage() {
             ) : null}
 
             {submitMutation.isError ? (
-              <ErrorState message={submitMutation.error?.response?.data?.message || submitMutation.error?.message} />
+              <ErrorState message={getFriendlyServerError(submitMutation.error)} />
             ) : null}
             {submitMutation.isSuccess ? (
               <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
