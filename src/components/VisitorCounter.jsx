@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
-const COUNTER_API_URL = 'https://api.counterapi.dev/v1/nordsudaction_visitore/up'
+const COUNTER_API_URL = './counter-proxy.php'
 const SESSION_COUNT_KEY = 'nsa_visitor_counter_value'
-const VISIBILITY_THRESHOLD = 0
-const DEV_FALLBACK_COUNT = 1234
+const VISIBILITY_THRESHOLD = 1000
 
 function toSafeCount(payload) {
   if (payload && typeof payload === 'object') {
@@ -20,57 +19,8 @@ function toSafeCount(payload) {
   return null
 }
 
-function detectLanguage(pathname) {
-  const path = (pathname || '').toLowerCase()
-
-  if (path.startsWith('/es') || path.includes('/es/')) {
-    return 'es'
-  }
-
-  if (path.startsWith('/fr') || path.includes('/fr/')) {
-    return 'fr'
-  }
-
-  if (path.startsWith('/en') || path.includes('/en/')) {
-    return 'en'
-  }
-
-  const saved = (localStorage.getItem('lang') || '').toLowerCase()
-  if (saved.startsWith('fr')) {
-    return 'fr'
-  }
-  if (saved.startsWith('es')) {
-    return 'es'
-  }
-  if (saved.startsWith('en')) {
-    return 'en'
-  }
-
-  const browserLanguage = (navigator.language || '').toLowerCase()
-  if (browserLanguage.startsWith('fr')) {
-    return 'fr'
-  }
-  if (browserLanguage.startsWith('es')) {
-    return 'es'
-  }
-
-  return 'en'
-}
-
-function labelForLanguage(language) {
-  if (language === 'fr') {
-    return 'Visiteurs :'
-  }
-
-  if (language === 'es') {
-    return 'Visitantes:'
-  }
-
-  return 'Visitors:'
-}
-
 function VisitorCounter() {
-  const { pathname } = useLocation()
+  const { t } = useTranslation()
   const [count, setCount] = useState(() => {
     const cached = sessionStorage.getItem(SESSION_COUNT_KEY)
     if (cached === null) {
@@ -109,12 +59,6 @@ function VisitorCounter() {
         })
 
         if (!response.ok) {
-          if (import.meta.env.DEV) {
-            sessionStorage.setItem(SESSION_COUNT_KEY, String(DEV_FALLBACK_COUNT))
-            if (isActive) {
-              setCount(DEV_FALLBACK_COUNT)
-            }
-          }
           return
         }
 
@@ -122,12 +66,6 @@ function VisitorCounter() {
         const value = toSafeCount(payload)
 
         if (value === null) {
-          if (import.meta.env.DEV) {
-            sessionStorage.setItem(SESSION_COUNT_KEY, String(DEV_FALLBACK_COUNT))
-            if (isActive) {
-              setCount(DEV_FALLBACK_COUNT)
-            }
-          }
           return
         }
 
@@ -137,12 +75,7 @@ function VisitorCounter() {
           setCount(value)
         }
       } catch {
-        if (import.meta.env.DEV) {
-          sessionStorage.setItem(SESSION_COUNT_KEY, String(DEV_FALLBACK_COUNT))
-          if (isActive) {
-            setCount(DEV_FALLBACK_COUNT)
-          }
-        }
+        // Keep hidden on any network/proxy error.
       }
     }
 
@@ -153,10 +86,15 @@ function VisitorCounter() {
     }
   }, [count])
 
-  const isAdminRoute = pathname.toLowerCase().startsWith('/admin')
-  const language = useMemo(() => detectLanguage(pathname), [pathname])
-  const label = useMemo(() => labelForLanguage(language), [language])
-  const shouldShow = (import.meta.env.DEV || !isAdminRoute) && Number.isFinite(count) && count >= VISIBILITY_THRESHOLD
+  const label = t('visitorCounterLabel')
+  const formattedCount = useMemo(() => {
+    if (!Number.isFinite(count)) {
+      return ''
+    }
+
+    return new Intl.NumberFormat('en-US').format(count)
+  }, [count])
+  const shouldShow = Number.isFinite(count) && count >= VISIBILITY_THRESHOLD
 
   return (
     <div
@@ -166,7 +104,7 @@ function VisitorCounter() {
       aria-label={shouldShow ? `${label} ${count}` : 'Visitor counter hidden'}
     >
       <span className="visitor-counter__label">{label}</span>
-      <span className="visitor-counter__count">{count}</span>
+      <span className="visitor-counter__count">{formattedCount}</span>
     </div>
   )
 }
