@@ -41,7 +41,7 @@ function AdminLayout() {
           ) : null}
           {role === 'admin' ? (
             <NavLink to="/admin/activities" className={navClass}>
-              Presse et medias
+              Médias
             </NavLink>
           ) : null}
           {role === 'admin' ? (
