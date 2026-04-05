@@ -1,10 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
-const COUNTER_API_URL = API_BASE_URL
-  ? `${API_BASE_URL.replace(/\/api\/?$/, '')}/counter-proxy.php`
-  : '/counter-proxy.php'
+const COUNTER_API_URL = 'https://api.nordsudaction.ma/api/visitor-up'
 const SESSION_COUNT_KEY = 'nsa_visitor_counter_value'
 const VISIBILITY_THRESHOLD = 1000
 
