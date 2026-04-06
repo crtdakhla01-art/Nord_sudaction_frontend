@@ -2,12 +2,14 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { getAdminToken, getOtpContext } from '../../api/adminClient'
 import ErrorState from '../../components/ErrorState'
 import { useAdminAuth } from '../../hooks/useAdminAuth'
+import usePreventDoubleSubmit from '../../hooks/usePreventDoubleSubmit'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 function AdminVerifyOtpPage() {
   const { verifyOtpMutation } = useAdminAuth()
   const { t } = useTranslation()
+  const { wrap } = usePreventDoubleSubmit()
   const navigate = useNavigate()
   const otpContext = getOtpContext()
   const [otpCode, setOtpCode] = useState('')
@@ -20,7 +22,7 @@ function AdminVerifyOtpPage() {
     return <Navigate to="/admin/login" replace />
   }
 
-  const onSubmit = async (event) => {
+  const onSubmit = wrap(async (event) => {
     event.preventDefault()
 
     try {
@@ -31,7 +33,7 @@ function AdminVerifyOtpPage() {
     } catch {
       // Error is rendered via verifyOtpMutation.isError.
     }
-  }
+  })
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-primary-50 px-4">

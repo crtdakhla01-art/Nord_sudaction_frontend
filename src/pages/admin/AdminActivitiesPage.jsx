@@ -3,6 +3,7 @@ import ErrorState from '../../components/ErrorState'
 import InputField from '../../components/InputField'
 import LoadingState from '../../components/LoadingState'
 import { useActivitiesCRUD } from '../../hooks/useActivitiesCRUD'
+import usePreventDoubleSubmit from '../../hooks/usePreventDoubleSubmit'
 import { getImageUrl } from '../../api/client'
 
 const emptyValues = { title: '', link: '', image: '' }
@@ -105,12 +106,14 @@ function AdminActivitiesPage() {
     return Object.keys(errs).length === 0
   }
 
+  const { wrap } = usePreventDoubleSubmit()
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormValues((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = wrap(async (e) => {
     e.preventDefault()
     if (!validate()) return
 
@@ -132,7 +135,7 @@ function AdminActivitiesPage() {
     setFormValues(emptyValues)
     setImageFile(null)
     setFormErrors({})
-  }
+  })
 
   const openAdd = () => {
     setFormValues(emptyValues)

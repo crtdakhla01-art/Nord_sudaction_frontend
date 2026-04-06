@@ -13,7 +13,7 @@ const OpportunityCard = memo(function OpportunityCard({ opportunity }) {
       to={`/opportunities/${opportunity.id}`}
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-primary-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
     >
-      <div className="w-full flex-shrink-0 overflow-hidden">
+      <div className="w-full flex-shrink-0 overflow-hidden md:h-40">
         {primaryImage ? (
           <img
             className="w-full transition duration-500 group-hover:scale-105 md:h-40 md:object-cover"
@@ -23,7 +23,7 @@ const OpportunityCard = memo(function OpportunityCard({ opportunity }) {
             decoding="async"
           />
         ) : (
-          <span className="flex h-full w-full items-center justify-center text-4xl font-black text-secondary-500 opacity-20">NSA</span>
+          <span className="flex h-full w-full items-center justify-center text-4xl font-black text-secondary-500 opacity-20">{t('opportunityNoImage')}</span>
         )}
       </div>
 

@@ -6,6 +6,7 @@ import LoadingState from '../../components/LoadingState'
 import TextareaField from '../../components/TextareaField'
 import { getImageUrl } from '../../api/client'
 import { useEventsCRUD } from '../../hooks/useEventsCRUD'
+import usePreventDoubleSubmit from '../../hooks/usePreventDoubleSubmit'
 import { formatDateLabel, toDateInputValue } from '../../utils/date'
 import { createEmptyGalleryItem, getFeaturedGalleryMedia, getGalleryItems } from '../../utils/eventGallery'
 
@@ -176,12 +177,14 @@ function AdminEventsPage() {
     })
   }
 
+  const { wrap } = usePreventDoubleSubmit()
+
   const resetForm = () => {
     setEditingId(null)
     setValues(createInitialValues())
   }
 
-  const onSubmit = async (event) => {
+  const onSubmit = wrap(async (event) => {
     event.preventDefault()
 
     if (editingId) {
@@ -194,7 +197,7 @@ function AdminEventsPage() {
     }
 
     resetForm()
-  }
+  })
 
   return (
     <section className="w-full space-y-6">

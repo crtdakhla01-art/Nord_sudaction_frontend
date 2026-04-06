@@ -11,6 +11,7 @@ import TextareaField from '../components/TextareaField'
 import { useOpportunityTypes } from '../hooks/useOpportunityTypes'
 import { useOpportunities } from '../hooks/useOpportunities'
 import { useSubmitOpportunity } from '../hooks/useSubmitOpportunity'
+import usePreventDoubleSubmit from '../hooks/usePreventDoubleSubmit'
 import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
 
 const initialForm = {
@@ -43,6 +44,7 @@ function OpportunitiesPage() {
   const { data: opportunities, isLoading, isError, error } = useOpportunities()
   const { data: opportunityTypes } = useOpportunityTypes()
   const submitMutation = useSubmitOpportunity()
+  const { wrap } = usePreventDoubleSubmit()
 
   const staticTypeOptions = [
     { key: 'investment', label: t('opportunityTypeInvestment') },
@@ -184,7 +186,7 @@ function OpportunitiesPage() {
     }))
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = wrap(async (event) => {
     event.preventDefault()
 
     if (!validate()) return
@@ -197,7 +199,7 @@ function OpportunitiesPage() {
     } catch {
       // error is displayed via submitMutation.isError
     }
-  }
+  })
 
   const tabClass = (tab) =>
     `rounded-xl px-4 py-2 text-sm font-semibold transition ${

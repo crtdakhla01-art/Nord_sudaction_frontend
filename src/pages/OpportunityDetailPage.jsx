@@ -91,7 +91,7 @@ function OpportunityDetailPage() {
               </MotionH1>
 
               {/* Info tiles */}
-              <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {opportunity.ville && (
                   <div className="rounded-2xl border border-primary-100 bg-primary-50 px-4 py-4">
                     <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-300">{t('cardVille')}</p>
@@ -106,10 +106,10 @@ function OpportunityDetailPage() {
                   <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-300">{t('cardBudget')}</p>
                   <p className="mt-2 text-sm font-semibold leading-6 text-primary-500">{opportunity.budget || '-'}</p>
                 </div>
-                <div className="rounded-2xl border border-secondary-100 bg-secondary-50 px-4 py-4">
+                {/* <div className="rounded-2xl border border-secondary-100 bg-secondary-50 px-4 py-4">
                   <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary-400">{t('cardPhone')}</p>
                   <p className="mt-2 text-sm font-semibold leading-6 text-secondary-600">{opportunity.phone || '-'}</p>
-                </div>
+                </div> */}
               </div>
             </div>
           </MotionDiv>
@@ -224,9 +224,17 @@ function OpportunityDetailPage() {
                       {opportunity.email}
                     </a>
                   </li>
-                  <li>
-                    <strong className="text-secondary-600">{t('cardPhone')}:</strong> {opportunity.phone}
-                  </li>
+                  {opportunity.phone && (
+                    <li>
+                      <strong className="text-secondary-600">{t('cardPhone')}:</strong>{' '}
+                      <a
+                        href={`tel:${opportunity.phone}`}
+                        className="text-secondary-500 underline hover:text-secondary-600"
+                      >
+                        {opportunity.phone}
+                      </a>
+                    </li>
+                  )}
                 </ul>
               </MotionSection>
             </div>

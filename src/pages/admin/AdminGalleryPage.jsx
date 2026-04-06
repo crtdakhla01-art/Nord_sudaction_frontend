@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import ErrorState from '../../components/ErrorState'
 import LoadingState from '../../components/LoadingState'
 import { useAdminGalleryCRUD } from '../../hooks/useAdminGalleryCRUD'
+import usePreventDoubleSubmit from '../../hooks/usePreventDoubleSubmit'
 
 const resolveUrl = (path) => {
   if (!path) return null
@@ -29,6 +30,7 @@ function AdminGalleryPage() {
     deleteCategoryMutation,
   } = useAdminGalleryCRUD(page)
   const fileInputRef = useRef(null)
+  const { wrap } = usePreventDoubleSubmit()
 
   const payload = galleryQuery.data ?? {}
   const images = Array.isArray(payload.data) ? payload.data : []
@@ -58,13 +60,13 @@ function AdminGalleryPage() {
     await deleteMutation.mutateAsync(id)
   }
 
-  const handleCreateCategory = async (e) => {
+  const handleCreateCategory = wrap(async (e) => {
     e.preventDefault()
     const name = newCategoryName.trim()
     if (!name) return
     await createCategoryMutation.mutateAsync(name)
     setNewCategoryName('')
-  }
+  })
 
   const handleCategoryChange = async (imageId, value) => {
     if (!value) return

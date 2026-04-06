@@ -7,6 +7,7 @@ import RichTextEditor from '../../components/RichTextEditor'
 import TextareaField from '../../components/TextareaField'
 import { getImageUrl } from '../../api/client'
 import { useAdminPostsCRUD } from '../../hooks/useAdminPostsCRUD'
+import usePreventDoubleSubmit from '../../hooks/usePreventDoubleSubmit'
 import { formatDateLabel, toDateInputValue } from '../../utils/date'
 
 const initialValues = {
@@ -66,12 +67,14 @@ function AdminPostsPage() {
     })
   }
 
+  const { wrap } = usePreventDoubleSubmit()
+
   const resetForm = () => {
     setEditingId(null)
     setValues(initialValues)
   }
 
-  const onSubmit = async (event) => {
+  const onSubmit = wrap(async (event) => {
     event.preventDefault()
 
     if (editingId) {
@@ -81,7 +84,7 @@ function AdminPostsPage() {
     }
 
     resetForm()
-  }
+  })
 
   return (
     <section className="w-full space-y-6">

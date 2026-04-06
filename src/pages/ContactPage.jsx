@@ -7,6 +7,7 @@ import InputField from '../components/InputField'
 import SectionContainer from '../components/SectionContainer'
 import TextareaField from '../components/TextareaField'
 import { useSubmitContactMessage } from '../hooks/useSubmitContactMessage'
+import usePreventDoubleSubmit from '../hooks/usePreventDoubleSubmit'
 import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
 const initialForm = {
@@ -26,6 +27,7 @@ function ContactPage() {
   const [formValues, setFormValues] = useState(initialForm)
   const [formErrors, setFormErrors] = useState({})
   const submitMutation = useSubmitContactMessage()
+  const { wrap } = usePreventDoubleSubmit()
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -47,14 +49,14 @@ function ContactPage() {
     return Object.keys(errors).length === 0
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = wrap(async (event) => {
     event.preventDefault()
     if (!validate()) return
 
     await submitMutation.mutateAsync(formValues)
     setFormValues(initialForm)
     setFormErrors({})
-  }
+  })
 
   return (
     <SectionContainer>

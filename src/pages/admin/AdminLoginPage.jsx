@@ -4,10 +4,12 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { getAdminToken, setOtpContext } from '../../api/adminClient'
 import ErrorState from '../../components/ErrorState'
 import { useAdminAuth } from '../../hooks/useAdminAuth'
+import usePreventDoubleSubmit from '../../hooks/usePreventDoubleSubmit'
 
 function AdminLoginPage() {
   const { loginMutation } = useAdminAuth()
   const { t } = useTranslation()
+  const { wrap } = usePreventDoubleSubmit()
   const navigate = useNavigate()
   const [values, setValues] = useState({
     email: '',
@@ -23,7 +25,7 @@ function AdminLoginPage() {
     setValues((prev) => ({ ...prev, [name]: value }))
   }
 
-  const onSubmit = async (event) => {
+  const onSubmit = wrap(async (event) => {
     event.preventDefault()
     try {
       await loginMutation.mutateAsync(values)
@@ -34,7 +36,7 @@ function AdminLoginPage() {
     } catch {
       // Error is rendered via loginMutation.isError.
     }
-  }
+  })
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-primary-50 px-4">
