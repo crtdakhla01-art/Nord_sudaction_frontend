@@ -1,13 +1,51 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import ErrorState from '../components/ErrorState'
 import SectionContainer from '../components/SectionContainer'
-import { fetchGalleryPage } from '../api/gallery'
+import { fetchGalleryCategories, fetchGalleryPage } from '../api/gallery'
 import { fadeLeft, fadeUp, inViewViewport } from '../utils/animations'
 
 const skeletonItems = Array.from({ length: 8 }, (_, index) => index)
+
+const knownGalleryCategories = [
+  {
+    aliases: ['Dakhla desert', 'Dakhla désert', 'Dakhla kit surf', 'Dakhla kite surf'],
+    en: 'Dakhla desert',
+    es: 'Kitesurf en Dakhla',
+  },
+  {
+    aliases: ['Activites et animation', 'Activités et animation'],
+    en: 'Activities and entertainment',
+    es: 'Actividades y animacion',
+  },
+  {
+    aliases: ['Raid Tanja lagouira', 'Raid Tanja Lagouira'],
+    en: 'Raid Tanja Lagouira',
+    es: 'Raid Tanja Lagouira',
+  },
+]
+
+const normalizeCategory = (value = '') =>
+  String(value)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim()
+    .toLowerCase()
+
+const translateCategoryLabel = (categoryName, language) => {
+  const languagePrefix = String(language || '').slice(0, 2).toLowerCase()
+  if (!['en', 'es'].includes(languagePrefix)) return categoryName
+
+  const normalizedCategory = normalizeCategory(categoryName)
+  const matchingCategory = knownGalleryCategories.find((item) =>
+    item.aliases.some((alias) => normalizeCategory(alias) === normalizedCategory),
+  )
+
+  if (!matchingCategory) return categoryName
+  return matchingCategory[languagePrefix] || categoryName
+}
 
 const ImageCard = memo(function ImageCard({ img, onOpen }) {
   const [loaded, setLoaded] = useState(false)
@@ -44,7 +82,7 @@ export default function GalleryPage() {
   const MotionDiv = motion.div
   const MotionH1 = motion.h1
 
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [lightbox, setLightbox] = useState(null)
   const [activeCategory, setActiveCategory] = useState('all')
 
@@ -64,11 +102,27 @@ export default function GalleryPage() {
     staleTime: 10 * 60 * 1000,
   })
 
+  const { data: categoriesData } = useQuery({
+    queryKey: ['gallery-categories'],
+    queryFn: fetchGalleryCategories,
+    staleTime: 10 * 60 * 1000,
+  })
+
   const images = data?.pages.flatMap((page) => page.images) ?? []
-  const categoryNames = Array.from(new Set(images.map((img) => img.categoryName).filter(Boolean)))
+  const categoryNames = Array.from(
+    new Set((categoriesData ?? []).map((category) => category.name).filter(Boolean)),
+  )
   const categories = categoryNames.length > 0 ? ['all', ...categoryNames] : []
+  const selectedCategory = categories.includes(activeCategory) ? activeCategory : 'all'
   const filteredImages =
-    activeCategory === 'all' ? images : images.filter((img) => img.categoryName === activeCategory)
+    selectedCategory === 'all'
+      ? images
+      : images.filter((img) => img.categoryName === selectedCategory)
+
+  const getCategoryLabel = useCallback(
+    (categoryName) => translateCategoryLabel(categoryName, i18n.resolvedLanguage || i18n.language),
+    [i18n.language, i18n.resolvedLanguage],
+  )
 
   const handleOpen = useCallback((img) => setLightbox(img), [])
 
@@ -140,12 +194,12 @@ export default function GalleryPage() {
                   type="button"
                   onClick={() => setActiveCategory(category)}
                   className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
-                    activeCategory === category
+                    selectedCategory === category
                       ? 'bg-secondary-500 text-white'
                       : 'border border-primary-200 bg-white text-primary-500 hover:bg-primary-50'
                   }`}
                 >
-                  {category === 'all' ? 'Toutes' : category}
+                  {category === 'all' ? t('all') : getCategoryLabel(category)}
                 </button>
               ))}
             </div>

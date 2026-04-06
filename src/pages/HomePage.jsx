@@ -273,9 +273,6 @@ function HomePage() {
             >
               Actualités
             </MotionH2>
-            <Link to="/actualites" className="animated-underline text-sm font-semibold text-secondary-500 transition hover:text-accent-500">
-              voir plus
-            </Link>
           </div>
 
           {isLoading ? <LoadingState /> : null}
@@ -325,6 +322,17 @@ function HomePage() {
                 </MotionArticle>
               ))}
             </MotionDiv>
+          ) : null}
+
+          {!isLoading && !isError ? (
+            <div className="mt-5 flex justify-center">
+              <Link
+                to="/actualites"
+                className="animated-underline text-sm font-semibold text-secondary-500 transition hover:text-accent-500"
+              >
+                voir plus
+              </Link>
+            </div>
           ) : null}
         </MotionDiv>
       </SectionContainer>

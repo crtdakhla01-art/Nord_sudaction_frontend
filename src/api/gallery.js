@@ -36,3 +36,23 @@ export const fetchGalleryPage = async ({ pageParam = 1 }) => {
     nextPage: currentPage < lastPage ? currentPage + 1 : undefined,
   }
 }
+
+export const fetchGalleryCategories = async () => {
+  const response = await publicApi.get('/gallery-categories')
+  const payload = response.data ?? {}
+
+  const items = Array.isArray(payload)
+    ? payload
+    : Array.isArray(payload.data)
+      ? payload.data
+      : Array.isArray(payload.categories)
+        ? payload.categories
+        : []
+
+  return items
+    .map((item) => ({
+      id: item?.id ?? null,
+      name: String(item?.name || '').trim(),
+    }))
+    .filter((item) => item.name.length > 0)
+}
