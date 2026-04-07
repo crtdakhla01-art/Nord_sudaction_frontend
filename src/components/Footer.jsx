@@ -91,14 +91,6 @@ function Footer() {
                 www.dakhlainvest.ma
               </a>
               <a
-                href="https://www.visitmorocco.com"
-                target="_blank"
-                rel="noreferrer"
-                className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500"
-              >
-                www.visitmorocco.com
-              </a>
-              <a
                 href="https://www.justice.gov.ma"
                 target="_blank"
                 rel="noreferrer"
@@ -113,6 +105,14 @@ function Footer() {
                 className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500"
               >
                 www.diplomatie.ma
+              </a>
+                            <a
+                href="https://www.visitdakhla.ma"
+                target="_blank"
+                rel="noreferrer"
+                className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500"
+              >
+                www.visitdakhla.ma
               </a>
             </div>
           </div>
