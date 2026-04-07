@@ -105,6 +105,19 @@ const resources = {
       eventsPassedTab: 'Événements passés',
       eventsFilterAll: 'Tous les types',
       opportunitiesPageTitle: 'Opportunités',
+      opportunitiesIntroParagraph1:
+        'Dakhla s’affirme comme une destination stratégique pour les investisseurs et entrepreneurs en quête de projets innovants et à fort potentiel.',
+      opportunitiesIntroParagraph2:
+        'La section Opportunités de Nord Sud Action vous ouvre les portes d’un marché riche et diversifié, où chaque idée, projet ou partenariat peut se concrétiser.',
+      opportunitiesIntroListTitle: 'Ici, vous pouvez :',
+      opportunitiesIntroBullet1:
+        'Découvrir des opportunités d’investissement à fort impact dans des secteurs variés : tourisme, industrie, services, énergie, agriculture…',
+      opportunitiesIntroBullet2:
+        'Soumettre vos offres de cession, propositions de partenariat ou projets à la recherche de financement.',
+      opportunitiesIntroBullet3:
+        'Être mis en relation avec les acteurs locaux et institutionnels les plus pertinents pour accélérer vos projets.',
+      opportunitiesIntroParagraph3:
+        'Avec Nord Sud Action, transformez vos ambitions en actions concrètes et profitez d’un accompagnement expert pour tirer le meilleur de la région de Dakhla. Notre objectif est de faciliter la rencontre entre l’offre et la demande, en créant un environnement transparent, sécurisé et propice au développement économique et à l’innovation dans la région de Dakhla.',
       opportunitiesViewTab: 'Voir les opportunités',
       opportunitiesSubmitTab: 'Soumettre une offre',
       filterAllTypes: 'Tous les types',
@@ -252,6 +265,7 @@ const resources = {
       footerText: 'Là où les projets deviennent des investissements',
       footerContact: 'Contact',
       footerSocial: 'Réseaux sociaux',
+      footerUsefulLinks: 'Liens utiles',
       footerCopyright: 'Tous droits réservés.',
       postTypeArticle: 'Articles',
       postTypeCommunique: 'Communiqués',
@@ -361,6 +375,19 @@ const resources = {
       eventsPassedTab: 'Past events',
       eventsFilterAll: 'All types',
       opportunitiesPageTitle: 'Opportunities',
+      opportunitiesIntroParagraph1:
+        'Dakhla is establishing itself as a strategic destination for investors and entrepreneurs seeking innovative, high-potential projects.',
+      opportunitiesIntroParagraph2:
+        'The Opportunities section of Nord Sud Action opens the door to a rich and diverse market, where every idea, project, or partnership can take shape.',
+      opportunitiesIntroListTitle: 'Here, you can:',
+      opportunitiesIntroBullet1:
+        'Explore high-impact investment opportunities across a wide range of sectors: tourism, industry, services, energy, agriculture, and more.',
+      opportunitiesIntroBullet2:
+        'Submit business transfer offers, partnership proposals, or projects seeking funding.',
+      opportunitiesIntroBullet3:
+        'Connect with the most relevant local and institutional stakeholders to accelerate your projects.',
+      opportunitiesIntroParagraph3:
+        'With Nord Sud Action, turn your ambitions into concrete action and benefit from expert guidance to unlock the full potential of the Dakhla region. Our goal is to facilitate the meeting of supply and demand by creating a transparent, secure environment that supports economic development and innovation in the Dakhla region.',
       opportunitiesViewTab: 'View opportunities',
       opportunitiesSubmitTab: 'Submit opportunity',
       filterAllTypes: 'All types',
@@ -507,6 +534,7 @@ const resources = {
       footerText: 'Where projects become investments',
       footerContact: 'Contact',
       footerSocial: 'Social',
+      footerUsefulLinks: 'Useful links',
       footerCopyright: 'All rights reserved.',
       postTypeArticle: 'Articles',
       postTypeCommunique: 'Press Releases',
@@ -616,6 +644,19 @@ const resources = {
       eventsPassedTab: 'Eventos pasados',
       eventsFilterAll: 'Todos los tipos',
       opportunitiesPageTitle: 'Oportunidades',
+      opportunitiesIntroParagraph1:
+        'Dakhla se afirma como un destino estratégico para inversores y emprendedores que buscan proyectos innovadores y de alto potencial.',
+      opportunitiesIntroParagraph2:
+        'La sección Oportunidades de Nord Sud Action le abre las puertas de un mercado rico y diversificado, donde cada idea, proyecto o alianza puede hacerse realidad.',
+      opportunitiesIntroListTitle: 'Aqui, usted puede:',
+      opportunitiesIntroBullet1:
+        'Descubrir oportunidades de inversion de alto impacto en sectores variados: turismo, industria, servicios, energia, agricultura y mas.',
+      opportunitiesIntroBullet2:
+        'Presentar sus ofertas de cesion, propuestas de alianza o proyectos en busca de financiacion.',
+      opportunitiesIntroBullet3:
+        'Ponerse en contacto con los actores locales e institucionales mas pertinentes para acelerar sus proyectos.',
+      opportunitiesIntroParagraph3:
+        'Con Nord Sud Action, transforme sus ambiciones en acciones concretas y aproveche un acompanamiento experto para sacar el maximo partido de la region de Dakhla. Nuestro objetivo es facilitar el encuentro entre la oferta y la demanda, creando un entorno transparente, seguro y favorable al desarrollo economico y a la innovacion en la region de Dakhla.',
       opportunitiesViewTab: 'Ver oportunidades',
       opportunitiesSubmitTab: 'Enviar oportunidad',
       filterAllTypes: 'Todos los tipos',
@@ -762,6 +803,7 @@ const resources = {
       footerText: 'Donde los proyectos se convierten en inversiones',
       footerContact: 'Contacto',
       footerSocial: 'Redes sociales',
+      footerUsefulLinks: 'Enlaces utiles',
       footerCopyright: 'Todos los derechos reservados.',
       postTypeArticle: 'Artículos',
       postTypeCommunique: 'Comunicados',

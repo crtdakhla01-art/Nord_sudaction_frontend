@@ -70,6 +70,52 @@ function Footer() {
               </svg>
             </a>
           </div>
+
+          <div className="mt-6">
+            <p className="text-sm font-semibold text-white">{t('footerUsefulLinks')}</p>
+            <div className="mt-2 flex flex-col gap-2">
+              <a
+                href="https://www.visitmorocco.com"
+                target="_blank"
+                rel="noreferrer"
+                className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500"
+              >
+                www.visitmorocco.com
+              </a>
+              <a
+                href="https://www.dakhlainvest.ma"
+                target="_blank"
+                rel="noreferrer"
+                className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500"
+              >
+                www.dakhlainvest.ma
+              </a>
+              <a
+                href="https://www.visitmorocco.com"
+                target="_blank"
+                rel="noreferrer"
+                className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500"
+              >
+                www.visitmorocco.com
+              </a>
+              <a
+                href="https://www.justice.gov.ma"
+                target="_blank"
+                rel="noreferrer"
+                className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500"
+              >
+                www.justice.gov.ma
+              </a>
+              <a
+                href="https://www.diplomatie.ma"
+                target="_blank"
+                rel="noreferrer"
+                className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500"
+              >
+                www.diplomatie.ma
+              </a>
+            </div>
+          </div>
         </div>
       </div>
       <div className="border-t border-secondary-700 px-4 py-4 text-center text-xs leading-5 text-primary-400 sm:px-6">

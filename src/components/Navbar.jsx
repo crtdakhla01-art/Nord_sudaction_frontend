@@ -80,7 +80,7 @@ function Navbar() {
               </div>
 
               <motion.a
-                href="https://visitedakhla.ma"
+                href="https://visitdakhla.ma"
                 target="_blank"
                 rel="noreferrer"
                 className="block w-full lg:w-[80%] flex-shrink-0 lg:ml-auto"

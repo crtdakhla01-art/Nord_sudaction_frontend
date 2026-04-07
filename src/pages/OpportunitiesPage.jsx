@@ -12,7 +12,7 @@ import { useOpportunityTypes } from '../hooks/useOpportunityTypes'
 import { useOpportunities } from '../hooks/useOpportunities'
 import { useSubmitOpportunity } from '../hooks/useSubmitOpportunity'
 import usePreventDoubleSubmit from '../hooks/usePreventDoubleSubmit'
-import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
+import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
 const initialForm = {
   titre: '',
@@ -217,6 +217,33 @@ function OpportunitiesPage() {
         animate="visible"
       >
         <MotionH1 className="text-4xl font-extrabold text-primary-500 md:text-5xl" variants={fadeLeft}>{t('opportunitiesPageTitle')}</MotionH1>
+
+        <MotionDiv className="mt-6" variants={fadeUp}>
+          <div className="rounded-2xl border border-primary-100 bg-white p-6 shadow-sm sm:p-8">
+            <div className="space-y-4 text-base leading-7 text-primary-400 md:text-lg">
+              <p>{t('opportunitiesIntroParagraph1')}</p>
+              <p>{t('opportunitiesIntroParagraph2')}</p>
+              <div>
+                <p className="font-semibold text-primary-500">{t('opportunitiesIntroListTitle')}</p>
+                <ul className="mt-3 space-y-3">
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-secondary-500" />
+                    <span>{t('opportunitiesIntroBullet1')}</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-secondary-500" />
+                    <span>{t('opportunitiesIntroBullet2')}</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-secondary-500" />
+                    <span>{t('opportunitiesIntroBullet3')}</span>
+                  </li>
+                </ul>
+              </div>
+              <p>{t('opportunitiesIntroParagraph3')}</p>
+            </div>
+          </div>
+        </MotionDiv>
 
         <MotionDiv className="mt-6 inline-flex items-center gap-1 rounded-xl border border-primary-100 bg-white p-1 shadow-sm" variants={fadeUp}>
           <button type="button" className={tabClass('list')} onClick={() => setActiveTab('list')}>
