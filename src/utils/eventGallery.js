@@ -6,13 +6,29 @@ export const createEmptyGalleryItem = () => ({
   link: '',
 })
 
+export const normalizeGalleryLink = (value) => {
+  const trimmed = typeof value === 'string' ? value.trim() : ''
+
+  if (!trimmed) {
+    return ''
+  }
+
+  if (/^[a-z][a-z\d+.-]*:\/\//i.test(trimmed)) {
+    return trimmed
+  }
+
+  return `https://${trimmed.replace(/^\/+/, '')}`
+}
+
 const isValidGalleryLink = (value) => {
-  if (!value) {
+  const normalizedValue = normalizeGalleryLink(value)
+
+  if (!normalizedValue) {
     return false
   }
 
   try {
-    const parsed = new URL(value)
+    const parsed = new URL(normalizedValue)
     return parsed.protocol === 'http:' || parsed.protocol === 'https:'
   } catch {
     return false
@@ -33,7 +49,7 @@ export const getGalleryItems = (event) => {
 
 export const appendGalleryItemsToFormData = (formData, galleryItems) => {
   galleryItems.forEach((item, index) => {
-    const normalizedLink = typeof item.link === 'string' ? item.link.trim() : ''
+    const normalizedLink = normalizeGalleryLink(item.link)
     const hasValidLink = isValidGalleryLink(normalizedLink)
     const hasData = item.image || item.existingImage || item.vedio || item.existingVedio || hasValidLink
 

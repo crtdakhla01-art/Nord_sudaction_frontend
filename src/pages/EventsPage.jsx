@@ -6,7 +6,7 @@ import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
 import SectionContainer from '../components/SectionContainer'
 import { useEvents } from '../hooks/useEvents'
-import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
+import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
 function EventsPage() {
   const MotionDiv = motion.div
@@ -54,6 +54,20 @@ function EventsPage() {
         animate="visible"
       >
         <MotionH1 className="text-4xl font-extrabold text-primary-500 md:text-5xl" variants={fadeLeft}>{t('eventsPageTitle')}</MotionH1>
+
+        <MotionDiv className="mt-6" variants={fadeUp}>
+          <div className="rounded-2xl border border-primary-100 bg-white p-6 shadow-sm sm:p-8">
+            <h2 className="text-2xl font-bold text-primary-500 md:text-3xl">{t('eventsIntroTitle')}</h2>
+            <div className="mt-4 space-y-4 text-base leading-7 text-primary-400 md:text-lg">
+              <p>{t('eventsIntroParagraph1')}</p>
+              <p>{t('eventsIntroParagraph2')}</p>
+              <p>{t('eventsIntroParagraph3')}</p>
+              <p>{t('eventsIntroParagraph4')}</p>
+              <p>{t('eventsIntroParagraph5')}</p>
+              <p>{t('eventsIntroParagraph6')}</p>
+            </div>
+          </div>
+        </MotionDiv>
 
         <MotionDiv className="mt-6 w-full overflow-x-auto pb-1" variants={fadeUp}>
           <div className="inline-flex min-w-max items-center gap-1 rounded-xl border border-primary-100 bg-white p-1 shadow-sm">

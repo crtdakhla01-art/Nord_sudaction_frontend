@@ -111,10 +111,10 @@ function Navbar() {
           <MotionDiv className="mx-auto flex w-full max-w-6xl items-center justify-between gap-2 py-3" variants={fadeUp}>
             <MotionNav className="hidden flex-row items-center gap-1 lg:flex" variants={staggerContainer}>
               <MotionLink variants={fadeUp}><NavLink to="/" className={navClassName} onClick={() => setIsOpen(false)}>{t('navHome')}</NavLink></MotionLink>
-              <MotionLink variants={fadeUp}><NavLink to="/events" className={navClassName} onClick={() => setIsOpen(false)}>{t('navEvents')}</NavLink></MotionLink>
-              <MotionLink variants={fadeUp}><NavLink to="/activities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navActivites')}</NavLink></MotionLink>
               <MotionLink variants={fadeUp}><NavLink to="/opportunities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navOpportunities')}</NavLink></MotionLink>
+              <MotionLink variants={fadeUp}><NavLink to="/events" className={navClassName} onClick={() => setIsOpen(false)}>{t('navEvents')}</NavLink></MotionLink>
               <MotionLink variants={fadeUp}><NavLink to="/galerie" className={navClassName} onClick={() => setIsOpen(false)}>{t('navGallery')}</NavLink></MotionLink>
+              <MotionLink variants={fadeUp}><NavLink to="/activities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navActivites')}</NavLink></MotionLink>
               <MotionLink variants={fadeUp}><NavLink to="/contact" className={navClassName} onClick={() => setIsOpen(false)}>{t('navContact')}</NavLink></MotionLink>
             </MotionNav>
             <MotionDiv className="hidden lg:block" variants={fadeLeft}>
@@ -133,10 +133,10 @@ function Navbar() {
           animate="visible"
         >
           <NavLink to="/" className={navClassName} onClick={() => setIsOpen(false)}>{t('navHome')}</NavLink>
-          <NavLink to="/events" className={navClassName} onClick={() => setIsOpen(false)}>{t('navEvents')}</NavLink>
-          <NavLink to="/activities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navActivites')}</NavLink>
           <NavLink to="/opportunities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navOpportunities')}</NavLink>
+          <NavLink to="/events" className={navClassName} onClick={() => setIsOpen(false)}>{t('navEvents')}</NavLink>
           <NavLink to="/galerie" className={navClassName} onClick={() => setIsOpen(false)}>{t('navGallery')}</NavLink>
+          <NavLink to="/activities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navActivites')}</NavLink>
           <NavLink to="/contact" className={navClassName} onClick={() => setIsOpen(false)}>{t('navContact')}</NavLink>
         </motion.nav>
       )}

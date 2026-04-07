@@ -72,7 +72,7 @@ const resources = {
       laCopeDates: '22-25 octobre 2026',
       raidEdition: '17ème édition',
       raidTitle: 'RAID TANJA LAGOUIRA',
-      raidDates: '30 octobre au 8 novembre 2026',
+      raidDates: 'Du 30 octobre au 8 novembre 2026',
       raidText1:
         'Un raid qui relie deux fêtes nationales : le 31 octobre, fête de l’unité et le 6 novembre, la glorieuse marche verte.',
       raidText2:
@@ -87,8 +87,20 @@ const resources = {
       homeCtaText:
         'Aidez les personnes à accéder au volontariat, à l’emploi et aux initiatives solidaires en publiant des opportunités vérifiées.',
       eventsPageTitle: 'Événements',
-      eventsIntro:
-        'Découvrez des moments où bénévoles, associations et communautés locales se réunissent.',
+      eventsIntro: 'Découvrez des moments où bénévoles, associations et communautés locales se réunissent.',
+      eventsIntroTitle: 'Dakhla, votre nouvelle destination MICE d’exception',
+      eventsIntroParagraph1:
+        'Au carrefour de l’Afrique et de l’Europe, Dakhla s’impose comme une destination émergente incontournable pour l’organisation de congrès, salons, séminaires et événements internationaux.',
+      eventsIntroParagraph2:
+        'L’Association Nord Sud Action vous accompagne en tant que partenaire stratégique local, en vous proposant une approche intégrée et sur mesure pour la réalisation de vos projets événementiels à fort impact.',
+      eventsIntroParagraph3:
+        'De la conception à l’exécution, nous orchestrons chaque détail avec exigence et professionnalisme : ingénierie logistique, aménagement d’espaces, installations techniques, coordination opérationnelle et gestion des démarches administratives auprès des autorités locales.',
+      eventsIntroParagraph4:
+        'Notre parfaite connaissance du territoire, combinée à un réseau qualifié de partenaires institutionnels et privés, vous garantit un accès fluide aux ressources essentielles et aux meilleurs prestataires de la région.',
+      eventsIntroParagraph5:
+        'En choisissant Nord Sud Action, vous faites le choix d’un accompagnement haut de gamme, d’une expertise locale éprouvée et d’un environnement unique pour offrir à vos événements une dimension exceptionnelle.',
+      eventsIntroParagraph6:
+        'Nous mettons tout en œuvre pour faire de chaque rendez-vous un levier de rayonnement, de connexion et de création de valeur durable à Dakhla.',
       eventsUpcomingTab: 'Événements à venir',
       eventsPassedTab: 'Événements passés',
       eventsFilterAll: 'Tous les types',
@@ -331,8 +343,20 @@ const resources = {
       homeCtaText:
         'Help people access volunteering, jobs, and support opportunities by publishing verified initiatives.',
       eventsPageTitle: 'Events',
-      eventsIntro:
-        'Discover moments where volunteers, organizations, and local communities come together.',
+      eventsIntro: 'Discover moments where volunteers, organizations, and local communities come together.',
+      eventsIntroTitle: 'Dakhla, your new exceptional MICE destination',
+      eventsIntroParagraph1:
+        'At the crossroads of Africa and Europe, Dakhla is establishing itself as a key emerging destination for organizing congresses, trade fairs, seminars, and international events.',
+      eventsIntroParagraph2:
+        'Nord Sud Action supports you as a strategic local partner, offering an integrated and tailor-made approach for delivering high-impact event projects.',
+      eventsIntroParagraph3:
+        'From concept to execution, we coordinate every detail with rigor and professionalism: logistics engineering, venue setup, technical installations, operational coordination, and administrative procedures with local authorities.',
+      eventsIntroParagraph4:
+        'Our in-depth knowledge of the region, combined with a qualified network of institutional and private partners, ensures smooth access to essential resources and the best service providers in the area.',
+      eventsIntroParagraph5:
+        'By choosing Nord Sud Action, you choose premium support, proven local expertise, and a unique environment that gives your events an exceptional dimension.',
+      eventsIntroParagraph6:
+        'We are committed to turning every event into a driver of visibility, connection, and long-term value creation in Dakhla.',
       eventsUpcomingTab: 'Upcoming events',
       eventsPassedTab: 'Past events',
       eventsFilterAll: 'All types',
@@ -574,8 +598,20 @@ const resources = {
       homeCtaText:
         'Ayuda a las personas a acceder al voluntariado, al empleo y al apoyo social publicando iniciativas verificadas.',
       eventsPageTitle: 'Eventos',
-      eventsIntro:
-        'Descubre momentos donde voluntarios, asociaciones y comunidades locales se unen.',
+      eventsIntro: 'Descubre momentos donde voluntarios, asociaciones y comunidades locales se unen.',
+      eventsIntroTitle: 'Dakhla, su nuevo destino MICE de referencia',
+      eventsIntroParagraph1:
+        'En el cruce de África y Europa, Dakhla se consolida como un destino emergente imprescindible para la organización de congresos, ferias, seminarios y eventos internacionales.',
+      eventsIntroParagraph2:
+        'La Asociación Nord Sud Action le acompaña como socio estratégico local, proponiéndole un enfoque integrado y a medida para llevar a cabo sus proyectos eventuales de alto impacto.',
+      eventsIntroParagraph3:
+        'Desde la concepción hasta la ejecución, coordinamos cada detalle con exigencia y profesionalismo: ingeniería logística, acondicionamiento de espacios, instalaciones técnicas, coordinación operativa y gestión de los trámites administrativos ante las autoridades locales.',
+      eventsIntroParagraph4:
+        'Nuestro profundo conocimiento del territorio, combinado con una red cualificada de socios institucionales y privados, le garantiza un acceso fluido a los recursos esenciales y a los mejores prestadores de la región.',
+      eventsIntroParagraph5:
+        'Al elegir Nord Sud Action, elige un acompañamiento de alta gama, una experiencia local consolidada y un entorno único para dar a sus eventos una dimensión excepcional.',
+      eventsIntroParagraph6:
+        'Ponemos todo en marcha para convertir cada encuentro en una palanca de visibilidad, conexión y creación de valor duradero en Dakhla.',
       eventsUpcomingTab: 'Eventos proximos',
       eventsPassedTab: 'Eventos pasados',
       eventsFilterAll: 'Todos los tipos',

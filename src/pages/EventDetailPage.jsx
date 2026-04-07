@@ -8,6 +8,7 @@ import LoadingState from '../components/LoadingState'
 import SectionContainer from '../components/SectionContainer'
 import { useEvent } from '../hooks/useEvent'
 import { formatDateLabel } from '../utils/date'
+import { normalizeGalleryLink } from '../utils/eventGallery'
 import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
 
 function MediaThumb({ item, isActive, onSelect }) {
@@ -417,14 +418,14 @@ function EventDetailPage() {
                     {links.map((item, index) => (
                       <a
                         key={`${item.link}-${index}`}
-                        href={item.link}
+                        href={normalizeGalleryLink(item.link)}
                         target="_blank"
                         rel="noreferrer"
                         className="group flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-secondary-100 bg-secondary-50 px-4 py-4 text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-secondary-200 hover:bg-white hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-500 focus-visible:ring-offset-2"
                       >
                         <div className="min-w-0">
                           <p className="text-sm font-semibold text-secondary-600">{t('openLink')} {links.length > 1 ? index + 1 : ''}</p>
-                          <p className="mt-1 truncate text-sm text-primary-400">{item.link}</p>
+                          <p className="mt-1 truncate text-sm text-primary-400">{normalizeGalleryLink(item.link)}</p>
                         </div>
                         <span className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-white text-secondary-500 shadow-sm transition-all duration-300 group-hover:bg-secondary-500 group-hover:text-white">
                           ↗

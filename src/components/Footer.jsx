@@ -16,11 +16,10 @@ function Footer() {
           <p className="text-sm font-semibold text-white">{t('footerPages')}</p>
           <div className="mt-2 flex flex-col gap-2">
             <Link to="/" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navHome')}</Link>
-            <Link to="/a-propos" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navAbout')}</Link>
-            <Link to="/events" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navEvents')}</Link>
-            <Link to="/activities" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navActivites')}</Link>
             <Link to="/opportunities" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navOpportunities')}</Link>
+            <Link to="/events" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navEvents')}</Link>
             <Link to="/galerie" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navGallery')}</Link>
+            <Link to="/activities" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navActivites')}</Link>
             <Link to="/contact" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navContact')}</Link>
           </div>
         </div>
