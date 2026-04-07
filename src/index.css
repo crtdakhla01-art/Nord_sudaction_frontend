@@ -51,6 +51,12 @@ html[dir="rtl"] * {
   text-align: right;
 }
 
+html[dir="rtl"] [dir="ltr"] {
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+}
+
 html[dir="ltr"],
 html[dir="ltr"] * {
   direction: ltr;

@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import logo from '../assets/blanc_logo.png'
 
+const contactPhone = '+212660544904'
+
 function Footer() {
   const { t } = useTranslation()
 
@@ -26,7 +28,9 @@ function Footer() {
         <div>
           <p className="text-sm font-semibold text-white">{t('footerContact')}</p>
           <p className="mt-2 text-sm text-primary-300">contact@nordsudaction.org</p>
-          <p className="text-sm text-primary-300">+212660544904</p>
+          <p className="text-sm text-primary-300">
+            <span dir="ltr">{contactPhone}</span>
+          </p>
         </div>
         <div>
           <p className="text-sm font-semibold text-white">{t('footerSocial')}</p>

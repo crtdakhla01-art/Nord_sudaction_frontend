@@ -10,6 +10,8 @@ import { useSubmitContactMessage } from '../hooks/useSubmitContactMessage'
 import usePreventDoubleSubmit from '../hooks/usePreventDoubleSubmit'
 import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
+const contactPhone = '+212 660 544 904'
+
 const initialForm = {
   name: '',
   email: '',
@@ -87,7 +89,7 @@ function ContactPage() {
               className="animated-underline inline-flex items-center gap-2 rounded-xl bg-accent-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-accent-600 active:scale-95"
             >
               <span className="inline-block h-2 w-2 rounded-full bg-white/60" />
-              {t('whatsappLabel')} +212 660 544 904
+              {t('whatsappLabel')} <span dir="ltr">{contactPhone}</span>
             </a>
           </div>
         </MotionDiv>
@@ -126,6 +128,8 @@ function ContactPage() {
             )}
             name="phone"
             type="tel"
+            dir="ltr"
+            inputMode="tel"
             value={formValues.phone}
             onChange={handleChange}
             error={formErrors.phone}
