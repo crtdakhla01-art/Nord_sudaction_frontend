@@ -132,7 +132,19 @@ function AdminPostsPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          <InputField label="Media" type="file" name="media" accept="image/*,video/*" onChange={onChange} />
+          <label className="block text-sm font-medium text-primary-500">
+            <span>Media</span>
+            <input
+              className="mt-2 block min-h-12 w-full cursor-pointer rounded-xl border border-primary-200 bg-white px-4 py-3 text-sm text-primary-500 shadow-sm outline-none transition-all duration-300 file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-secondary-500 file:px-3 file:py-2 file:text-xs file:font-semibold file:text-white focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20"
+              type="file"
+              name="media"
+              accept="image/*,video/*"
+              onChange={onChange}
+            />
+            {values.media ? (
+              <span className="mt-2 block text-xs text-primary-400">Selected file: {values.media.name}</span>
+            ) : null}
+          </label>
 
           <label className="inline-flex items-center gap-3 text-sm font-medium text-primary-500">
             <input

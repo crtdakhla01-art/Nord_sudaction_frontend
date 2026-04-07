@@ -272,13 +272,15 @@ function EventDetailPage() {
 
           <MotionDiv className="grid gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(320px,0.9fr)]" variants={fadeUp}>
             <div className="space-y-8">
-              <MotionSection className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)] sm:p-8" variants={fadeUp}>
-                <p className="text-xs font-bold uppercase tracking-[0.24em] text-secondary-500">{t('formDescription')}</p>
-                <h2 className="mt-2 text-xl font-bold text-primary-500">{t('descriptionHeading')}</h2>
-                <div className="mt-5 rounded-2xl bg-primary-50 p-5 sm:p-6">
-                  <p className="whitespace-pre-line text-base leading-8 text-primary-400">{event.description}</p>
-                </div>
-              </MotionSection>
+              {event.description ? (
+                <MotionSection className="rounded-[28px] border border-primary-100 bg-white p-6 shadow-[0_14px_34px_rgba(20,20,20,0.05)] sm:p-8" variants={fadeUp}>
+                  <p className="text-xs font-bold uppercase tracking-[0.24em] text-secondary-500">{t('formDescription')}</p>
+                  <h2 className="mt-2 text-xl font-bold text-primary-500">{t('descriptionHeading')}</h2>
+                  <div className="mt-5 rounded-2xl bg-primary-50 p-5 sm:p-6">
+                    <p className="whitespace-pre-line text-base leading-8 text-primary-400">{event.description}</p>
+                  </div>
+                </MotionSection>
+              ) : null}
 
               <MotionSection className="rounded-[28px] border border-secondary-100 bg-primary-50 p-5 shadow-[0_14px_34px_rgba(20,20,20,0.05)] sm:p-6" variants={fadeUp} style={{ y: mediaY }}>
                 <div className="mb-5 flex items-center justify-between gap-4">

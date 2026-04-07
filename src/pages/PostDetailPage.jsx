@@ -108,7 +108,9 @@ function PostDetailPage() {
                 <MotionH1 className="text-2xl font-extrabold leading-snug tracking-tight text-primary-500 md:text-3xl" variants={fadeLeft}>{post.title}</MotionH1>
 
                 {/* Lead description */}
-                <p className="border-l-4 border-secondary-500 pl-4 text-base font-medium leading-relaxed text-primary-400">{post.description}</p>
+                {post.description ? (
+                  <p className="border-l-4 border-secondary-500 pl-4 text-base font-medium leading-relaxed text-primary-400">{post.description}</p>
+                ) : null}
 
                 {/* Rich content */}
                 {post.content ? (

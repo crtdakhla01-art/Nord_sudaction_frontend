@@ -85,7 +85,9 @@ function ActualitesPage() {
               <div className="p-6 md:p-8">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-secondary-500">Featured</p>
                 <h2 className="mt-3 text-2xl font-black text-primary-500">{featured.title}</h2>
-                <p className="mt-3 text-sm leading-7 text-primary-400">{featured.description}</p>
+                {featured.description ? (
+                  <p className="mt-3 text-sm leading-7 text-primary-400">{featured.description}</p>
+                ) : null}
                 <p className="mt-3 text-xs font-semibold uppercase text-primary-400">{formatDateLabel(featured.published_at || featured.created_at, 'fr')}</p>
                 <Link to={`/actualites/${featured.slug}`} className="mt-5 inline-flex cursor-pointer rounded-lg bg-secondary-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-secondary-600 active:scale-95">
                   {t('readMore')}
@@ -123,7 +125,7 @@ function ActualitesPage() {
                     <div className="flex flex-1 flex-col justify-between gap-2 p-3">
                       <div className="space-y-1">
                         <h3 className="text-sm font-bold text-primary-500 line-clamp-2">{post.title}</h3>
-                        <p className="line-clamp-2 text-xs text-primary-400">{post.description}</p>
+                        {post.description ? <p className="line-clamp-2 text-xs text-primary-400">{post.description}</p> : null}
                         <p className="text-xs font-semibold uppercase text-primary-400">{formatDateLabel(post.published_at || post.created_at, 'fr')}</p>
                       </div>
                       <button

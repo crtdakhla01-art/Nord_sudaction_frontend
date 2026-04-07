@@ -191,14 +191,16 @@ function EventDetailModal({ event, onClose }) {
             <hr className="border-primary-100" />
 
             {/* Description */}
-            <div>
-              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-secondary-500">
-                {t('formDescription')}
-              </h3>
-              <p className="whitespace-pre-line leading-relaxed text-primary-400">
-                {event.description}
-              </p>
-            </div>
+            {event.description ? (
+              <div>
+                <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-secondary-500">
+                  {t('formDescription')}
+                </h3>
+                <p className="whitespace-pre-line leading-relaxed text-primary-400">
+                  {event.description}
+                </p>
+              </div>
+            ) : null}
 
             {/* Links */}
             {links.length > 0 && (
