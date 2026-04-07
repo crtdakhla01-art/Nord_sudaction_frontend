@@ -443,6 +443,16 @@ function EventDetailPage() {
               </MotionSection>
             </div>
           </MotionDiv>
+
+          {/* Back to events button at bottom */}
+          <MotionDiv className="flex justify-center" variants={fadeUp}>
+            <Link
+              to="/events"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary-50 px-4 py-2 text-sm font-semibold text-primary-500 transition-all duration-300 hover:bg-primary-100 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2"
+            >
+              ← {t('backToEvents')}
+            </Link>
+          </MotionDiv>
         </MotionDiv>
       </SectionContainer>
 

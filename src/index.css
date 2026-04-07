@@ -44,6 +44,27 @@ body {
   color: #3c3c3c;
 }
 
+/* RTL Support - Ensure direction is applied globally */
+html[dir="rtl"],
+html[dir="rtl"] * {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="ltr"],
+html[dir="ltr"] * {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Override specific elements that shouldn't have text-align right */
+html[dir="rtl"] img,
+html[dir="rtl"] button,
+html[dir="rtl"] figure,
+html[dir="rtl"] svg {
+  text-align: inherit;
+}
+
 .animated-underline {
   position: relative;
   width: fit-content;
@@ -107,6 +128,15 @@ body {
   animation-play-state: paused;
 }
 
+/* RTL support for marquee */
+[dir="rtl"] .partners-track {
+  animation: partners-marquee-rtl 22s linear infinite;
+}
+
+[dir="rtl"] .partners-track-reverse {
+  animation-direction: reverse;
+}
+
 @keyframes partners-marquee {
   0% {
     transform: translateX(0);
@@ -114,6 +144,16 @@ body {
 
   100% {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes partners-marquee-rtl {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(50%);
   }
 }
 
@@ -145,4 +185,37 @@ body {
   font-weight: 800;
   color: #ef1b2b;
   font-variant-numeric: tabular-nums;
+}
+
+/* RTL Text Alignment */
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6 {
+  text-align: right !important;
+}
+
+/* RTL Flex Reverse for decorative bars */
+[dir="rtl"] .flex.items-center.gap-2 {
+  flex-direction: row-reverse !important;
+}
+
+/* Ensure partners/sidebar sections have bar on right in RTL */
+[dir="rtl"] .mb-6.flex.w-full.items-center.gap-2,
+[dir="rtl"] .mb-4.flex.w-full.items-center.gap-2 {
+  flex-direction: row-reverse !important;
+}
+
+/* Force bar to right side and text to left in RTL */
+[dir="rtl"] .mb-6.flex.w-full.items-center.gap-2 span,
+[dir="rtl"] .mb-4.flex.w-full.items-center.gap-2 span {
+  order: 2 !important;
+}
+
+[dir="rtl"] .mb-6.flex.w-full.items-center.gap-2 h3,
+[dir="rtl"] .mb-4.flex.w-full.items-center.gap-2 h3 {
+  order: 1 !important;
+  flex: 1;
 }

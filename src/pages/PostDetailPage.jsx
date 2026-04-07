@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
 import SectionContainer from '../components/SectionContainer'
@@ -12,9 +13,9 @@ import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 function SidebarWidget({ title, children }) {
   return (
     <div className="rounded-xl bg-white p-4 shadow">
-      <div className="mb-4 flex items-center gap-2">
+      <div className="mb-4 flex w-full items-center gap-2 rtl:flex-row-reverse">
         <span className="h-5 w-1 rounded-full bg-secondary-500" />
-        <h3 className="text-sm font-extrabold uppercase tracking-wide text-primary-500">{title}</h3>
+        <h3 className="w-full text-sm font-extrabold uppercase tracking-wide text-primary-500 rtl:text-right">{title}</h3>
       </div>
       {children}
     </div>
@@ -22,6 +23,7 @@ function SidebarWidget({ title, children }) {
 }
 
 function SidebarPost({ post }) {
+  const { i18n } = useTranslation()
   return (
     <Link to={`/actualites/${post.slug}`} className="group flex items-start gap-3 py-3 transition">
       <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-primary-100 p-1 sm:h-14 sm:p-0">
@@ -35,7 +37,7 @@ function SidebarPost({ post }) {
       </div>
       <div className="flex-1 min-w-0">
         <p className="line-clamp-2 text-xs font-semibold leading-snug text-primary-500 group-hover:text-secondary-500 transition-colors">{post.title}</p>
-        <p className="mt-1 text-[11px] text-primary-300">{formatDateLabel(post.published_at || post.created_at, 'fr')}</p>
+        <p className="mt-1 text-[11px] text-primary-300">{formatDateLabel(post.published_at || post.created_at, i18n.language)}</p>
       </div>
     </Link>
   )
@@ -46,6 +48,7 @@ function PostDetailPage() {
   const MotionH1 = motion.h1
 
   const { slug } = useParams()
+  const { t, i18n } = useTranslation()
 
   const { data, isLoading, isError, error } = usePosts()
   const posts = data?.data || []
@@ -76,7 +79,7 @@ function PostDetailPage() {
 
         {/* Back link */}
         <Link to="/actualites" className="mb-6 inline-flex items-center gap-1.5 text-sm font-semibold text-secondary-500 transition hover:text-secondary-600">
-          ← Retour aux actualités
+          {t('backToNews')}
         </Link>
 
         {/* 2-column layout */}
@@ -101,7 +104,7 @@ function PostDetailPage() {
 
                 {/* Meta row */}
                 <div className="flex flex-wrap items-center gap-2 text-xs">
-                  <span className="font-semibold text-primary-400">{formatDateLabel(post.published_at || post.created_at, 'fr')}</span>
+                  <span className="font-semibold text-primary-400">{formatDateLabel(post.published_at || post.created_at, i18n.language)}</span>
                 </div>
 
                 {/* Title */}
@@ -123,14 +126,14 @@ function PostDetailPage() {
                 {/* External link */}
                 {post.external_link ? (
                   <div className="rounded-lg border border-primary-100 bg-primary-50 p-4">
-                    <p className="mb-2 text-xs font-semibold uppercase text-primary-400">Source externe</p>
+                    <p className="mb-2 text-xs font-semibold uppercase text-primary-400">{t('externalSource')}</p>
                     <a
                       href={post.external_link}
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex items-center gap-2 rounded-lg bg-secondary-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-accent-500"
                     >
-                      🔗 Ouvrir la source
+                      {t('openSource')}
                     </a>
                   </div>
                 ) : null}
@@ -142,7 +145,7 @@ function PostDetailPage() {
               <section className="mt-6 space-y-4">
                 <div className="flex items-center gap-2">
                   <span className="h-5 w-1 rounded-full bg-secondary-500" />
-                  <h2 className="text-sm font-extrabold uppercase tracking-wide text-primary-500">Articles liés</h2>
+                  <h2 className="text-sm font-extrabold uppercase tracking-wide text-primary-500">{t('relatedArticles')}</h2>
                 </div>
                 <motion.div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3" variants={staggerContainer}>
                   {related.map((item) => (
@@ -166,7 +169,7 @@ function PostDetailPage() {
                       )}
                       <div className="space-y-1 p-3">
                         <h3 className="line-clamp-2 text-sm font-bold leading-snug text-primary-500 group-hover:text-secondary-500 transition-colors">{item.title}</h3>
-                        <p className="text-[11px] text-primary-300">{formatDateLabel(item.published_at || item.created_at, 'fr')}</p>
+                        <p className="text-[11px] text-primary-300">{formatDateLabel(item.published_at || item.created_at, i18n.language)}</p>
                       </div>
                       </Link>
                     </motion.div>
@@ -179,13 +182,13 @@ function PostDetailPage() {
           {/* ── Sidebar — col-span-4 ── */}
           <aside className="col-span-12 space-y-5 lg:col-span-4">
 
-            <SidebarWidget title="Autres actualités">
+            <SidebarWidget title={t('otherNews')}>
               {sidebarPosts.length > 0 ? (
                 <div className="divide-y divide-primary-100">
                   {sidebarPosts.map((p) => <SidebarPost key={p.id} post={p} />)}
                 </div>
               ) : (
-                <p className="text-xs text-primary-300">Aucun article disponible.</p>
+                <p className="text-xs text-primary-300">{t('noArticlesAvailable')}</p>
               )}
             </SidebarWidget>
 

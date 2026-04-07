@@ -31,50 +31,50 @@ function Navbar() {
     >
       <div className="px-4 sm:px-5 md:px-7 lg:px-8">
         <div className="mx-auto w-full max-w-6xl py-2 lg:hidden">
-          <MotionDiv className="flex items-center justify-between" variants={fadeUp}>
-            <div className="flex items-center gap-2">
-              <NavLink to="/" className="flex items-center" onClick={() => setIsOpen(false)}>
+          <MotionDiv className="flex items-center justify-between gap-2 rtl:flex-row-reverse" variants={fadeUp}>
+            <div className="flex items-center gap-1 sm:gap-2 rtl:flex-row-reverse">
+              <NavLink to="/" className="flex items-center flex-shrink-0" onClick={() => setIsOpen(false)}>
                 <motion.img
                   src={logo}
                   alt={t('brand')}
-                  className="h-14 w-auto object-contain sm:h-16"
+                  className="h-12 sm:h-14 w-auto object-contain"
                   variants={fadeLeft}
                 />
               </NavLink>
               <DakhlaWeather />
             </div>
 
-            <div className="flex items-center gap-3">
+            <MotionDiv className="flex items-center gap-1 sm:gap-3 rtl:flex-row-reverse" variants={fadeUp}>
               <LanguageSwitcher />
               <button
                 type="button"
                 aria-expanded={isOpen}
                 aria-label="Toggle navigation menu"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-gray-300 text-xl leading-none text-gray-700"
+                className="inline-flex h-8 sm:h-9 w-8 sm:w-9 items-center justify-center rounded-md border border-gray-300 text-lg sm:text-xl leading-none text-gray-700 flex-shrink-0"
                 onClick={() => setIsOpen((prev) => !prev)}
               >
                 <span>{isOpen ? 'x' : '='}</span>
               </button>
-            </div>
+            </MotionDiv>
           </MotionDiv>
         </div>
       </div>
       <div className="border-y border-gray-100 bg-white">
         <div className="px-4 sm:px-5 md:px-7 lg:px-8">
-          <MotionDiv className="mx-auto w-full max-w-6xl py-3 lg:flex lg:items-center lg:justify-between lg:gap-8" variants={fadeUp}>
-            <NavLink to="/" className="hidden lg:flex lg:flex-shrink-0 lg:items-center gap-3" onClick={() => setIsOpen(false)}>
+          <MotionDiv className="mx-auto w-full max-w-6xl py-3 lg:flex lg:items-center lg:justify-between lg:gap-8 rtl:flex-row-reverse" variants={fadeUp}>
+            <NavLink to="/" className="hidden lg:flex lg:flex-shrink-0 lg:items-center gap-3 rtl:flex-row-reverse" onClick={() => setIsOpen(false)}>
               <motion.img
                 src={logo}
                 alt={t('brand')}
                 className="h-16 w-auto object-contain flex-shrink-0"
                 variants={fadeLeft}
               />
-              <span className="text-sm font-light text-gray-600 leading-tight max-w-[200px]">
+              <span className="text-sm font-light text-gray-600 leading-tight max-w-[200px] rtl:text-right">
                 {t('footerText')}
               </span>
             </NavLink>
 
-            <div className="flex items-center gap-3 w-full lg:w-auto">
+            <div className="flex items-center gap-3 w-full lg:w-auto rtl:flex-row-reverse rtl:justify-end">
               <div className="hidden lg:block flex-shrink-0">
                 <DakhlaWeather />
               </div>
@@ -83,7 +83,7 @@ function Navbar() {
                 href="https://visitdakhla.ma"
                 target="_blank"
                 rel="noreferrer"
-                className="block w-full lg:w-[80%] flex-shrink-0 lg:ml-auto"
+                className="block w-full lg:w-[80%] flex-shrink-0 lg:ml-auto rtl:lg:ml-0"
                 variants={fadeUp}
                 whileHover={{ scale: 1.01 }}
                 transition={{ duration: 0.25, ease: 'easeOut' }}
@@ -108,36 +108,36 @@ function Navbar() {
 
       <div className="border-t border-gray-100 bg-white">
         <div className="px-4 sm:px-5 md:px-7 lg:px-8">
-          <MotionDiv className="mx-auto flex w-full max-w-6xl items-center justify-between gap-2 py-3" variants={fadeUp}>
-            <MotionNav className="hidden flex-row items-center gap-1 lg:flex" variants={staggerContainer}>
-              <MotionLink variants={fadeUp}><NavLink to="/" className={navClassName} onClick={() => setIsOpen(false)}>{t('navHome')}</NavLink></MotionLink>
-              <MotionLink variants={fadeUp}><NavLink to="/opportunities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navOpportunities')}</NavLink></MotionLink>
-              <MotionLink variants={fadeUp}><NavLink to="/events" className={navClassName} onClick={() => setIsOpen(false)}>{t('navEvents')}</NavLink></MotionLink>
-              <MotionLink variants={fadeUp}><NavLink to="/galerie" className={navClassName} onClick={() => setIsOpen(false)}>{t('navGallery')}</NavLink></MotionLink>
-              <MotionLink variants={fadeUp}><NavLink to="/activities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navActivites')}</NavLink></MotionLink>
-              <MotionLink variants={fadeUp}><NavLink to="/contact" className={navClassName} onClick={() => setIsOpen(false)}>{t('navContact')}</NavLink></MotionLink>
-            </MotionNav>
-            <MotionDiv className="hidden lg:block" variants={fadeLeft}>
-              <LanguageSwitcher />
+            <MotionDiv className="mx-auto flex w-full max-w-6xl items-center justify-between gap-2 py-3 rtl:flex-row-reverse" variants={fadeUp}>
+              <MotionNav className="hidden flex-row items-center gap-1 lg:flex rtl:flex-row" variants={staggerContainer}>
+                <MotionLink variants={fadeUp}><NavLink to="/" className={navClassName} onClick={() => setIsOpen(false)}>{t('navHome')}</NavLink></MotionLink>
+                <MotionLink variants={fadeUp}><NavLink to="/opportunities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navOpportunities')}</NavLink></MotionLink>
+                <MotionLink variants={fadeUp}><NavLink to="/events" className={navClassName} onClick={() => setIsOpen(false)}>{t('navEvents')}</NavLink></MotionLink>
+                <MotionLink variants={fadeUp}><NavLink to="/galerie" className={navClassName} onClick={() => setIsOpen(false)}>{t('navGallery')}</NavLink></MotionLink>
+                <MotionLink variants={fadeUp}><NavLink to="/activities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navActivites')}</NavLink></MotionLink>
+                <MotionLink variants={fadeUp}><NavLink to="/contact" className={navClassName} onClick={() => setIsOpen(false)}>{t('navContact')}</NavLink></MotionLink>
+              </MotionNav>
+              <MotionDiv className="hidden lg:block rtl:order-first" variants={fadeLeft}>
+                <LanguageSwitcher />
+              </MotionDiv>
             </MotionDiv>
-          </MotionDiv>
         </div>
       </div>
 
       {/* Mobile navigation menu */}
       {isOpen && (
         <motion.nav
-          className="flex flex-col gap-2 border-t border-gray-100 bg-white px-3 py-2 sm:px-4 lg:hidden"
+          className="flex flex-col gap-2 border-t border-gray-100 bg-white px-3 py-2 sm:px-4 lg:hidden rtl:text-right"
           variants={fadeUp}
           initial="hidden"
           animate="visible"
         >
-          <NavLink to="/" className={navClassName} onClick={() => setIsOpen(false)}>{t('navHome')}</NavLink>
-          <NavLink to="/opportunities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navOpportunities')}</NavLink>
-          <NavLink to="/events" className={navClassName} onClick={() => setIsOpen(false)}>{t('navEvents')}</NavLink>
-          <NavLink to="/galerie" className={navClassName} onClick={() => setIsOpen(false)}>{t('navGallery')}</NavLink>
-          <NavLink to="/activities" className={navClassName} onClick={() => setIsOpen(false)}>{t('navActivites')}</NavLink>
-          <NavLink to="/contact" className={navClassName} onClick={() => setIsOpen(false)}>{t('navContact')}</NavLink>
+          <NavLink to="/" className={`${navClassName} rtl:text-right`} onClick={() => setIsOpen(false)}>{t('navHome')}</NavLink>
+          <NavLink to="/opportunities" className={`${navClassName} rtl:text-right`} onClick={() => setIsOpen(false)}>{t('navOpportunities')}</NavLink>
+          <NavLink to="/events" className={`${navClassName} rtl:text-right`} onClick={() => setIsOpen(false)}>{t('navEvents')}</NavLink>
+          <NavLink to="/galerie" className={`${navClassName} rtl:text-right`} onClick={() => setIsOpen(false)}>{t('navGallery')}</NavLink>
+          <NavLink to="/activities" className={`${navClassName} rtl:text-right`} onClick={() => setIsOpen(false)}>{t('navActivites')}</NavLink>
+          <NavLink to="/contact" className={`${navClassName} rtl:text-right`} onClick={() => setIsOpen(false)}>{t('navContact')}</NavLink>
         </motion.nav>
       )}
     </MotionHeader>

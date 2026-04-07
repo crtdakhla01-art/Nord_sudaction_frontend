@@ -11,7 +11,7 @@ import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 import { useTranslation } from 'react-i18next'
 
 function ActualitesPage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const MotionDiv = motion.div
   const MotionH1 = motion.h1
   const MotionArticle = motion.article
@@ -43,8 +43,6 @@ function ActualitesPage() {
   const shouldPaginate = totalPosts > 16
   const featured = posts.find((item) => item.is_featured)
 
-  const pageTitle = 'Actualités'
-
   return (
     <SectionContainer>
       <MotionDiv
@@ -55,7 +53,7 @@ function ActualitesPage() {
       >
         <MotionDiv className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between" variants={fadeUp}>
           <div>
-            <MotionH1 className="mt-2 text-4xl font-extrabold text-primary-500 md:text-5xl" variants={fadeLeft}>{pageTitle}</MotionH1>
+            <MotionH1 className="mt-2 text-4xl font-extrabold text-primary-500 md:text-5xl" variants={fadeLeft}>{t('actualitesPageTitle')}</MotionH1>
           </div>
 
           <input
@@ -65,7 +63,7 @@ function ActualitesPage() {
               setSearch(event.target.value)
               setPage(1)
             }}
-            placeholder="Search by title..."
+            placeholder={t('searchPlaceholder')}
             className="w-full rounded-xl border border-secondary-100 bg-primary-50 px-4 py-2.5 text-sm text-primary-500 shadow-sm outline-none transition focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20 md:max-w-xs"
           />
         </MotionDiv>
@@ -83,12 +81,12 @@ function ActualitesPage() {
                 )}
               </div>
               <div className="p-6 md:p-8">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-secondary-500">Featured</p>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-secondary-500">{t('featuredLabel')}</p>
                 <h2 className="mt-3 text-2xl font-black text-primary-500">{featured.title}</h2>
                 {featured.description ? (
                   <p className="mt-3 text-sm leading-7 text-primary-400">{featured.description}</p>
                 ) : null}
-                <p className="mt-3 text-xs font-semibold uppercase text-primary-400">{formatDateLabel(featured.published_at || featured.created_at, 'fr')}</p>
+                <p className="mt-3 text-xs font-semibold uppercase text-primary-400">{formatDateLabel(featured.published_at || featured.created_at, i18n.language)}</p>
                 <Link to={`/actualites/${featured.slug}`} className="mt-5 inline-flex cursor-pointer rounded-lg bg-secondary-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-secondary-600 active:scale-95">
                   {t('readMore')}
                 </Link>
@@ -126,7 +124,7 @@ function ActualitesPage() {
                       <div className="space-y-1">
                         <h3 className="text-sm font-bold text-primary-500 line-clamp-2">{post.title}</h3>
                         {post.description ? <p className="line-clamp-2 text-xs text-primary-400">{post.description}</p> : null}
-                        <p className="text-xs font-semibold uppercase text-primary-400">{formatDateLabel(post.published_at || post.created_at, 'fr')}</p>
+                        <p className="text-xs font-semibold uppercase text-primary-400">{formatDateLabel(post.published_at || post.created_at, i18n.language)}</p>
                       </div>
                       <button
                         type="button"
@@ -142,7 +140,7 @@ function ActualitesPage() {
 
             {posts.length === 0 ? (
               <p className="rounded-2xl border border-secondary-100 bg-primary-50 px-4 py-5 text-sm text-primary-400 shadow-md">
-                No posts found.
+                {t('noPostsFound')}
               </p>
             ) : null}
 
@@ -154,7 +152,7 @@ function ActualitesPage() {
                   disabled={currentPage <= 1}
                   className="cursor-pointer rounded-lg border border-secondary-100 px-3 py-1.5 text-xs font-semibold text-primary-500 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  Prev
+                  {t('prev')}
                 </button>
                 <span className="text-xs font-semibold text-primary-400">{currentPage} / {lastPage}</span>
                 <button
@@ -163,7 +161,7 @@ function ActualitesPage() {
                   disabled={currentPage >= lastPage}
                   className="cursor-pointer rounded-lg border border-secondary-100 px-3 py-1.5 text-xs font-semibold text-primary-500 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  Next
+                  {t('next')}
                 </button>
               </div>
             ) : null}

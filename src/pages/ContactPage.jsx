@@ -121,7 +121,7 @@ function ContactPage() {
             label={(
               <>
                 {t('formPhone')}
-                <span className="ml-1 text-xs font-normal text-primary-300">(optionnel)</span>
+                <span className="ml-1 text-xs font-normal text-primary-300">({t('optional')})</span>
               </>
             )}
             name="phone"

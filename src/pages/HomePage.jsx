@@ -271,7 +271,7 @@ function HomePage() {
               whileInView="visible"
               viewport={inViewViewport}
             >
-              Actualités
+              {t('newsTitle')}
             </MotionH2>
           </div>
 
@@ -330,7 +330,7 @@ function HomePage() {
                 to="/actualites"
                 className="animated-underline text-sm font-semibold text-secondary-500 transition hover:text-accent-500"
               >
-                voir plus
+                {t('viewAllNews')}
               </Link>
             </div>
           ) : null}
@@ -347,10 +347,10 @@ function HomePage() {
           whileInView="visible"
           viewport={inViewViewport}
         >
-          <div className="mb-6 flex items-center gap-2">
+          <div className="mb-6 flex w-full items-center gap-2 rtl:flex-row-reverse">
             <span className="h-5 w-1 rounded-full bg-secondary-500" />
             <MotionH3
-              className="text-sm font-extrabold uppercase tracking-wide text-primary-500"
+              className="w-full text-sm font-extrabold uppercase tracking-wide text-primary-500 rtl:text-right"
               variants={fadeLeft}
               initial="hidden"
               whileInView="visible"
