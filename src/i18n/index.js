@@ -255,7 +255,7 @@ const resources = {
       adEndDate: 'Date fin',
       seeDetails: 'Voir les détails',
       visitorCounterLabel: 'Visiteurs :',
-      visitorCounterMessage: 'Vous etes le visiteur numero :',
+      visitorCounterMessage: 'Vous êtes le visiteur numéro :',
       readMore: 'Lire la suite',
       viewArticle: 'Voir l’article',
       close: 'Fermer',
