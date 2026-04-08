@@ -81,7 +81,7 @@ const resources = {
       featuredEventsTitle: 'Événements à la une',
       viewAllEvents: 'Voir tous les événements',
       actualitesPageTitle: 'Actualités',
-      newsTitle: 'actualités',
+      newsTitle: 'Actualités',
       viewAllNews: 'Voir Plus',
       backToNews: '← Retour aux actualités',
       relatedArticles: 'Articles liés',
