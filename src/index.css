@@ -165,20 +165,21 @@ html[dir="rtl"] svg {
 
 .visitor-counter {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
+  right: 14px;
+  bottom: 14px;
   z-index: 9999;
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.62rem 0.9rem;
+  gap: 0.35rem;
+  padding: 0.45rem 0.7rem;
   border: 1px solid rgba(239, 27, 43, 0.22);
-  border-radius: 14px;
+  border-radius: 12px;
   background: linear-gradient(135deg, rgba(250, 248, 245, 0.92), rgba(255, 244, 244, 0.82));
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 10px 26px rgba(94, 20, 25, 0.12);
   color: #3c3c3c;
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   line-height: 1;
 }
 
