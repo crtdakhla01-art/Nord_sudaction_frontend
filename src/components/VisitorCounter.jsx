@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const COUNTER_API_URL = 'https://api.nordsudaction.ma/api/visitor-up'
 const SESSION_COUNT_KEY = 'nsa_visitor_counter_value'
 const INITIAL_COUNT = 8965
-const DISPLAY_LABEL = 'Vous etes le visiteur numero :'
 
 function toSafeCount(payload) {
   if (payload && typeof payload === 'object') {
@@ -20,6 +20,7 @@ function toSafeCount(payload) {
 }
 
 function VisitorCounter() {
+  const { t, i18n } = useTranslation()
   const [count, setCount] = useState(() => {
     const cached = sessionStorage.getItem(SESSION_COUNT_KEY)
     if (cached === null) {
@@ -86,19 +87,20 @@ function VisitorCounter() {
       return String(INITIAL_COUNT)
     }
 
-    return new Intl.NumberFormat('en-US').format(count)
-  }, [count])
+    return new Intl.NumberFormat(i18n.resolvedLanguage || i18n.language || 'fr').format(count)
+  }, [count, i18n.language, i18n.resolvedLanguage])
   const ariaCount = Number.isFinite(count) ? count : INITIAL_COUNT
+  const label = t('visitorCounterMessage')
 
   return (
     <div
       className="visitor-counter"
       style={{ display: 'flex' }}
       aria-live="polite"
-      aria-label={`${DISPLAY_LABEL} ${ariaCount}`}
+      aria-label={`${label} ${ariaCount}`}
     >
-      <span className="visitor-counter__label">{DISPLAY_LABEL}</span>
-      <span className="visitor-counter__count">{formattedCount}</span>
+      <span className="visitor-counter__label">{label}</span>
+      <span className="visitor-counter__count" dir="ltr">{formattedCount}</span>
     </div>
   )
 }
