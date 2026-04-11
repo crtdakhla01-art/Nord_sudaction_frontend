@@ -1,11 +1,93 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import logo from '../assets/blanc_logo.png'
+import { useSubscribeNewsletter } from '../hooks/useSubscribeNewsletter'
 
 const contactPhone = '+212660544904'
 
+const initialNewsletterForm = {
+  name: '',
+  email: '',
+  consent: false,
+}
+
 function Footer() {
   const { t } = useTranslation()
+  const subscribeMutation = useSubscribeNewsletter()
+  const [newsletterForm, setNewsletterForm] = useState(initialNewsletterForm)
+  const [newsletterErrors, setNewsletterErrors] = useState({})
+
+  const handleNewsletterChange = (event) => {
+    const { name, type, value, checked } = event.target
+    setNewsletterForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }))
+    setNewsletterErrors((prev) => ({ ...prev, [name]: undefined }))
+  }
+
+  const validateNewsletterForm = () => {
+    const nextErrors = {}
+
+    if (!newsletterForm.name.trim()) {
+      nextErrors.name = t('requiredError')
+    }
+
+    if (!newsletterForm.email.trim()) {
+      nextErrors.email = t('requiredError')
+    } else if (!/^\S+@\S+\.\S+$/.test(newsletterForm.email.trim())) {
+      nextErrors.email = t('invalidEmailError')
+    }
+
+    if (!newsletterForm.consent) {
+      nextErrors.consent = t('requiredError')
+    }
+
+    setNewsletterErrors(nextErrors)
+    return Object.keys(nextErrors).length === 0
+  }
+
+  const getNewsletterErrorMessage = () => {
+    const response = subscribeMutation.error?.response
+    const emailErrors = response?.data?.errors?.email
+    const validationMessage = response?.data?.message
+    const exceptionName = response?.data?.exception
+    const normalizedMessage = String(validationMessage || '').toLowerCase()
+    const isDuplicateEmailMessage = normalizedMessage.includes('already used')
+      || normalizedMessage.includes('already been taken')
+      || normalizedMessage.includes('deja utilise')
+      || normalizedMessage.includes('déjà utilisé')
+    const hasEmailValidationError = Array.isArray(emailErrors) && emailErrors.length > 0
+    const isValidationException = response?.status === 422
+      || String(exceptionName || '').includes('ValidationException')
+
+    if (isDuplicateEmailMessage) {
+      return t('newsletterAlreadySubscribed')
+    }
+
+    if (isValidationException && typeof validationMessage === 'string' && validationMessage.trim()) {
+      return validationMessage
+    }
+
+    if (hasEmailValidationError && typeof emailErrors[0] === 'string' && emailErrors[0].trim()) {
+      return emailErrors[0]
+    }
+
+    if (hasEmailValidationError) return t('newsletterAlreadySubscribed')
+    return t('newsletterError')
+  }
+
+  const handleNewsletterSubmit = async (event) => {
+    event.preventDefault()
+    if (!validateNewsletterForm()) return
+
+    await subscribeMutation.mutateAsync({
+      name: newsletterForm.name.trim(),
+      email: newsletterForm.email.trim(),
+      consent: newsletterForm.consent,
+    })
+
+    setNewsletterForm(initialNewsletterForm)
+    setNewsletterErrors({})
+  }
 
   return (
     <footer className="mt-8 bg-primary-800 text-white">
@@ -31,6 +113,65 @@ function Footer() {
           <p className="text-sm text-primary-300">
             <span dir="ltr">{contactPhone}</span>
           </p>
+
+          <div className="mt-4">
+            <p className="text-sm font-semibold text-white">{t('footerNewsletterTitle')}</p>
+            <p className="mt-1 text-xs text-primary-300">{t('footerNewsletterDescription')}</p>
+
+            <form className="mt-3 space-y-2" onSubmit={handleNewsletterSubmit} noValidate>
+              <label className="sr-only" htmlFor="newsletter-name">{t('formName')}</label>
+              <input
+                id="newsletter-name"
+                name="name"
+                type="text"
+                value={newsletterForm.name}
+                onChange={handleNewsletterChange}
+                placeholder={t('footerNewsletterNamePlaceholder')}
+                className="w-full rounded-lg border border-secondary-700 bg-primary-900 px-3 py-2 text-sm text-white placeholder:text-primary-400 focus:border-secondary-500 focus:outline-none"
+              />
+              {newsletterErrors.name ? <p className="text-xs text-red-300">{newsletterErrors.name}</p> : null}
+
+              <label className="sr-only" htmlFor="newsletter-email">{t('formEmail')}</label>
+              <input
+                id="newsletter-email"
+                name="email"
+                type="email"
+                value={newsletterForm.email}
+                onChange={handleNewsletterChange}
+                placeholder={t('footerNewsletterEmailPlaceholder')}
+                className="w-full rounded-lg border border-secondary-700 bg-primary-900 px-3 py-2 text-sm text-white placeholder:text-primary-400 focus:border-secondary-500 focus:outline-none"
+              />
+              {newsletterErrors.email ? <p className="text-xs text-red-300">{newsletterErrors.email}</p> : null}
+
+              <label className="mt-1 flex items-start gap-2 text-xs text-primary-200" htmlFor="newsletter-consent">
+                <input
+                  id="newsletter-consent"
+                  name="consent"
+                  type="checkbox"
+                  checked={newsletterForm.consent}
+                  onChange={handleNewsletterChange}
+                  className="mt-0.5 h-4 w-4 rounded border-secondary-600 bg-primary-900 text-secondary-500 focus:ring-secondary-500"
+                />
+                <span>{t('footerNewsletterConsentLabel')}</span>
+              </label>
+              {newsletterErrors.consent ? <p className="text-xs text-red-300">{newsletterErrors.consent}</p> : null}
+
+              <button
+                type="submit"
+                disabled={subscribeMutation.isPending}
+                className="mt-1 inline-flex w-full items-center justify-center rounded-lg bg-secondary-500 px-3 py-2 text-sm font-semibold text-primary-900 transition hover:bg-secondary-400 disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                {subscribeMutation.isPending ? t('sending') : t('footerNewsletterButton')}
+              </button>
+            </form>
+
+            {subscribeMutation.isSuccess ? (
+              <p className="mt-2 text-xs text-green-300">{t('newsletterSuccess')}</p>
+            ) : null}
+            {subscribeMutation.isError ? (
+              <p className="mt-2 text-xs text-red-300">{getNewsletterErrorMessage()}</p>
+            ) : null}
+          </div>
         </div>
         <div>
           <p className="text-sm font-semibold text-white">{t('footerSocial')}</p>
