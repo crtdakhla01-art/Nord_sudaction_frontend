@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 const COUNTER_API_URL = 'https://api.nordsudaction.ma/api/visitor-up'
 const SESSION_COUNT_KEY = 'nsa_visitor_counter_value'
 const INITIAL_COUNT = 8965
-const POLL_INTERVAL_MS = 60000
 
 function toSafeCount(payload) {
   if (payload && typeof payload === 'object') {
@@ -26,7 +25,7 @@ function toSafeCount(payload) {
 
     const upCount = Number(payload?.data?.up_count)
     if (Number.isFinite(upCount) && upCount >= 0) {
-      // The production counter API exposes incremental visits as up_count.
+    // The production counter API exposes incremental visits as up_count.
       return INITIAL_COUNT + Math.trunc(upCount)
     }
   }
@@ -51,6 +50,14 @@ function VisitorCounter() {
   })
   useEffect(() => {
     let isActive = true
+
+    // This endpoint increments the counter. Do not call it again on refresh
+    // if we already counted this browser session.
+    if (sessionStorage.getItem(SESSION_COUNT_KEY) !== null) {
+      return () => {
+        isActive = false
+      }
+    }
 
     const loadCounter = async () => {
       try {
@@ -83,11 +90,9 @@ function VisitorCounter() {
     }
 
     loadCounter()
-    const intervalId = window.setInterval(loadCounter, POLL_INTERVAL_MS)
 
     return () => {
       isActive = false
-      window.clearInterval(intervalId)
     }
   }, [])
 
