@@ -1,18 +1,33 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const COUNTER_API_URL = 'https://api.nordsudaction.ma/api/visitor-up'
 const SESSION_COUNT_KEY = 'nsa_visitor_counter_value'
 const INITIAL_COUNT = 8965
+const POLL_INTERVAL_MS = 60000
 
 function toSafeCount(payload) {
   if (payload && typeof payload === 'object') {
-    const candidates = [payload.count, payload.value, payload.total]
+    const candidates = [
+      payload.count,
+      payload.value,
+      payload.total,
+      payload?.data?.count,
+      payload?.data?.value,
+      payload?.data?.total,
+    ]
+
     for (const candidate of candidates) {
       const parsed = Number(candidate)
       if (Number.isFinite(parsed) && parsed >= 0) {
         return Math.trunc(parsed)
       }
+    }
+
+    const upCount = Number(payload?.data?.up_count)
+    if (Number.isFinite(upCount) && upCount >= 0) {
+      // The production counter API exposes incremental visits as up_count.
+      return INITIAL_COUNT + Math.trunc(upCount)
     }
   }
 
@@ -34,15 +49,7 @@ function VisitorCounter() {
 
     return INITIAL_COUNT
   })
-  const hasStartedRef = useRef(false)
-
   useEffect(() => {
-    if (hasStartedRef.current) {
-      return
-    }
-
-    hasStartedRef.current = true
-
     let isActive = true
 
     const loadCounter = async () => {
@@ -76,11 +83,13 @@ function VisitorCounter() {
     }
 
     loadCounter()
+    const intervalId = window.setInterval(loadCounter, POLL_INTERVAL_MS)
 
     return () => {
       isActive = false
+      window.clearInterval(intervalId)
     }
-  }, [count])
+  }, [])
 
   const formattedCount = useMemo(() => {
     if (!Number.isFinite(count)) {
