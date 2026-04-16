@@ -284,7 +284,7 @@ const resources = {
       footerNewsletterDescription: 'Recevez nos dernières actualités.',
       footerNewsletterNamePlaceholder: 'Votre nom',
       footerNewsletterEmailPlaceholder: 'Votre email',
-      footerNewsletterConsentLabel: 'J\'accepte de recevoir les actualites et offres de Nord Sud Action.',
+      footerNewsletterConsentLabel: 'J\'accepte de recevoir les actualités et offres de Nord Sud Action.',
       footerNewsletterButton: 'S’abonner',
       footerSocial: 'Réseaux sociaux',
       footerUsefulLinks: 'Liens utiles',
