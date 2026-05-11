@@ -29,6 +29,9 @@ function AdminLayout() {
           <NavLink to="/admin/opportunities" className={navClass}>
             {t('navOpportunities')}
           </NavLink>
+          <NavLink to="/admin/inscriptions" className={navClass}>
+            Inscriptions
+          </NavLink>
           {role === 'admin' ? (
             <NavLink to="/admin/posts" className={navClass}>
               Actualités

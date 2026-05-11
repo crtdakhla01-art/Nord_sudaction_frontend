@@ -102,9 +102,9 @@ const resources = {
         'Aidez les personnes à accéder au volontariat, à l’emploi et aux initiatives solidaires en publiant des opportunités vérifiées.',
       eventsPageTitle: 'Événements',
       eventsIntro: 'Découvrez des moments où bénévoles, associations et communautés locales se réunissent.',
-      eventsIntroTitle: 'Dakhla, votre nouvelle destination MICE d’exception',
+      eventsIntroTitle: 'Le sahara marocain, votre nouvelle destination MICE d’exception',
       eventsIntroParagraph1:
-        'Au carrefour de l’Afrique et de l’Europe, Dakhla s’impose comme une destination émergente incontournable pour l’organisation de congrès, salons, séminaires et événements internationaux.',
+        'Au carrefour de l’Afrique et de l’Europe, les provinces du sud (Dakhla, Laayoune et Smara) s’imposent comme une destination émergente incontournable pour l’organisation de congrès, salons, séminaires et événements internationaux.',
       eventsIntroParagraph2:
         'L’Association Nord Sud Action vous accompagne en tant que partenaire stratégique local, en vous proposant une approche intégrée et sur mesure pour la réalisation de vos projets événementiels à fort impact.',
       eventsIntroParagraph3:
@@ -114,13 +114,13 @@ const resources = {
       eventsIntroParagraph5:
         'En choisissant Nord Sud Action, vous faites le choix d’un accompagnement haut de gamme, d’une expertise locale éprouvée et d’un environnement unique pour offrir à vos événements une dimension exceptionnelle.',
       eventsIntroParagraph6:
-        'Nous mettons tout en œuvre pour faire de chaque rendez-vous un levier de rayonnement, de connexion et de création de valeur durable à Dakhla.',
+        'Nous mettons tout en œuvre pour faire de chaque rendez-vous un levier de rayonnement, de connexion et de création de valeur durable.',
       eventsUpcomingTab: 'Événements à venir',
       eventsPassedTab: 'Événements passés',
       eventsFilterAll: 'Tous les types',
       opportunitiesPageTitle: 'Opportunités',
       opportunitiesIntroParagraph1:
-        'Dakhla s’affirme comme une destination stratégique pour les investisseurs et entrepreneurs en quête de projets innovants et à fort potentiel.',
+        'Les provinces du sud s’affirment comme une destination stratégique pour les investisseurs et entrepreneurs en quête de projets innovants et à fort potentiel.',
       opportunitiesIntroParagraph2:
         'La section Opportunités de Nord Sud Action vous ouvre les portes d’un marché riche et diversifié, où chaque idée, projet ou partenariat peut se concrétiser.',
       opportunitiesIntroListTitle: 'Ici, vous pouvez :',
@@ -131,7 +131,7 @@ const resources = {
       opportunitiesIntroBullet3:
         'Être mis en relation avec les acteurs locaux et institutionnels les plus pertinents pour accélérer vos projets.',
       opportunitiesIntroParagraph3:
-        'Avec Nord Sud Action, transformez vos ambitions en actions concrètes et profitez d’un accompagnement expert pour tirer le meilleur de la région de Dakhla. Notre objectif est de faciliter la rencontre entre l’offre et la demande, en créant un environnement transparent, sécurisé et propice au développement économique et à l’innovation dans la région de Dakhla.',
+        'Avec Nord Sud Action, transformez vos ambitions en actions concrètes et profitez d’un accompagnement expert pour tirer le meilleur de la région de Dakhla. Notre objectif est de faciliter la rencontre entre l’offre et la demande, en créant un environnement transparent, sécurisé et propice au développement économique et à l’innovation dans les trois régions du sud.',
       opportunitiesViewTab: 'Voir les opportunités',
       opportunitiesSubmitTab: 'Soumettre une offre',
       filterAllTypes: 'Tous les types',

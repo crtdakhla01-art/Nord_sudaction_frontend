@@ -80,6 +80,15 @@ function AdminOverviewPage() {
               <StatLine label="Last 7 days" value={stats?.contacts?.last_7_days ?? 0} />
             </div>
           </article>
+
+          <article className="w-full rounded-2xl border border-primary-100 bg-white p-6 shadow-md">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-primary-400">Inscriptions</h3>
+            <p className="mt-3 text-2xl font-black text-primary-500">{stats?.inscriptions?.total ?? 0}</p>
+            <div className="mt-3 space-y-1">
+              <StatLine label="Payes" value={stats?.inscriptions?.paid ?? 0} />
+              <StatLine label="Non payes" value={stats?.inscriptions?.unpaid ?? 0} />
+            </div>
+          </article>
         </div>
       ) : null}
     </section>

@@ -23,10 +23,12 @@ const ContactPage = lazy(() => import('./pages/ContactPage'))
 const EventDetailPage = lazy(() => import('./pages/EventDetailPage'))
 const EventsPage = lazy(() => import('./pages/EventsPage'))
 const HomePage = lazy(() => import('./pages/HomePage'))
+const InscriptionPage = lazy(() => import('./pages/InscriptionPage'))
 const OpportunitiesPage = lazy(() => import('./pages/OpportunitiesPage'))
 const OpportunityDetailPage = lazy(() => import('./pages/OpportunityDetailPage'))
 const GalleryPage = lazy(() => import('./pages/GalleryPage'))
 const PostDetailPage = lazy(() => import('./pages/PostDetailPage'))
+const AdminInscriptionsPage = lazy(() => import('./pages/admin/AdminInscriptionsPage'))
 
 function RouteFallback() {
   return <div className="min-h-[40vh] bg-white" />
@@ -57,6 +59,7 @@ function App() {
               <Route index element={<AdminHomeRedirect />} />
               <Route path="opportunities" element={<AdminOpportunitiesPage />} />
               <Route path="opportunities/:id" element={<AdminOpportunityDetailPage />} />
+              <Route path="inscriptions" element={<AdminInscriptionsPage />} />
 
               <Route element={<ProtectedAdminRoute allowedRoles={['admin']} />}>
                 <Route path="posts" element={<AdminPostsPage />} />
@@ -83,6 +86,7 @@ function App() {
             <Route path="/actualites/:slug" element={<PostDetailPage />} />
             <Route path="/galerie" element={<GalleryPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/inscription" element={<InscriptionPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
