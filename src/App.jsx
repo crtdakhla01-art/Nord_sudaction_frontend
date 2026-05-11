@@ -4,6 +4,7 @@ import { getAdminUser } from './api/adminClient'
 import ProtectedAdminRoute from './components/admin/ProtectedAdminRoute'
 import ScrollToTopOnRouteChange from './components/ScrollToTopOnRouteChange'
 import VisitorCounter from './components/VisitorCounter'
+import PopupBanner from './components/PopupBanner'
 import AdminLayout from './layouts/AdminLayout'
 import MainLayout from './layouts/MainLayout'
 
@@ -49,6 +50,7 @@ function App() {
     <>
       <ScrollToTopOnRouteChange />
       <VisitorCounter />
+      <PopupBanner />
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           <Route path="/admin/login" element={<AdminLoginPage />} />
