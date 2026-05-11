@@ -27,14 +27,27 @@ function EventsPage() {
 
   const timelineEvents = useMemo(() => {
     const list = events || []
-
-    return list.filter((event) => {
-      if (activeTab === 'upcoming') {
-        return !event.is_it_passed
+    if (activeTab === 'upcoming') {
+      const getEventTime = (event) => {
+        const timestamp = Date.parse(event?.date)
+        return Number.isNaN(timestamp) ? null : timestamp
       }
 
-      return Boolean(event.is_it_passed)
-    })
+      return list
+        .filter((event) => !event.is_it_passed)
+        .sort((a, b) => {
+          const timeA = getEventTime(a)
+          const timeB = getEventTime(b)
+
+          if (timeA === null && timeB === null) return 0
+          if (timeA === null) return 1
+          if (timeB === null) return -1
+
+          return timeA - timeB
+        })
+    }
+
+    return list.filter((event) => Boolean(event.is_it_passed))
   }, [activeTab, events])
 
   const totalItems = timelineEvents.length
