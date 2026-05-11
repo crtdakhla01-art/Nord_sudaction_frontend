@@ -100,6 +100,11 @@ function InscriptionPage() {
   const MotionDiv = motion.div
   const MotionForm = motion.form
 
+  const todayISO = useMemo(() => {
+    const today = new Date()
+    return today.toISOString().split('T')[0]
+  }, [])
+
   const [currentStep, setCurrentStep] = useState(1)
   const [values, setValues] = useState(initialValues)
   const [errors, setErrors] = useState({})
@@ -250,6 +255,7 @@ function InscriptionPage() {
                 name="birth_date"
                 type="date"
                 required
+                max={todayISO}
                 value={values.birth_date}
                 onChange={(event) => setField('birth_date', event.target.value)}
                 error={errors.birth_date}
