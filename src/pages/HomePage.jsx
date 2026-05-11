@@ -30,16 +30,18 @@ const partners = [
   '/partner_15.jpeg',
   '/partner_16.jpeg',
   '/partner_17.jpeg',
-  '/partner_19.jpeg',
-  '/partner_21.jpeg',
+  '/partner_19.png',
+  '/partner_21.png',
   '/partner_22.jpeg',
   '/partner_23.jpeg',
   '/partner_24.jpeg',
   '/partner_25.jpg',
-  '/partner_26.jpg',
+  '/partner_26.png',
   '/partner_27.jpg',
   '/partner_28.png',
   '/partner_29.jpg',
+  '/partner_29.jpeg',
+  '/partner_30.png',
 ]
 
 const staticAdvertisements = [
