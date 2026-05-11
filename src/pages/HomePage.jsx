@@ -40,7 +40,6 @@ const partners = [
   '/partner_27.jpg',
   '/partner_28.png',
   '/partner_29.jpg',
-  '/partner_29.jpeg',
   '/partner_30.png',
 ]
 
