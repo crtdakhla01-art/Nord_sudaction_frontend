@@ -1,8 +1,8 @@
 export const createEmptyGalleryItem = () => ({
   image: null,
   existingImage: '',
-  vedio: null,
-  existingVedio: '',
+  video: null,
+  existingVideo: '',
   link: '',
 })
 
@@ -39,8 +39,8 @@ export const getGalleryItems = (event) => {
   const items = (event?.gallery || []).map((item) => ({
     image: null,
     existingImage: item.image || '',
-    vedio: null,
-    existingVedio: item.vedio || '',
+    video: null,
+    existingVideo: item.video || '',
     link: item.link || '',
   }))
 
@@ -51,7 +51,7 @@ export const appendGalleryItemsToFormData = (formData, galleryItems) => {
   galleryItems.forEach((item, index) => {
     const normalizedLink = normalizeGalleryLink(item.link)
     const hasValidLink = isValidGalleryLink(normalizedLink)
-    const hasData = item.image || item.existingImage || item.vedio || item.existingVedio || hasValidLink
+    const hasData = item.image || item.existingImage || item.video || item.existingVideo || hasValidLink
 
     if (!hasData) {
       return
@@ -63,10 +63,10 @@ export const appendGalleryItemsToFormData = (formData, galleryItems) => {
       formData.append(`gallery[${index}][existing_image]`, item.existingImage)
     }
 
-    if (item.vedio) {
-      formData.append(`gallery[${index}][vedio]`, item.vedio)
-    } else if (item.existingVedio) {
-      formData.append(`gallery[${index}][existing_vedio]`, item.existingVedio)
+    if (item.video) {
+      formData.append(`gallery[${index}][video]`, item.video)
+    } else if (item.existingVideo) {
+      formData.append(`gallery[${index}][existing_video]`, item.existingVideo)
     }
 
     if (hasValidLink) {
@@ -87,12 +87,12 @@ export const getFeaturedGalleryMedia = (event) => {
     }
   }
 
-  const videoItem = gallery.find((item) => item?.vedio)
+  const videoItem = gallery.find((item) => item?.video)
 
   if (videoItem) {
     return {
       type: 'video',
-      path: videoItem.vedio,
+      path: videoItem.video,
       link: videoItem.link || '',
     }
   }

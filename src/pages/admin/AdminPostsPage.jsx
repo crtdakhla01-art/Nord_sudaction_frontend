@@ -216,7 +216,7 @@ function AdminPostsPage() {
                     /\.(mp4|webm|ogg|mov|avi|mkv)$/i.test(item.media) ? (
                       <video src={getImageUrl(item.media)} className="h-full w-full object-cover" muted />
                     ) : (
-                      <img src={getImageUrl(item.media)} alt={item.title} className="h-full w-full object-cover" loading="lazy" />
+                      <img src={getImageUrl(item.media)} alt={item.title} className="h-full w-full object-cover" loading="lazy" decoding="async" width="80" height="80" />
                     )
                   ) : (
                     <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary-300">NSA</span>

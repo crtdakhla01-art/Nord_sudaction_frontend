@@ -42,6 +42,10 @@ function ActivityModal({ values, onChange, onImageChange, imageFile, onSubmit, o
                 src={getImageUrl(values.image)}
                 alt="Aperçu actuel"
                 className="mb-2 h-24 w-full rounded-lg object-cover"
+                loading="lazy"
+                decoding="async"
+                width="640"
+                height="96"
               />
             ) : null}
             {imageFile ? (
@@ -49,6 +53,10 @@ function ActivityModal({ values, onChange, onImageChange, imageFile, onSubmit, o
                 src={URL.createObjectURL(imageFile)}
                 alt="Aperçu"
                 className="mb-2 h-24 w-full rounded-lg object-cover"
+                loading="lazy"
+                decoding="async"
+                width="640"
+                height="96"
               />
             ) : null}
             <input
@@ -198,6 +206,10 @@ function AdminActivitiesPage() {
                           src={getImageUrl(activity.image)}
                           alt={activity.title}
                           className="h-10 w-16 rounded object-cover"
+                          loading="lazy"
+                          decoding="async"
+                          width="64"
+                          height="40"
                         />
                       ) : (
                         <span className="text-xs text-primary-300">—</span>

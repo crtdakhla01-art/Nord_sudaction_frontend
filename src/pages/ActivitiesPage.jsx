@@ -66,6 +66,9 @@ function ActivitiesPage() {
                         alt={activity.title}
                         className="w-full md:h-40 md:object-cover"
                         loading="lazy"
+                        decoding="async"
+                        width="640"
+                        height="320"
                       />
                     </div>
                   ) : null}

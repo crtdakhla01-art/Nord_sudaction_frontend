@@ -2,6 +2,7 @@ import { NavLink, Outlet } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import { useAdminAuth } from '../hooks/useAdminAuth'
+import { ADMIN_ROLE, MANAGER_ROLE } from '../constants/roles'
 
 function AdminLayout() {
   const { logoutMutation, role, user } = useAdminAuth()
@@ -18,10 +19,10 @@ function AdminLayout() {
     <div className="min-h-screen w-full bg-primary-50 text-primary-500">
       <aside className="fixed inset-y-0 left-0 h-screen w-[250px] overflow-y-auto bg-[#3c3c3c] px-5 py-6 text-white">
         <p className="text-xl font-black">NSA Admin</p>
-        <p className="mt-1 text-xs text-primary-200">{role === 'manager' ? t('managerPanel') : t('dashboard')}</p>
+        <p className="mt-1 text-xs text-primary-200">{role === MANAGER_ROLE ? t('managerPanel') : t('dashboard')}</p>
 
         <nav className="mt-8 space-y-2">
-          {role === 'admin' ? (
+          {role === ADMIN_ROLE ? (
             <NavLink to="/admin" end className={navClass}>
               {t('overview')}
             </NavLink>
@@ -32,27 +33,27 @@ function AdminLayout() {
           <NavLink to="/admin/inscriptions" className={navClass}>
             Inscriptions
           </NavLink>
-          {role === 'admin' ? (
+          {role === ADMIN_ROLE ? (
             <NavLink to="/admin/posts" className={navClass}>
               Actualités
             </NavLink>
           ) : null}
-          {role === 'admin' ? (
+          {role === ADMIN_ROLE ? (
             <NavLink to="/admin/events" className={navClass}>
               {t('navEvents')}
             </NavLink>
           ) : null}
-          {role === 'admin' ? (
+          {role === ADMIN_ROLE ? (
             <NavLink to="/admin/activities" className={navClass}>
               Médias
             </NavLink>
           ) : null}
-          {role === 'admin' ? (
+          {role === ADMIN_ROLE ? (
             <NavLink to="/admin/gallery" className={navClass}>
               Galerie
             </NavLink>
           ) : null}
-          {role === 'admin' ? (
+          {role === ADMIN_ROLE ? (
             <span className="block rounded-xl px-4 py-2 text-sm font-semibold text-primary-200">{t('users')}</span>
           ) : null}
         </nav>

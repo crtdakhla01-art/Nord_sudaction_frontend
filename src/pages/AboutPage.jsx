@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import SectionContainer from '../components/SectionContainer'
-import logo from '../assets/logo.jpeg'
-import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
+import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
 const events = [
   { titleKey: 'aboutPageForumTitle', textKey: 'aboutPageForumText' },

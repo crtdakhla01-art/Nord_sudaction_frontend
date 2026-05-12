@@ -1,18 +1,41 @@
 import { useEffect, useRef } from 'react'
+import DOMPurify from 'dompurify'
+
+// Configure DOMPurify to allow only safe HTML tags.
+const SAFE_CONFIG = {
+  ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'a', 'div', 'span'],
+  ALLOWED_ATTR: ['href', 'title', 'class', 'id', 'target', 'rel'],
+  ALLOW_DATA_ATTR: false,
+  ALLOW_UNKNOWN_PROTOCOLS: false,
+}
 
 function RichTextEditor({ label, value, onChange }) {
   const editorRef = useRef(null)
 
   useEffect(() => {
-    if (editorRef.current && editorRef.current.innerHTML !== value) {
-      editorRef.current.innerHTML = value || ''
+    if (editorRef.current) {
+      // Sanitize the input value before displaying.
+      const clean = DOMPurify.sanitize(value || '', SAFE_CONFIG)
+      if (editorRef.current.innerHTML !== clean) {
+        editorRef.current.innerHTML = clean
+      }
     }
   }, [value])
 
   const applyCommand = (command, arg = null) => {
     editorRef.current?.focus()
     document.execCommand(command, false, arg)
-    onChange(editorRef.current?.innerHTML || '')
+    const html = editorRef.current?.innerHTML || ''
+    // Sanitize before emitting to parent.
+    const clean = DOMPurify.sanitize(html, SAFE_CONFIG)
+    onChange(clean)
+  }
+
+  const handleInput = (event) => {
+    const html = event.currentTarget.innerHTML
+    // Sanitize before emitting to parent.
+    const clean = DOMPurify.sanitize(html, SAFE_CONFIG)
+    onChange(clean)
   }
 
   return (
@@ -38,7 +61,7 @@ function RichTextEditor({ label, value, onChange }) {
         ref={editorRef}
         contentEditable
         className="min-h-44 w-full rounded-xl border border-secondary-100 bg-primary-50 px-4 py-3 text-sm text-primary-500 shadow-sm outline-none transition focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20"
-        onInput={(event) => onChange(event.currentTarget.innerHTML)}
+        onInput={handleInput}
       />
     </div>
   )

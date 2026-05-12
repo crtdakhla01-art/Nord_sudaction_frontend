@@ -127,7 +127,7 @@ function InscriptionPage() {
   const submitMutation = useSubmitInscription()
   const { wrap } = usePreventDoubleSubmit()
 
-  const progress = useMemo(() => (currentStep / steps.length) * 100, [currentStep])
+  const progress = useMemo(() => (currentStep / steps.length) * 100, [currentStep, steps.length])
 
   const setField = (name, value) => {
     setValues((prev) => ({ ...prev, [name]: value }))

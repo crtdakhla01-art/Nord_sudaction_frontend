@@ -7,45 +7,15 @@ const defaultApiBaseUrl =
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || defaultApiBaseUrl
 
-export const ADMIN_TOKEN_KEY = 'admin_token'
-export const ADMIN_USER_KEY = 'admin_user'
+// Storage keys for OTP context only (not for tokens/users which use secure cookies)
 export const ADMIN_OTP_CONTEXT_KEY = 'admin_otp_context'
 
-export const getAdminToken = () => localStorage.getItem(ADMIN_TOKEN_KEY)
-export const setAdminToken = (token) => localStorage.setItem(ADMIN_TOKEN_KEY, token)
-export const clearAdminToken = () => localStorage.removeItem(ADMIN_TOKEN_KEY)
-
-export const getAdminUser = () => {
-  const raw = localStorage.getItem(ADMIN_USER_KEY)
-
-  if (!raw) {
-    return null
-  }
-
-  try {
-    return JSON.parse(raw)
-  } catch {
-    return null
-  }
-}
-
-export const setAdminUser = (user) => {
-  localStorage.setItem(ADMIN_USER_KEY, JSON.stringify(user))
-}
-
-export const clearAdminUser = () => localStorage.removeItem(ADMIN_USER_KEY)
-
-export const clearAdminSession = () => {
-  clearAdminToken()
-  clearAdminUser()
-}
-
 export const setOtpContext = (context) => {
-  localStorage.setItem(ADMIN_OTP_CONTEXT_KEY, JSON.stringify(context))
+  sessionStorage.setItem(ADMIN_OTP_CONTEXT_KEY, JSON.stringify(context))
 }
 
 export const getOtpContext = () => {
-  const raw = localStorage.getItem(ADMIN_OTP_CONTEXT_KEY)
+  const raw = sessionStorage.getItem(ADMIN_OTP_CONTEXT_KEY)
 
   if (!raw) {
     return null
@@ -59,7 +29,7 @@ export const getOtpContext = () => {
 }
 
 export const clearOtpContext = () => {
-  localStorage.removeItem(ADMIN_OTP_CONTEXT_KEY)
+  sessionStorage.removeItem(ADMIN_OTP_CONTEXT_KEY)
 }
 
 export const adminApi = axios.create({
@@ -67,19 +37,23 @@ export const adminApi = axios.create({
   headers: {
     Accept: 'application/json',
   },
-})
-
-adminApi.interceptors.request.use((config) => {
-  const token = getAdminToken()
-
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-
-  return config
+  // Enable cookies for stateful SPA authentication.
+  withCredentials: true,
 })
 
 adminApi.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject(error),
+  (error) => {
+    // Handle 401/419 (unauthenticated or session expired) globally.
+    if (error.response?.status === 401 || error.response?.status === 419) {
+      // Clear OTP context on auth failure and redirect to login.
+      clearOtpContext()
+      
+      // Optionally redirect or emit auth event to be handled by the app.
+      window.dispatchEvent(new CustomEvent('auth:unauthorized'))
+    }
+
+    return Promise.reject(error)
+  }
 )
+

@@ -1,62 +1,22 @@
-import { ADMIN_TOKEN_KEY } from './adminClient'
+import { adminApi } from './adminClient'
 
-const getBaseUrl = () =>
-  import.meta.env.VITE_API_BASE_URL ||
-  `${window.location.protocol}//${window.location.hostname}:8000/api`
-
-const authHeaders = ({ json = false } = {}) => {
-  const token = localStorage.getItem(ADMIN_TOKEN_KEY)
-  const headers = {
-    Accept: 'application/json',
-  }
-
-  if (json) {
-    headers['Content-Type'] = 'application/json'
-  }
-
-  if (token) {
-    headers.Authorization = `Bearer ${token}`
-  }
-
-  return headers
-}
-
-const handleResponse = async (res) => {
-  const data = await res.json()
-  if (!res.ok) throw new Error(data?.message || 'Request failed')
+export const fetchAdminActivities = async () => {
+  const { data } = await adminApi.get('/admin/activities')
   return data
 }
 
-export const fetchAdminActivities = async () => {
-  const res = await fetch(`${getBaseUrl()}/admin/activities`, {
-    headers: authHeaders(),
-  })
-  return handleResponse(res)
-}
-
 export const createActivity = async (payload) => {
-  const res = await fetch(`${getBaseUrl()}/admin/activities`, {
-    method: 'POST',
-    headers: authHeaders(),
-    body: payload,
-  })
-  return handleResponse(res)
+  const { data } = await adminApi.post('/admin/activities', payload)
+  return data
 }
 
 export const updateActivity = async ({ id, formData }) => {
   formData.append('_method', 'PUT')
-  const res = await fetch(`${getBaseUrl()}/admin/activities/${id}`, {
-    method: 'POST',
-    headers: authHeaders(),
-    body: formData,
-  })
-  return handleResponse(res)
+  const { data } = await adminApi.post(`/admin/activities/${id}`, formData)
+  return data
 }
 
 export const deleteActivity = async (id) => {
-  const res = await fetch(`${getBaseUrl()}/admin/activities/${id}`, {
-    method: 'DELETE',
-    headers: authHeaders(),
-  })
-  return handleResponse(res)
+  const { data } = await adminApi.delete(`/admin/activities/${id}`)
+  return data
 }

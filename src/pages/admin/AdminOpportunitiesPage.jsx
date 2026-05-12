@@ -77,6 +77,10 @@ function AdminOpportunitiesPage() {
                             src={getImageUrl(imagePath)}
                             alt={`${item.titre || 'Opportunity'} ${index + 1}`}
                             className="h-16 w-full rounded-lg object-cover"
+                            loading="lazy"
+                            decoding="async"
+                            width="240"
+                            height="64"
                           />
                         ))}
                       </div>

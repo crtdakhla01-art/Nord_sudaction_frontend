@@ -23,6 +23,9 @@ const EventCard = memo(function EventCard({ event }) {
               className="w-full transition duration-300 group-hover:scale-105 md:h-40 md:object-cover"
               loading="lazy"
               decoding="async"
+              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 33vw, 100vw"
+              width="640"
+              height="320"
             />
           ) : null}
 

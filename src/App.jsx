@@ -1,12 +1,12 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { getAdminUser } from './api/adminClient'
+import { useUser } from './hooks/useUser'
 import ProtectedAdminRoute from './components/admin/ProtectedAdminRoute'
 import ScrollToTopOnRouteChange from './components/ScrollToTopOnRouteChange'
 import VisitorCounter from './components/VisitorCounter'
-import PopupBanner from './components/PopupBanner'
 import AdminLayout from './layouts/AdminLayout'
 import MainLayout from './layouts/MainLayout'
+import { ADMIN_ROLE, MANAGER_ROLE } from './constants/roles'
 
 const AdminEventsPage = lazy(() => import('./pages/admin/AdminEventsPage'))
 const AdminGalleryPage = lazy(() => import('./pages/admin/AdminGalleryPage'))
@@ -30,15 +30,20 @@ const OpportunityDetailPage = lazy(() => import('./pages/OpportunityDetailPage')
 const GalleryPage = lazy(() => import('./pages/GalleryPage'))
 const PostDetailPage = lazy(() => import('./pages/PostDetailPage'))
 const AdminInscriptionsPage = lazy(() => import('./pages/admin/AdminInscriptionsPage'))
+const PopupBanner = lazy(() => import('./components/PopupBanner'))
 
 function RouteFallback() {
   return <div className="min-h-[40vh] bg-white" />
 }
 
 function AdminHomeRedirect() {
-  const role = getAdminUser()?.role?.name
+  const { role, isLoading } = useUser()
 
-  if (role === 'manager') {
+  if (isLoading) {
+    return <RouteFallback />
+  }
+
+  if (role === MANAGER_ROLE) {
     return <Navigate to="/admin/opportunities" replace />
   }
 
@@ -46,11 +51,25 @@ function AdminHomeRedirect() {
 }
 
 function App() {
+  // Handle global auth state changes (e.g., 401 responses triggering logout).
+  useEffect(() => {
+    const handleUnauthorized = () => {
+      // Force a refetch of /admin/me which will return 401, clearing the session.
+      window.location.href = '/admin/login'
+    }
+
+    window.addEventListener('auth:unauthorized', handleUnauthorized)
+
+    return () => window.removeEventListener('auth:unauthorized', handleUnauthorized)
+  }, [])
+
   return (
     <>
       <ScrollToTopOnRouteChange />
       <VisitorCounter />
-      <PopupBanner />
+      <Suspense fallback={null}>
+        <PopupBanner />
+      </Suspense>
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           <Route path="/admin/login" element={<AdminLoginPage />} />
@@ -63,7 +82,7 @@ function App() {
               <Route path="opportunities/:id" element={<AdminOpportunityDetailPage />} />
               <Route path="inscriptions" element={<AdminInscriptionsPage />} />
 
-              <Route element={<ProtectedAdminRoute allowedRoles={['admin']} />}>
+              <Route element={<ProtectedAdminRoute allowedRoles={[ADMIN_ROLE]} />}>
                 <Route path="posts" element={<AdminPostsPage />} />
                 <Route path="events" element={<AdminEventsPage />} />
                 <Route path="activities" element={<AdminActivitiesPage />} />

@@ -153,6 +153,11 @@ function HomePage() {
               src={homeHeroGalleryImages[currentHeroImageIndex]}
               alt={`${t('brand')} ${currentHeroImageIndex + 1}`}
               className="h-[calc(100%-2.25rem)] w-full rounded-[1.5rem] border border-white/70 object-cover shadow-md"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              width="1280"
+              height="720"
               initial={{ opacity: 0.35 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -301,7 +306,7 @@ function HomePage() {
                 >
                   <div className="w-full overflow-hidden">
                     {post.media ? (
-                      <img src={getImageUrl(post.media)} alt={post.title} className="w-full md:h-28 md:object-cover" loading="lazy" decoding="async" />
+                      <img src={getImageUrl(post.media)} alt={post.title} className="w-full md:h-28 md:object-cover" loading="lazy" decoding="async" width="640" height="224" />
                     ) : (
                       <div className="flex h-28 w-full items-center justify-center">
                         <span className="text-2xl font-black text-secondary-500 opacity-20">NSA</span>
@@ -374,6 +379,8 @@ function HomePage() {
                           className="max-h-full max-w-full object-contain"
                           loading="lazy"
                           decoding="async"
+                          width="144"
+                          height="112"
                         />
                       </div>
                     </div>
@@ -392,6 +399,8 @@ function HomePage() {
                           className="max-h-full max-w-full object-contain"
                           loading="lazy"
                           decoding="async"
+                          width="144"
+                          height="112"
                         />
                       </div>
                     </div>
@@ -410,6 +419,8 @@ function HomePage() {
                       className="max-h-full max-w-full object-contain"
                       loading="lazy"
                       decoding="async"
+                      width="144"
+                      height="112"
                     />
                   </div>
                 </div>

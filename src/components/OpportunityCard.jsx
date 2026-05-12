@@ -21,6 +21,9 @@ const OpportunityCard = memo(function OpportunityCard({ opportunity }) {
             alt={opportunity.titre || `${opportunity.first_name || ''} ${opportunity.last_name || ''}`.trim() || 'Opportunity'}
             loading="lazy"
             decoding="async"
+            sizes="(min-width: 1024px) 20vw, (min-width: 768px) 33vw, 100vw"
+            width="640"
+            height="320"
           />
         ) : (
           <span className="flex h-full w-full items-center justify-center text-4xl font-black text-secondary-500 opacity-20">{t('opportunityNoImage')}</span>

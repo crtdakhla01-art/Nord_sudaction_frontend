@@ -33,11 +33,6 @@ export const submitOpportunity = async (formValues) => {
     })
   }
 
-  // Backward compatibility if caller still sends a single image field.
-  if (formValues.image) {
-    payload.append('image', formValues.image)
-  }
-
   const { data } = await publicApi.post('/opportunities', payload)
   return data
 }

@@ -1,8 +1,9 @@
 import { Navigate, useNavigate } from 'react-router-dom'
-import { getAdminToken, getOtpContext } from '../../api/adminClient'
+import { getOtpContext } from '../../api/adminClient'
 import ErrorState from '../../components/ErrorState'
 import { useAdminAuth } from '../../hooks/useAdminAuth'
 import usePreventDoubleSubmit from '../../hooks/usePreventDoubleSubmit'
+import { useUser } from '../../hooks/useUser'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -11,11 +12,18 @@ function AdminVerifyOtpPage() {
   const { t } = useTranslation()
   const { wrap } = usePreventDoubleSubmit()
   const navigate = useNavigate()
+  const { isAuthenticated, isLoading } = useUser()
   const otpContext = getOtpContext()
   const [otpCode, setOtpCode] = useState('')
 
-  if (getAdminToken()) {
+  // Already authenticated: redirect to admin.
+  if (isAuthenticated && !isLoading) {
     return <Navigate to="/admin" replace />
+  }
+
+  // Loading auth state: show placeholder.
+  if (isLoading) {
+    return <div className="min-h-screen bg-primary-50" />
   }
 
   if (!otpContext?.email) {

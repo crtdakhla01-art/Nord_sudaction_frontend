@@ -3,16 +3,6 @@ import { useState, useEffect } from 'react'
 const WEATHER_URL =
   'https://api.open-meteo.com/v1/forecast?latitude=23.6848&longitude=-15.9579&current=temperature_2m,wind_speed_10m,weather_code,is_day,relative_humidity_2m&timezone=auto'
 
-function getWeatherInfo(code) {
-  if (code === 0) return 'صافٍ'
-  if (code <= 3) return 'غائم جزئياً'
-  if (code <= 48) return 'ضباب'
-  if (code <= 55) return 'رذاذ'
-  if (code <= 65) return 'مطر'
-  if (code <= 82) return 'زخات مطر'
-  return 'عاصفة رعدية'
-}
-
 function isRainy(code) {
   return code >= 51
 }
@@ -94,9 +84,6 @@ function DakhlaWeather() {
   if (!data) return null
 
   const temp = Math.round(data.temperature_2m)
-  const wind = Math.round(data.wind_speed_10m)
-  const humidity = data.relative_humidity_2m
-  const description = getWeatherInfo(data.weather_code)
   const rain = isRainy(data.weather_code)
 
   return (

@@ -1,23 +1,31 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Navigate, useNavigate } from 'react-router-dom'
-import { getAdminToken, setOtpContext } from '../../api/adminClient'
+import { setOtpContext } from '../../api/adminClient'
 import ErrorState from '../../components/ErrorState'
 import { useAdminAuth } from '../../hooks/useAdminAuth'
 import usePreventDoubleSubmit from '../../hooks/usePreventDoubleSubmit'
+import { useUser } from '../../hooks/useUser'
 
 function AdminLoginPage() {
   const { loginMutation } = useAdminAuth()
   const { t } = useTranslation()
   const { wrap } = usePreventDoubleSubmit()
   const navigate = useNavigate()
+  const { isAuthenticated, isLoading } = useUser()
   const [values, setValues] = useState({
     email: '',
     password: '',
   })
 
-  if (getAdminToken()) {
+  // Already authenticated: redirect to admin.
+  if (isAuthenticated) {
     return <Navigate to="/admin" replace />
+  }
+
+  // Loading auth state: show placeholder.
+  if (isLoading) {
+    return <div className="min-h-screen bg-primary-50" />
   }
 
   const onChange = (event) => {

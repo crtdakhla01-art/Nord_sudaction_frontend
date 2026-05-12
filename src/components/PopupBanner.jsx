@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 
@@ -39,6 +40,10 @@ export default function PopupBanner() {
                 src="/popup.jpeg"
                 alt="Nord Sud Action - LinkedIn"
                 className="w-full h-auto object-cover"
+                loading="eager"
+                decoding="async"
+                width="960"
+                height="960"
               />
               {/* Close Button */}
               <button

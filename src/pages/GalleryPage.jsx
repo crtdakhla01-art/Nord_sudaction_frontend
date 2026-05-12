@@ -67,10 +67,13 @@ const ImageCard = memo(function ImageCard({ img, onOpen }) {
       )}
       <img
         src={img.thumb}
+        srcSet={img.full ? `${img.thumb} 640w, ${img.full} 1280w` : `${img.thumb} 640w`}
         alt={img.alt}
         loading="lazy"
         decoding="async"
         sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+        width="640"
+        height="448"
         onLoad={() => setLoaded(true)}
         className={`h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105 sm:h-56 ${loaded ? '' : 'invisible absolute'}`}
       />
@@ -251,7 +254,10 @@ export default function GalleryPage() {
             <img
               src={lightbox.full}
               alt={lightbox.alt}
+              loading="eager"
               decoding="async"
+              width="1600"
+              height="900"
               className="max-h-[85vh] w-full rounded-2xl object-contain shadow-2xl"
             />
             <button

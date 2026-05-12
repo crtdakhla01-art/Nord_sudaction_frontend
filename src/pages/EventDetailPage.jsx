@@ -101,11 +101,11 @@ function MediaLightbox({ item, onClose, onPrev, onNext, hasMultiple }) {
 
       <div className="flex max-h-[90vh] max-w-6xl items-center justify-center overflow-hidden rounded-[28px] bg-black shadow-2xl">
         {item?.image ? (
-          <img src={getImageUrl(item.image)} alt="" className="max-h-[90vh] max-w-full object-contain" decoding="async" />
+          <img src={getImageUrl(item.image)} alt="" className="max-h-[90vh] max-w-full object-contain" loading="eager" decoding="async" width="1600" height="900" />
         ) : null}
 
-        {item?.vedio ? (
-          <video key={item.vedio} src={getImageUrl(item.vedio)} className="max-h-[90vh] max-w-full bg-black object-contain" controls autoPlay playsInline preload="metadata" />
+        {item?.video ? (
+          <video key={item.video} src={getImageUrl(item.video)} className="max-h-[90vh] max-w-full bg-black object-contain" controls autoPlay playsInline preload="metadata" />
         ) : null}
       </div>
     </div>
@@ -194,7 +194,7 @@ function EventDetailPage() {
 
   const gallery = event.gallery || []
   const images = gallery.filter((item) => item?.image)
-  const videos = gallery.filter((item) => item?.vedio)
+  const videos = gallery.filter((item) => item?.video)
   const links = gallery.filter((item) => item?.link)
   const activeImage = images[activeIndex] || null
   const hasPreviewableMedia = Boolean(activeImage?.image)
@@ -354,10 +354,10 @@ function EventDetailPage() {
                 {videos.length > 0 ? (
                   <div className="mt-5 grid gap-4 sm:grid-cols-2">
                     {videos.map((item, index) => (
-                      <article key={`${item.vedio}-${index}`} className="overflow-hidden rounded-2xl border border-primary-100 bg-primary-50 shadow-sm">
+                      <article key={`${item.video}-${index}`} className="overflow-hidden rounded-2xl border border-primary-100 bg-primary-50 shadow-sm">
                         <div className="relative aspect-video bg-black">
                           <video
-                            src={getImageUrl(item.vedio)}
+                            src={getImageUrl(item.video)}
                             className="h-full w-full object-contain sm:object-cover"
                             controls
                             playsInline

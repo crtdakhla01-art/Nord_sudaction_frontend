@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
+import DOMPurify from 'dompurify'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
 import SectionContainer from '../components/SectionContainer'
@@ -98,7 +99,11 @@ function PostDetailPage() {
                     <img src={getImageUrl(post.media)} alt={post.title} className="h-full w-full object-contain sm:object-cover" loading="lazy" decoding="async" />
                   )}
                 </div>
-              ) : null}
+              ) : (
+                <div className="flex h-72 w-full items-center justify-center bg-primary-50 sm:h-80 md:h-[420px]">
+                  <span className="text-6xl font-black text-secondary-500 opacity-20">NSA</span>
+                </div>
+              )}
 
               <div className="space-y-5 p-5 sm:p-7">
 
@@ -119,7 +124,7 @@ function PostDetailPage() {
                 {post.content ? (
                   <div
                     className="post-content prose max-w-none border-t border-primary-100 pt-5 prose-headings:text-primary-500 prose-p:leading-8 prose-p:text-primary-400 prose-a:text-secondary-500 prose-a:no-underline hover:prose-a:underline"
-                    dangerouslySetInnerHTML={{ __html: post.content }}
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
                   />
                 ) : null}
 

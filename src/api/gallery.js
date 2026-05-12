@@ -39,15 +39,8 @@ export const fetchGalleryPage = async ({ pageParam = 1 }) => {
 
 export const fetchGalleryCategories = async () => {
   const response = await publicApi.get('/gallery-categories')
-  const payload = response.data ?? {}
-
-  const items = Array.isArray(payload)
-    ? payload
-    : Array.isArray(payload.data)
-      ? payload.data
-      : Array.isArray(payload.categories)
-        ? payload.categories
-        : []
+  const payload = response.data ?? []
+  const items = Array.isArray(payload) ? payload : []
 
   return items
     .map((item) => ({

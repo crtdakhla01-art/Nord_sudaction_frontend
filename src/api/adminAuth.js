@@ -1,9 +1,6 @@
 import {
   adminApi,
-  clearAdminSession,
-  getAdminUser,
-  setAdminToken,
-  setAdminUser,
+  clearOtpContext,
 } from './adminClient'
 
 export const loginWithPassword = async (credentials) => {
@@ -14,23 +11,26 @@ export const loginWithPassword = async (credentials) => {
 export const verifyOtpCode = async (payload) => {
   const { data } = await adminApi.post('/verify-otp', payload)
 
-  if (data?.token) {
-    setAdminToken(data.token)
-  }
-
-  if (data?.user) {
-    setAdminUser(data.user)
-  }
+  // OTP verification now establishes a secure session cookie.
+  // No token is returned to localStorage.
 
   return data
 }
 
-export const getStoredUser = () => getAdminUser()
+export const getStoredUser = async () => {
+  // Fetch the current authenticated user from the secure session.
+  try {
+    const { data } = await adminApi.get('/admin/me')
+    return data?.user || null
+  } catch {
+    return null
+  }
+}
 
 export const adminLogout = async () => {
   try {
     await adminApi.post('/admin/logout')
   } finally {
-    clearAdminSession()
+    clearOtpContext()
   }
 }

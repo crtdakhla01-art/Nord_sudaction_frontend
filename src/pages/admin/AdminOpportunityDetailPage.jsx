@@ -99,6 +99,10 @@ function AdminOpportunityDetailPage() {
                   alt={opportunity.titre || 'Opportunity'}
                   className="h-56 w-full cursor-pointer rounded-xl object-cover transition-opacity hover:opacity-90"
                   onClick={() => setLightboxIndex(0)}
+                  loading="lazy"
+                  decoding="async"
+                  width="1200"
+                  height="560"
                 />
 
                 {opportunityImages.length > 1 ? (
@@ -110,6 +114,10 @@ function AdminOpportunityDetailPage() {
                         alt={`${opportunity.titre || 'Opportunity'} ${index + 2}`}
                         className="h-20 w-full cursor-pointer rounded-lg object-cover transition-opacity hover:opacity-90"
                         onClick={() => setLightboxIndex(index + 1)}
+                        loading="lazy"
+                        decoding="async"
+                        width="320"
+                        height="80"
                       />
                     ))}
                   </div>
@@ -149,6 +157,10 @@ function AdminOpportunityDetailPage() {
                 alt={opportunity.titre || 'Opportunity'}
                 className="max-h-[90vh] max-w-[90vw] rounded-2xl object-contain shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
+                loading="eager"
+                decoding="async"
+                width="1600"
+                height="900"
               />
 
               {opportunityImages.length > 1 && (

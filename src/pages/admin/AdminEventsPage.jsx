@@ -21,10 +21,10 @@ const createInitialValues = () => ({
 
 const galleryFieldLabels = {
   image: 'Image',
-  vedio: 'Video',
+  video: 'Video',
   link: 'Lien',
   existing_image: 'Image existante',
-  existing_vedio: 'Video existante',
+  existing_video: 'Video existante',
 }
 
 const baseFieldLabels = {
@@ -143,9 +143,9 @@ function AdminEventsPage() {
           return {
             ...item,
             [field]: file || null,
-            [field === 'image' ? 'existingImage' : 'existingVedio']: file
+            [field === 'image' ? 'existingImage' : 'existingVideo']: file
               ? ''
-              : item[field === 'image' ? 'existingImage' : 'existingVedio'],
+              : item[field === 'image' ? 'existingImage' : 'existingVideo'],
           }
         }),
       }))
@@ -261,13 +261,13 @@ function AdminEventsPage() {
                       className="mt-2 block min-h-12 w-full rounded-xl border border-primary-200 bg-white px-4 py-3 text-sm text-primary-500 shadow-sm outline-none transition-all duration-300 file:mr-3 file:rounded-lg file:border-0 file:bg-secondary-500 file:px-3 file:py-2 file:text-xs file:font-semibold file:text-white focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20"
                       type="file"
                       accept="video/mp4,video/webm,video/ogg,video/quicktime"
-                      onChange={(event) => onGalleryFileChange(index, 'vedio', event.target.files?.[0] || null)}
+                      onChange={(event) => onGalleryFileChange(index, 'video', event.target.files?.[0] || null)}
                     />
-                    {galleryItem.vedio ? (
-                      <span className="mt-2 block text-xs text-primary-400">{t('selectedFile')}: {galleryItem.vedio.name}</span>
+                    {galleryItem.video ? (
+                      <span className="mt-2 block text-xs text-primary-400">{t('selectedFile')}: {galleryItem.video.name}</span>
                     ) : null}
-                    {!galleryItem.vedio && galleryItem.existingVedio ? (
-                      <span className="mt-2 block text-xs text-primary-400">{t('currentFile')}: {galleryItem.existingVedio.split('/').pop()}</span>
+                    {!galleryItem.video && galleryItem.existingVideo ? (
+                      <span className="mt-2 block text-xs text-primary-400">{t('currentFile')}: {galleryItem.existingVideo.split('/').pop()}</span>
                     ) : null}
                   </label>
 
@@ -338,6 +338,10 @@ function AdminEventsPage() {
                       src={getImageUrl(featuredMedia.path)}
                       alt={eventItem.title}
                       className="h-full w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      width="128"
+                      height="128"
                     />
                   ) : null}
 

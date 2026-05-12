@@ -15,7 +15,7 @@ function usePreventDoubleSubmit() {
 
   const wrap = useCallback((asyncFn) => async (...args) => {
     if (inFlightRef.current) {
-      if (process.env.NODE_ENV !== 'production') {
+      if (import.meta.env.DEV) {
         console.warn('[usePreventDoubleSubmit] Duplicate submission prevented.')
       }
       return
