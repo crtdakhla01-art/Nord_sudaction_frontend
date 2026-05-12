@@ -4,3 +4,8 @@ export const fetchPosts = async (params = {}) => {
   const { data } = await publicApi.get('/posts', { params })
   return data
 }
+
+export const fetchPostBySlug = async (slug) => {
+  const { data } = await publicApi.get(`/posts/${slug}`)
+  return data
+}

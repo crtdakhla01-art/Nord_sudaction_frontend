@@ -6,7 +6,7 @@ import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
 import SectionContainer from '../components/SectionContainer'
 import { getImageUrl } from '../api/client'
-import { usePosts } from '../hooks/usePosts'
+import { usePosts, usePost } from '../hooks/usePosts'
 import { formatDateLabel } from '../utils/date'
 import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
@@ -50,12 +50,12 @@ function PostDetailPage() {
   const { slug } = useParams()
   const { t, i18n } = useTranslation()
 
-  const { data, isLoading, isError, error } = usePosts()
-  const posts = data?.data || []
+  const { data: post, isLoading, isError, error } = usePost(slug)
+  const { data: allPostsData } = usePosts({ per_page: 50 })
+  const allPosts = allPostsData?.data || []
 
-  const post = posts.find((p) => p.slug === slug)
-  const related = posts.filter((p) => p.slug !== slug).slice(0, 3)
-  const sidebarPosts = posts.filter((p) => p.slug !== slug).slice(0, 7)
+  const related = allPosts.filter((p) => p.slug !== slug).slice(0, 3)
+  const sidebarPosts = allPosts.filter((p) => p.slug !== slug).slice(0, 7)
 
   useEffect(() => {
     if (!post) return

@@ -72,8 +72,8 @@ function ActualitesPage() {
           <MotionArticle className="overflow-hidden rounded-3xl border border-secondary-100 bg-primary-50 shadow-md" variants={fadeUp} whileHover={{ scale: 1.01 }} transition={{ duration: 0.25, ease: 'easeOut' }}>
             <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr]">
               <div className="h-72 md:h-full">
-                {featured.image ? (
-                  <img src={getImageUrl(featured.image)} alt={featured.title} className="h-full w-full object-cover" loading="lazy" decoding="async" />
+                {featured.media ? (
+                  <img src={getImageUrl(featured.media)} alt={featured.title} className="h-full w-full object-cover" loading="lazy" decoding="async" />
                 ) : (
                   <div className="flex h-full items-center justify-center bg-primary-50">
                     <span className="text-4xl font-black text-secondary-500 opacity-20">NSA</span>
