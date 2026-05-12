@@ -11,11 +11,20 @@ export default defineConfig({
     sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ['react', 'react-dom', 'react-router-dom'],
-          motion: ['framer-motion'],
-          i18n: ['i18next', 'react-i18next'],
-          query: ['@tanstack/react-query'],
+        manualChunks(id) {
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') || id.includes('node_modules/react-router-dom')) {
+            return 'react'
+          }
+          if (id.includes('node_modules/framer-motion')) {
+            return 'motion'
+          }
+          if (id.includes('node_modules/i18next') || id.includes('node_modules/react-i18next')) {
+            return 'i18n'
+          }
+          if (id.includes('node_modules/@tanstack/react-query')) {
+            return 'query'
+          }
+          return undefined
         },
       },
     },
