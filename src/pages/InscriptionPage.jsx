@@ -397,20 +397,6 @@ function InscriptionPage() {
                   <li>{t('activitiesAndDesertExcursion')}</li>
                 </ul>
               </div>
-
-              <label className="flex items-start gap-3 rounded-xl border border-primary-100 bg-primary-50 px-4 py-3 text-sm text-primary-500">
-                <input
-                  type="checkbox"
-                  checked={values.is_information_confirmed}
-                  onChange={(event) => setField('is_information_confirmed', event.target.checked)}
-                  className="mt-0.5 h-4 w-4 rounded border-primary-300 text-secondary-500 focus:ring-secondary-500"
-                />
-                <span>{t('confirmInformation')}</span>
-              </label>
-              {errors.is_information_confirmed ? (
-                <p className="text-sm font-medium text-secondary-600">{errors.is_information_confirmed}</p>
-              ) : null}
-
               <label className="flex items-start gap-3 rounded-xl border border-primary-100 bg-primary-50 px-4 py-3 text-sm text-primary-500">
                 <input
                   type="checkbox"

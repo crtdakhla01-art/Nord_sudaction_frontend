@@ -329,8 +329,8 @@ const resources = {
       desertExcursionLabel: 'Excursion désert',
       bivouacEveningLabel: 'Soirée bivouac',
       astronomicalObservationLabel: 'Observation astronomique',
-      financialParticipation: 'Participation financière',
-      rate: 'Tarif: 1 500 DH TTC',
+      financialParticipation: 'Cotisation',
+      rate: 'Tarif: 1 500 DH',
       roundTripFlightCasablanca: 'Vol A/R Casablanca - Smara',
       accommodation: 'Hébergement',
       meals: 'Restauration',
@@ -689,8 +689,8 @@ const resources = {
       desertExcursionLabel: 'Desert Excursion',
       bivouacEveningLabel: 'Bivouac Evening',
       astronomicalObservationLabel: 'Astronomical Observation',
-      financialParticipation: 'Financial Participation',
-      rate: 'Rate: 1,500 DH VAT included',
+      financialParticipation: 'Contribution',
+      rate: 'Rate: 1,500 DH',
       roundTripFlightCasablanca: 'Round-trip Flight Casablanca - Smara',
       accommodation: 'Accommodation',
       meals: 'Meals',
@@ -1049,8 +1049,8 @@ const resources = {
       desertExcursionLabel: 'Excursión al Desierto',
       bivouacEveningLabel: 'Noche en Bivouac',
       astronomicalObservationLabel: 'Observación Astronómica',
-      financialParticipation: 'Participación Financiera',
-      rate: 'Tarifa: 1,500 DH IVA Incluido',
+      financialParticipation: 'Contribución',
+      rate: 'Tarifa: 1,500 DH',
       roundTripFlightCasablanca: 'Vuelo de Ida y Vuelta Casablanca - Smara',
       accommodation: 'Alojamiento',
       meals: 'Comidas',
@@ -1379,8 +1379,8 @@ const resources = {
       desertExcursionLabel: 'رحلة صحراوية',
       bivouacEveningLabel: 'مساء في المخيم',
       astronomicalObservationLabel: 'الرصد الفلكي',
-      financialParticipation: 'المشاركة المالية',
-      rate: 'السعر: 1،500 درهم شامل الضريبة',
+      financialParticipation: 'المساهمة',
+      rate: 'السعر: 1،500 درهم',
       roundTripFlightCasablanca: 'رحلة ذهاب وإياب الدار البيضاء - سمارة',
       accommodation: 'الإقامة',
       meals: 'الوجبات',
@@ -1432,7 +1432,6 @@ const setDirection = (lng) => {
   document.body.setAttribute('dir', direction)
   
   // Trigger a small reflow to ensure Tailwind RTL detection works
-  // eslint-disable-next-line no-void
   void document.documentElement.offsetHeight
 }
 
