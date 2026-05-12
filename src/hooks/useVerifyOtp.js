@@ -9,6 +9,7 @@ export const useVerifyOtp = () => {
 
   return useMutation({
     mutationFn: verifyOtpCode,
+    retry: false,
     onSuccess: (data) => {
       clearOtpContext()
       const role = data?.user?.role?.name

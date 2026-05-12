@@ -4,5 +4,6 @@ import { loginWithPassword } from '../api/adminAuth'
 export const useLogin = () => {
   return useMutation({
     mutationFn: loginWithPassword,
+    retry: false,
   })
 }
