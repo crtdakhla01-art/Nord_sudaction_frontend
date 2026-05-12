@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import ErrorState from '../components/ErrorState'
 import SectionContainer from '../components/SectionContainer'
@@ -167,7 +167,19 @@ export default function GalleryPage() {
               {t('galleryIntro2')}
             </p>
             <p className="mt-3 text-base leading-7 text-primary-400 md:text-lg">
-              {t('galleryIntro3')}
+              <Trans
+                i18nKey="galleryIntro3"
+                components={{
+                  website: (
+                    <a
+                      href="https://www.nordsudaction.org"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-secondary-600 underline decoration-secondary-400 underline-offset-2 hover:text-secondary-700"
+                    />
+                  ),
+                }}
+              />
             </p>
           </div>
         </MotionDiv>
