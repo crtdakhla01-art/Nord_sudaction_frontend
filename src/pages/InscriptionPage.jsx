@@ -229,7 +229,6 @@ function InscriptionPage() {
         animate="visible"
       >
         <MotionDiv variants={fadeUp} className="rounded-3xl border border-secondary-100 bg-gradient-to-r from-primary-50 via-white to-secondary-50 p-6 shadow-md">
-          <p className="text-sm font-bold uppercase tracking-wide text-secondary-500">{t('inscriptionPageTitle')}</p>
           <h1 className="mt-2 text-3xl font-black text-primary-500 md:text-4xl">{t('forumSmaraInvest')}</h1>
           <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-primary-100">
             <div className="h-full rounded-full bg-secondary-500 transition-all" style={{ width: `${progress}%` }} />
