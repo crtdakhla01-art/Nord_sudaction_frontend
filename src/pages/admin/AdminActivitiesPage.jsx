@@ -179,7 +179,7 @@ function AdminActivitiesPage() {
 
       {activitiesQuery.isLoading ? <LoadingState /> : null}
       {activitiesQuery.isError ? (
-        <ErrorState message={activitiesQuery.error?.message} />
+        <ErrorState error={activitiesQuery.error} />
       ) : null}
 
       {!activitiesQuery.isLoading && !activitiesQuery.isError ? (
@@ -254,7 +254,7 @@ function AdminActivitiesPage() {
 
       {saveMutation.isError ? (
         <div className="mt-4">
-          <ErrorState message={saveMutation.error?.message} />
+          <ErrorState error={saveMutation.error} />
         </div>
       ) : null}
 

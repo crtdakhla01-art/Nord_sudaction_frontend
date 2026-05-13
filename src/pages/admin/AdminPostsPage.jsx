@@ -159,14 +159,7 @@ function AdminPostsPage() {
         </div>
 
         {(createMutation.isError || updateMutation.isError) ? (
-          <ErrorState
-            message={
-              createMutation.error?.response?.data?.message ||
-              updateMutation.error?.response?.data?.message ||
-              createMutation.error?.message ||
-              updateMutation.error?.message
-            }
-          />
+          <ErrorState error={createMutation.error || updateMutation.error} />
         ) : null}
 
         <button
@@ -198,7 +191,7 @@ function AdminPostsPage() {
       </div>
 
       {postsQuery.isLoading ? <LoadingState /> : null}
-      {postsQuery.isError ? <ErrorState message={postsQuery.error?.message} /> : null}
+      {postsQuery.isError ? <ErrorState error={postsQuery.error} /> : null}
 
       {!postsQuery.isLoading && !postsQuery.isError ? (
         <div className="space-y-4">

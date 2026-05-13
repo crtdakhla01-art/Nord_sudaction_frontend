@@ -155,7 +155,7 @@ function ContactPage() {
           />
 
           {submitMutation.isError ? (
-            <ErrorState message={submitMutation.error?.response?.data?.message || submitMutation.error?.message} />
+            <ErrorState error={submitMutation.error} />
           ) : null}
           {submitMutation.isSuccess ? (
             <p className="rounded-xl border border-secondary-200 bg-secondary-50 px-4 py-3 text-sm text-secondary-700">

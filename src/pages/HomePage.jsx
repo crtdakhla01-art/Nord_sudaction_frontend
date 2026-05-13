@@ -282,7 +282,7 @@ function HomePage() {
           </div>
 
           {isLoading ? <LoadingState /> : null}
-          {isError ? <ErrorState message={error?.message} /> : null}
+          {isError ? <ErrorState error={error} /> : null}
 
           {!isLoading && !isError ? (
             <MotionDiv

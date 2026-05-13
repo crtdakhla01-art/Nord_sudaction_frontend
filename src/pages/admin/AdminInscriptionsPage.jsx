@@ -222,7 +222,7 @@ function AdminInscriptionsPage() {
       </div>
 
       {isLoading ? <LoadingState /> : null}
-      {isError ? <ErrorState message={error?.response?.data?.message || error?.message} /> : null}
+      {isError ? <ErrorState error={error} /> : null}
 
       {!isLoading && !isError ? (
         <div className="overflow-hidden rounded-2xl border border-primary-100 bg-white shadow-md">

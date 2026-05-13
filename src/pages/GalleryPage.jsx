@@ -191,7 +191,7 @@ export default function GalleryPage() {
       {/* Photo grid */}
       <SectionContainer className="bg-white pt-2">
         <MotionDiv className="mx-auto max-w-6xl" variants={fadeUp} initial="hidden" whileInView="visible" viewport={inViewViewport}>
-          {isError ? <ErrorState message={error?.message || 'Failed to fetch gallery images.'} /> : null}
+          {isError ? <ErrorState error={error} /> : null}
 
           {isLoading ? (
             <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4" aria-hidden="true">

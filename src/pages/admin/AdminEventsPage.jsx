@@ -322,7 +322,7 @@ function AdminEventsPage() {
       </form>
 
       {eventsQuery.isLoading ? <LoadingState /> : null}
-      {eventsQuery.isError ? <ErrorState message={eventsQuery.error?.message} /> : null}
+      {eventsQuery.isError ? <ErrorState error={eventsQuery.error} /> : null}
 
       {!eventsQuery.isLoading && !eventsQuery.isError ? (
         <div className="grid grid-cols-2 gap-6">

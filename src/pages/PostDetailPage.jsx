@@ -66,7 +66,7 @@ function PostDetailPage() {
   }, [post])
 
   if (isLoading) return <SectionContainer><LoadingState /></SectionContainer>
-  if (isError) return <SectionContainer><ErrorState message={error?.message} error={error} /></SectionContainer>
+  if (isError) return <SectionContainer><ErrorState error={error} /></SectionContainer>
   if (!post) return <SectionContainer><ErrorState message="Article introuvable." /></SectionContainer>
 
   return (

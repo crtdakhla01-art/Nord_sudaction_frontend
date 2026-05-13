@@ -180,7 +180,7 @@ function EventDetailPage() {
     return (
       <SectionContainer>
         <div className="mx-auto flex min-h-[50vh] w-full max-w-3xl flex-col items-center justify-center gap-5 rounded-[28px] border border-secondary-100 bg-primary-50 px-6 py-12 text-center shadow-md">
-          <ErrorState message={error?.message} />
+          <ErrorState error={error} />
           <Link
             to="/events"
             className="inline-flex cursor-pointer items-center justify-center rounded-lg bg-secondary-500 px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-accent-500 hover:shadow-lg hover:shadow-secondary-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-500 focus-visible:ring-offset-2"

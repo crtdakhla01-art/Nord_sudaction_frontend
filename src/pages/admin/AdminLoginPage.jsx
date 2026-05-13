@@ -1,32 +1,21 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { setOtpContext } from '../../api/adminClient'
 import ErrorState from '../../components/ErrorState'
-import { useAdminAuth } from '../../hooks/useAdminAuth'
+import { useLogin } from '../../hooks/useLogin'
 import usePreventDoubleSubmit from '../../hooks/usePreventDoubleSubmit'
-import { useUser } from '../../hooks/useUser'
+import { authDebug } from '../../utils/authDebug'
 
 function AdminLoginPage() {
-  const { loginMutation } = useAdminAuth()
+  const loginMutation = useLogin()
   const { t } = useTranslation()
   const { wrap } = usePreventDoubleSubmit()
   const navigate = useNavigate()
-  const { isAuthenticated, isLoading } = useUser()
   const [values, setValues] = useState({
     email: '',
     password: '',
   })
-
-  // Already authenticated: redirect to admin.
-  if (isAuthenticated) {
-    return <Navigate to="/admin" replace />
-  }
-
-  // Loading auth state: show placeholder.
-  if (isLoading) {
-    return <div className="min-h-screen bg-primary-50" />
-  }
 
   const onChange = (event) => {
     const { name, value } = event.target
@@ -36,9 +25,14 @@ function AdminLoginPage() {
   const onSubmit = wrap(async (event) => {
     event.preventDefault()
     try {
-      await loginMutation.mutateAsync(values)
+      authDebug.log('[AUTH]', 'Submitting login step (credentials only)')
+      const response = await loginMutation.mutateAsync(values)
       setOtpContext({
         email: values.email,
+          challengeId: response?.data?.challenge_id,
+      })
+      authDebug.log('[AUTH]', 'Redirecting to OTP page', {
+          challengeId: response?.data?.challenge_id,
       })
       navigate('/admin/verify-otp', { replace: true })
     } catch {
@@ -78,15 +72,7 @@ function AdminLoginPage() {
           />
         </div>
 
-        {loginMutation.isError ? (
-          <ErrorState
-            message={
-              loginMutation.error?.response?.data?.errors?.email?.[0] ||
-              loginMutation.error?.response?.data?.message ||
-              loginMutation.error?.message
-            }
-          />
-        ) : null}
+        {loginMutation.isError ? <ErrorState error={loginMutation.error} /> : null}
 
         <button
           type="submit"

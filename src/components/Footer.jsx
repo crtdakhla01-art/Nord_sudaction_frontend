@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import logo from '../assets/blanc_logo.png'
 import { useSubscribeNewsletter } from '../hooks/useSubscribeNewsletter'
+import { getFriendlyServerError } from '../utils/friendlyError'
 
 const contactPhone = '+212660544904'
 
@@ -45,35 +46,11 @@ function Footer() {
     return Object.keys(nextErrors).length === 0
   }
 
-  const getNewsletterErrorMessage = () => {
-    const response = subscribeMutation.error?.response
-    const emailErrors = response?.data?.errors?.email
-    const validationMessage = response?.data?.message
-    const exceptionName = response?.data?.exception
-    const normalizedMessage = String(validationMessage || '').toLowerCase()
-    const isDuplicateEmailMessage = normalizedMessage.includes('already used')
-      || normalizedMessage.includes('already been taken')
-      || normalizedMessage.includes('deja utilise')
-      || normalizedMessage.includes('déjà utilisé')
-    const hasEmailValidationError = Array.isArray(emailErrors) && emailErrors.length > 0
-    const isValidationException = response?.status === 422
-      || String(exceptionName || '').includes('ValidationException')
-
-    if (isDuplicateEmailMessage) {
-      return t('newsletterAlreadySubscribed')
-    }
-
-    if (isValidationException && typeof validationMessage === 'string' && validationMessage.trim()) {
-      return validationMessage
-    }
-
-    if (hasEmailValidationError && typeof emailErrors[0] === 'string' && emailErrors[0].trim()) {
-      return emailErrors[0]
-    }
-
-    if (hasEmailValidationError) return t('newsletterAlreadySubscribed')
-    return t('newsletterError')
-  }
+  const getNewsletterErrorMessage = () => getFriendlyServerError(subscribeMutation.error, {
+    t,
+    context: 'newsletter',
+    fallback: t('newsletterError'),
+  })
 
   const handleNewsletterSubmit = async (event) => {
     event.preventDefault()

@@ -1,32 +1,22 @@
 import { Navigate, useNavigate } from 'react-router-dom'
 import { getOtpContext } from '../../api/adminClient'
 import ErrorState from '../../components/ErrorState'
-import { useAdminAuth } from '../../hooks/useAdminAuth'
+import { useVerifyOtp } from '../../hooks/useVerifyOtp'
 import usePreventDoubleSubmit from '../../hooks/usePreventDoubleSubmit'
-import { useUser } from '../../hooks/useUser'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { authDebug } from '../../utils/authDebug'
 
 function AdminVerifyOtpPage() {
-  const { verifyOtpMutation } = useAdminAuth()
+  const verifyOtpMutation = useVerifyOtp()
   const { t } = useTranslation()
   const { wrap } = usePreventDoubleSubmit()
   const navigate = useNavigate()
-  const { isAuthenticated, isLoading } = useUser()
-  const otpContext = getOtpContext()
+  // Keep the OTP challenge stable for this page lifecycle.
+  const [otpContext] = useState(() => getOtpContext())
   const [otpCode, setOtpCode] = useState('')
 
-  // Already authenticated: redirect to admin.
-  if (isAuthenticated && !isLoading) {
-    return <Navigate to="/admin" replace />
-  }
-
-  // Loading auth state: show placeholder.
-  if (isLoading) {
-    return <div className="min-h-screen bg-primary-50" />
-  }
-
-  if (!otpContext?.email) {
+  if (!otpContext?.email || !otpContext?.challengeId) {
     return <Navigate to="/admin/login" replace />
   }
 
@@ -34,8 +24,9 @@ function AdminVerifyOtpPage() {
     event.preventDefault()
 
     try {
+      authDebug.log('[OTP]', 'Submitting OTP verification')
       await verifyOtpMutation.mutateAsync({
-        email: otpContext.email,
+        challenge_id: otpContext.challengeId,
         code: otpCode,
       })
     } catch {
@@ -66,15 +57,7 @@ function AdminVerifyOtpPage() {
           />
         </div>
 
-        {verifyOtpMutation.isError ? (
-          <ErrorState
-            message={
-              verifyOtpMutation.error?.response?.data?.errors?.code?.[0] ||
-              verifyOtpMutation.error?.response?.data?.message ||
-              verifyOtpMutation.error?.message
-            }
-          />
-        ) : null}
+        {verifyOtpMutation.isError ? <ErrorState error={verifyOtpMutation.error} /> : null}
 
         <button
           type="submit"
@@ -87,7 +70,10 @@ function AdminVerifyOtpPage() {
         <button
           type="button"
           className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm font-semibold text-primary-500 transition hover:bg-primary-50"
-          onClick={() => navigate('/admin/login', { replace: true })}
+          onClick={() => {
+            authDebug.log('[AUTH]', 'Back to login clicked from OTP page')
+            navigate('/admin/login', { replace: true })
+          }}
         >
           {t('backToLogin')}
         </button>

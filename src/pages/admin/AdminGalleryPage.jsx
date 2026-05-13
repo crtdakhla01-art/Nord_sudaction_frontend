@@ -186,7 +186,7 @@ function AdminGalleryPage() {
       )}
 
       {galleryQuery.isLoading ? <LoadingState /> : null}
-      {galleryQuery.isError ? <ErrorState message={galleryQuery.error?.message} /> : null}
+      {galleryQuery.isError ? <ErrorState error={galleryQuery.error} /> : null}
 
       {!galleryQuery.isLoading && !galleryQuery.isError && (
         <>

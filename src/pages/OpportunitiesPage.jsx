@@ -257,7 +257,7 @@ function OpportunitiesPage() {
         {activeTab === 'list' ? (
           <MotionDiv className="mt-7" variants={fadeUp}>
             {isLoading ? <LoadingState /> : null}
-            {isError ? <ErrorState message={error?.message} /> : null}
+            {isError ? <ErrorState error={error} /> : null}
             {!isLoading && !isError ? (
               <>
                 <MotionDiv className="mb-6 flex flex-wrap gap-2" variants={fadeUp}>

@@ -7,6 +7,7 @@ import VisitorCounter from './components/VisitorCounter'
 import AdminLayout from './layouts/AdminLayout'
 import MainLayout from './layouts/MainLayout'
 import { ADMIN_ROLE, MANAGER_ROLE } from './constants/roles'
+import { authDebug } from './utils/authDebug'
 
 const AdminEventsPage = lazy(() => import('./pages/admin/AdminEventsPage'))
 const AdminGalleryPage = lazy(() => import('./pages/admin/AdminGalleryPage'))
@@ -54,6 +55,10 @@ function App() {
   // Handle global auth state changes (e.g., 401 responses triggering logout).
   useEffect(() => {
     const handleUnauthorized = () => {
+      authDebug.warn('[SESSION]', 'Global unauthorized event received; redirecting to /admin/login', {
+        path: window.location.pathname,
+      })
+
       // Force a refetch of /admin/me which will return 401, clearing the session.
       window.location.href = '/admin/login'
     }

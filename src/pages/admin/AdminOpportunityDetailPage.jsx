@@ -27,7 +27,7 @@ function AdminOpportunityDetailPage() {
   }
 
   if (isError) {
-    return <ErrorState message={error?.message} />
+    return <ErrorState error={error} />
   }
 
   if (!opportunity) {

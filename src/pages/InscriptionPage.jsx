@@ -413,9 +413,8 @@ function InscriptionPage() {
           ) : null}
 
           {submitMutation.isError ? (
-            <ErrorState
-              message={submitMutation.error?.response?.data?.message || t('inscriptionError')}
-            />
+
+            <ErrorState error={submitMutation.error} />
           ) : null}
 
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-primary-100 pt-4">

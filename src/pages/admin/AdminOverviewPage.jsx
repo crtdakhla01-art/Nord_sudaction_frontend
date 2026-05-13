@@ -30,7 +30,7 @@ function AdminOverviewPage() {
       </div>
 
       {isLoading ? <LoadingState /> : null}
-      {isError ? <ErrorState message={error?.response?.data?.message || error?.message} /> : null}
+      {isError ? <ErrorState error={error} /> : null}
 
       {!isLoading && !isError ? (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">

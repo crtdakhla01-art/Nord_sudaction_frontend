@@ -45,7 +45,7 @@ function OpportunityDetailPage() {
   if (isError) {
     return (
       <SectionContainer>
-        <ErrorState message={error?.message} />
+        <ErrorState error={error} />
       </SectionContainer>
     )
   }

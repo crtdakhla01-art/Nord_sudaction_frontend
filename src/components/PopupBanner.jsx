@@ -2,18 +2,25 @@ import { useState, useEffect } from 'react'
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
 
 export default function PopupBanner() {
+  const { pathname } = useLocation()
   const [isOpen, setIsOpen] = useState(false)
+  const isAdminRoute = pathname.startsWith('/admin')
 
   useEffect(() => {
+    if (isAdminRoute) {
+      return
+    }
+
     // Show popup after a short delay when component mounts
     const timer = setTimeout(() => {
       setIsOpen(true)
     }, 500)
 
     return () => clearTimeout(timer)
-  }, [])
+  }, [isAdminRoute])
 
   const handleNavigate = () => {
     window.open('https://www.linkedin.com/company/association-nord-sud-action/', '_blank')
@@ -21,7 +28,7 @@ export default function PopupBanner() {
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {!isAdminRoute && isOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 p-4 pointer-events-none">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
