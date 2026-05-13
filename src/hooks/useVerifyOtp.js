@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { clearOtpContext } from '../api/adminClient'
 import { getStoredUser, verifyOtpCode } from '../api/adminAuth'
@@ -7,6 +7,7 @@ import { authDebug } from '../utils/authDebug'
 
 export const useVerifyOtp = () => {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: verifyOtpCode,
@@ -29,6 +30,11 @@ export const useVerifyOtp = () => {
         userId: currentUser?.id,
         role,
       })
+
+      // Write the authenticated user into the React Query cache BEFORE navigating.
+      // Without this, ProtectedAdminRoute reads the stale null value and redirects
+      // back to /admin/login even though the session is valid.
+      queryClient.setQueryData(['admin', 'user', 'me'], currentUser)
 
       authDebug.log('[ROUTE GUARD]', 'Redirecting after OTP success', {
         to: role === MANAGER_ROLE ? '/admin/opportunities' : '/admin',
