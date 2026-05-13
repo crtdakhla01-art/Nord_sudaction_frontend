@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import DeleteConfirmModal from '../../components/admin/DeleteConfirmModal'
 import ErrorState from '../../components/ErrorState'
 import InputField from '../../components/InputField'
 import LoadingState from '../../components/LoadingState'
@@ -94,6 +95,7 @@ function AdminActivitiesPage() {
   const [formValues, setFormValues] = useState(emptyValues)
   const [formErrors, setFormErrors] = useState({})
   const [imageFile, setImageFile] = useState(null)
+  const [deletePending, setDeletePending] = useState(null) // { id, title }
 
   const saveMutation = formValues.id ? updateMutation : createMutation
   const activities = activitiesQuery.data || []
@@ -159,9 +161,14 @@ function AdminActivitiesPage() {
     setModalOpen(true)
   }
 
-  const handleDelete = async (id) => {
-    if (!window.confirm('Supprimer cette activité ?')) return
-    await deleteMutation.mutateAsync(id)
+  const handleDelete = (id, title) => {
+    setDeletePending({ id, title })
+  }
+
+  const confirmDelete = async () => {
+    if (!deletePending) return
+    await deleteMutation.mutateAsync(deletePending.id)
+    setDeletePending(null)
   }
 
   return (
@@ -236,7 +243,7 @@ function AdminActivitiesPage() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => handleDelete(activity.id)}
+                          onClick={() => handleDelete(activity.id, activity.title)}
                           disabled={deleteMutation.isPending}
                           className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-500 transition hover:bg-red-50 disabled:opacity-50"
                         >
@@ -270,6 +277,16 @@ function AdminActivitiesPage() {
           errors={formErrors}
         />
       ) : null}
+
+      <DeleteConfirmModal
+        isOpen={!!deletePending}
+        onCancel={() => setDeletePending(null)}
+        onConfirm={confirmDelete}
+        isPending={deleteMutation.isPending}
+        title="Supprimer cette activité ?"
+        itemName={deletePending?.title}
+        description="Cette activité sera supprimée définitivement. Cette action est irréversible."
+      />
     </div>
   )
 }

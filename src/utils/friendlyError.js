@@ -28,6 +28,8 @@ const getFirstValidationMessage = (errors) => {
   return null
 }
 
+const isTranslationKey = (value) => typeof value === 'string' && value.includes('.') && !value.includes(' ')
+
 const isTechnicalMessage = (message) => {
   const normalized = normalizeMessage(message)
 
@@ -148,6 +150,10 @@ export const getFriendlyServerError = (error, options = {}) => {
   }
 
   if (status === 422) {
+    if (validationMessage && isTranslationKey(validationMessage)) {
+      return t(validationMessage)
+    }
+
     return validationMessage || t('friendlyValidationError')
   }
 

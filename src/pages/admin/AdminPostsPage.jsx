@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import DeleteConfirmModal from '../../components/admin/DeleteConfirmModal'
 import ErrorState from '../../components/ErrorState'
 import InputField from '../../components/InputField'
 import LoadingState from '../../components/LoadingState'
@@ -40,6 +41,7 @@ function AdminPostsPage() {
 
   const { postsQuery, createMutation, updateMutation, deleteMutation } = useAdminPostsCRUD(filters)
   const saveMutation = editingId ? updateMutation : createMutation
+  const [deletePending, setDeletePending] = useState(null) // { id, title }
 
   const list = postsQuery.data?.data || []
   const currentPage = postsQuery.data?.current_page || 1
@@ -242,7 +244,7 @@ function AdminPostsPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => deleteMutation.mutate(item.id)}
+                  onClick={() => setDeletePending({ id: item.id, title: item.title })}
                   disabled={deleteMutation.isPending}
                   className="cursor-pointer rounded-lg bg-secondary-500 px-4 py-2 text-xs font-semibold text-white transition hover:bg-secondary-600"
                 >
@@ -273,6 +275,16 @@ function AdminPostsPage() {
           </div>
         </div>
       ) : null}
+
+      <DeleteConfirmModal
+        isOpen={!!deletePending}
+        onCancel={() => setDeletePending(null)}
+        onConfirm={async () => { await deleteMutation.mutateAsync(deletePending.id); setDeletePending(null) }}
+        isPending={deleteMutation.isPending}
+        title="Supprimer cet article ?"
+        itemName={deletePending?.title}
+        description="Cet article sera supprimé définitivement avec toutes ses données. Cette action est irréversible."
+      />
     </section>
   )
 }

@@ -9,6 +9,7 @@ import TextareaField from '../components/TextareaField'
 import { useSubmitContactMessage } from '../hooks/useSubmitContactMessage'
 import usePreventDoubleSubmit from '../hooks/usePreventDoubleSubmit'
 import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
+import { normalizeEmail, normalizePhone, validateEmail, validatePhone } from '../utils/validation'
 
 const contactPhone = '+212 660 544 904'
 
@@ -33,19 +34,50 @@ function ContactPage() {
 
   const handleChange = (event) => {
     const { name, value } = event.target
-    setFormValues((prev) => ({ ...prev, [name]: value }))
+    const nextValue = name === 'email'
+      ? normalizeEmail(value)
+      : name === 'phone'
+        ? normalizePhone(value)
+        : value
+
+    setFormValues((prev) => ({ ...prev, [name]: nextValue }))
+    setFormErrors((prev) => ({ ...prev, [name]: undefined }))
+  }
+
+  const validateField = (name, value) => {
+    if (name === 'email') {
+      const result = validateEmail(value, { required: true })
+      return result.isValid ? undefined : t(result.errorKey)
+    }
+
+    if (name === 'phone') {
+      const result = validatePhone(value, { required: false })
+      return result.isValid ? undefined : t(result.errorKey)
+    }
+
+    if (['name', 'object', 'message'].includes(name) && !String(value ?? '').trim()) {
+      return t('requiredError')
+    }
+
+    return undefined
+  }
+
+  const handleBlur = (event) => {
+    const { name, value } = event.target
+    const error = validateField(name, value)
+    setFormErrors((prev) => ({ ...prev, [name]: error }))
   }
 
   const validate = () => {
     const errors = {}
-    if (!formValues.name) errors.name = t('requiredError')
-    if (!formValues.email) {
-      errors.email = t('requiredError')
-    } else if (!/^\S+@\S+\.\S+$/.test(formValues.email)) {
-      errors.email = t('invalidEmailError')
-    }
-    if (!formValues.object) errors.object = t('requiredError')
-    if (!formValues.message) errors.message = t('requiredError')
+    const fieldsToCheck = ['name', 'email', 'phone', 'object', 'message']
+
+    fieldsToCheck.forEach((field) => {
+      const error = validateField(field, formValues[field])
+      if (error) {
+        errors[field] = error
+      }
+    })
 
     setFormErrors(errors)
     return Object.keys(errors).length === 0
@@ -55,7 +87,13 @@ function ContactPage() {
     event.preventDefault()
     if (!validate()) return
 
-    await submitMutation.mutateAsync(formValues)
+    const normalizedPayload = {
+      ...formValues,
+      email: normalizeEmail(formValues.email),
+      phone: normalizePhone(formValues.phone),
+    }
+
+    await submitMutation.mutateAsync(normalizedPayload)
     setFormValues(initialForm)
     setFormErrors({})
   })
@@ -106,6 +144,7 @@ function ContactPage() {
             required
             value={formValues.name}
             onChange={handleChange}
+            onBlur={handleBlur}
             error={formErrors.name}
           />
 
@@ -116,6 +155,7 @@ function ContactPage() {
             required
             value={formValues.email}
             onChange={handleChange}
+            onBlur={handleBlur}
             error={formErrors.email}
           />
 
@@ -132,6 +172,7 @@ function ContactPage() {
             inputMode="tel"
             value={formValues.phone}
             onChange={handleChange}
+            onBlur={handleBlur}
             error={formErrors.phone}
           />
 
@@ -141,6 +182,7 @@ function ContactPage() {
             required
             value={formValues.object}
             onChange={handleChange}
+            onBlur={handleBlur}
             error={formErrors.object}
           />
 
@@ -151,6 +193,7 @@ function ContactPage() {
             required
             value={formValues.message}
             onChange={handleChange}
+            onBlur={handleBlur}
             error={formErrors.message}
           />
 

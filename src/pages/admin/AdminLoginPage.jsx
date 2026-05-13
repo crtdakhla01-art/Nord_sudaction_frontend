@@ -6,12 +6,14 @@ import ErrorState from '../../components/ErrorState'
 import { useLogin } from '../../hooks/useLogin'
 import usePreventDoubleSubmit from '../../hooks/usePreventDoubleSubmit'
 import { authDebug } from '../../utils/authDebug'
+import { normalizeEmail, validateEmail } from '../../utils/validation'
 
 function AdminLoginPage() {
   const loginMutation = useLogin()
   const { t } = useTranslation()
   const { wrap } = usePreventDoubleSubmit()
   const navigate = useNavigate()
+  const [errors, setErrors] = useState({})
   const [values, setValues] = useState({
     email: '',
     password: '',
@@ -19,11 +21,42 @@ function AdminLoginPage() {
 
   const onChange = (event) => {
     const { name, value } = event.target
-    setValues((prev) => ({ ...prev, [name]: value }))
+    const nextValue = name === 'email' ? normalizeEmail(value) : value
+    setValues((prev) => ({ ...prev, [name]: nextValue }))
+    setErrors((prev) => ({ ...prev, [name]: undefined }))
+  }
+
+  const onBlur = (event) => {
+    const { name, value } = event.target
+
+    if (name === 'email') {
+      const result = validateEmail(value, { required: true })
+      setErrors((prev) => ({ ...prev, email: result.isValid ? undefined : t(result.errorKey) }))
+    }
+  }
+
+  const validateForm = () => {
+    const nextErrors = {}
+    const emailValidation = validateEmail(values.email, { required: true })
+    if (!emailValidation.isValid) {
+      nextErrors.email = t(emailValidation.errorKey)
+    }
+
+    if (!values.password.trim()) {
+      nextErrors.password = t('requiredError')
+    }
+
+    setErrors(nextErrors)
+
+    return Object.keys(nextErrors).length === 0
   }
 
   const onSubmit = wrap(async (event) => {
     event.preventDefault()
+    if (!validateForm()) {
+      return
+    }
+
     try {
       authDebug.log('[AUTH]', 'Submitting login step (credentials only)')
       const response = await loginMutation.mutateAsync(values)
@@ -56,8 +89,10 @@ function AdminLoginPage() {
             type="email"
             value={values.email}
             onChange={onChange}
+            onBlur={onBlur}
             required
           />
+          {errors.email ? <p className="text-xs text-secondary-600">{errors.email}</p> : null}
         </div>
 
         <div className="space-y-2">
@@ -70,6 +105,7 @@ function AdminLoginPage() {
             onChange={onChange}
             required
           />
+          {errors.password ? <p className="text-xs text-secondary-600">{errors.password}</p> : null}
         </div>
 
         {loginMutation.isError ? <ErrorState error={loginMutation.error} /> : null}

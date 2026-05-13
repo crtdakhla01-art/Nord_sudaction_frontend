@@ -13,6 +13,7 @@ import { useOpportunities } from '../hooks/useOpportunities'
 import { useSubmitOpportunity } from '../hooks/useSubmitOpportunity'
 import usePreventDoubleSubmit from '../hooks/usePreventDoubleSubmit'
 import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
+import { normalizeEmail, normalizePhone, validateEmail, validatePhone } from '../utils/validation'
 
 const initialForm = {
   titre: '',
@@ -113,8 +114,14 @@ function OpportunitiesPage() {
       }
     })
 
-    if (formValues.email && !/^\S+@\S+\.\S+$/.test(formValues.email)) {
-      errors.email = t('invalidEmailError')
+    const emailValidation = validateEmail(formValues.email, { required: true })
+    if (!emailValidation.isValid) {
+      errors.email = t(emailValidation.errorKey)
+    }
+
+    const phoneValidation = validatePhone(formValues.phone, { required: false })
+    if (!phoneValidation.isValid) {
+      errors.phone = t(phoneValidation.errorKey)
     }
 
     if (formValues.images.length > MAX_IMAGE_COUNT) {
@@ -175,8 +182,29 @@ function OpportunitiesPage() {
 
     setFormValues((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: name === 'email'
+        ? normalizeEmail(value)
+        : name === 'phone'
+          ? normalizePhone(value)
+          : value,
     }))
+
+    setFormErrors((prev) => ({ ...prev, [name]: undefined }))
+  }
+
+  const handleBlur = (event) => {
+    const { name, value } = event.target
+
+    if (name === 'email') {
+      const result = validateEmail(value, { required: true })
+      setFormErrors((prev) => ({ ...prev, email: result.isValid ? undefined : t(result.errorKey) }))
+      return
+    }
+
+    if (name === 'phone') {
+      const result = validatePhone(value, { required: false })
+      setFormErrors((prev) => ({ ...prev, phone: result.isValid ? undefined : t(result.errorKey) }))
+    }
   }
 
   const removeSelectedImage = (targetIndex) => {
@@ -414,8 +442,12 @@ function OpportunitiesPage() {
               <InputField
                 label={t('formPhone')}
                 name="phone"
+                type="tel"
+                inputMode="tel"
+                dir="ltr"
                 value={formValues.phone}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 error={formErrors.phone}
               />
             </div>
@@ -427,6 +459,7 @@ function OpportunitiesPage() {
                 name="email"
                 value={formValues.email}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 error={formErrors.email}
                 required
               />

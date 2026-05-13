@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import DeleteConfirmModal from '../../components/admin/DeleteConfirmModal'
 import ErrorState from '../../components/ErrorState'
 import LoadingState from '../../components/LoadingState'
 import { useAdminGalleryCRUD } from '../../hooks/useAdminGalleryCRUD'
@@ -20,6 +21,8 @@ function AdminGalleryPage() {
   const [selectedId, setSelectedId] = useState(null)
   const [selectedCategoryId, setSelectedCategoryId] = useState('')
   const [newCategoryName, setNewCategoryName] = useState('')
+  const [deleteImagePending, setDeleteImagePending] = useState(null)   // { id }
+  const [deleteCategoryPending, setDeleteCategoryPending] = useState(null) // { id, name }
   const {
     galleryQuery,
     categoriesQuery,
@@ -55,9 +58,15 @@ function AdminGalleryPage() {
     }
   }
 
-  const handleDelete = async (id) => {
-    if (!window.confirm('Supprimer cette image ?')) return
-    await deleteMutation.mutateAsync(id)
+  const handleDelete = (id) => {
+    setDeleteImagePending({ id })
+  }
+
+  const confirmDeleteImage = async () => {
+    if (!deleteImagePending) return
+    await deleteMutation.mutateAsync(deleteImagePending.id)
+    setDeleteImagePending(null)
+    setSelectedId(null)
   }
 
   const handleCreateCategory = wrap(async (e) => {
@@ -76,12 +85,17 @@ function AdminGalleryPage() {
     })
   }
 
-  const handleDeleteCategory = async (id) => {
-    if (!window.confirm('Supprimer cette categorie ? Les images resteront sans categorie.')) return
-    await deleteCategoryMutation.mutateAsync(id)
-    if (String(id) === selectedCategoryId) {
+  const handleDeleteCategory = (id, name) => {
+    setDeleteCategoryPending({ id, name })
+  }
+
+  const confirmDeleteCategory = async () => {
+    if (!deleteCategoryPending) return
+    await deleteCategoryMutation.mutateAsync(deleteCategoryPending.id)
+    if (String(deleteCategoryPending.id) === selectedCategoryId) {
       setSelectedCategoryId('')
     }
+    setDeleteCategoryPending(null)
   }
 
   return (
@@ -159,7 +173,7 @@ function AdminGalleryPage() {
             <button
               key={category.id}
               type="button"
-              onClick={() => handleDeleteCategory(category.id)}
+              onClick={() => handleDeleteCategory(category.id, category.name)}
               disabled={deleteCategoryMutation.isPending}
               className="rounded-lg border border-primary-200 px-3 py-1 text-xs text-primary-500 transition hover:border-red-300 hover:text-red-500"
               title="Supprimer"
@@ -265,6 +279,27 @@ function AdminGalleryPage() {
           )}
         </>
       )}
+
+      {/* Delete image confirmation */}
+      <DeleteConfirmModal
+        isOpen={!!deleteImagePending}
+        onCancel={() => setDeleteImagePending(null)}
+        onConfirm={confirmDeleteImage}
+        isPending={deleteMutation.isPending}
+        title="Supprimer cette image ?"
+        description="Cette image sera supprimée définitivement de la galerie. Cette action est irréversible."
+      />
+
+      {/* Delete category confirmation */}
+      <DeleteConfirmModal
+        isOpen={!!deleteCategoryPending}
+        onCancel={() => setDeleteCategoryPending(null)}
+        onConfirm={confirmDeleteCategory}
+        isPending={deleteCategoryMutation.isPending}
+        title="Supprimer cette catégorie ?"
+        itemName={deleteCategoryPending?.name}
+        description="Toutes les images dans cette catégorie seront également supprimées définitivement. Cette action est irréversible."
+      />
     </div>
   )
 }

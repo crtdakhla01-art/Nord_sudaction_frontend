@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import logo from '../assets/blanc_logo.png'
 import { useSubscribeNewsletter } from '../hooks/useSubscribeNewsletter'
 import { getFriendlyServerError } from '../utils/friendlyError'
+import { normalizeEmail, validateEmail } from '../utils/validation'
 
 const contactPhone = '+212660544904'
 
@@ -21,8 +22,25 @@ function Footer() {
 
   const handleNewsletterChange = (event) => {
     const { name, type, value, checked } = event.target
-    setNewsletterForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }))
+    const nextValue = type === 'checkbox'
+      ? checked
+      : name === 'email'
+        ? normalizeEmail(value)
+        : value
+
+    setNewsletterForm((prev) => ({ ...prev, [name]: nextValue }))
     setNewsletterErrors((prev) => ({ ...prev, [name]: undefined }))
+  }
+
+  const handleNewsletterBlur = (event) => {
+    const { name, value } = event.target
+
+    if (name !== 'email') {
+      return
+    }
+
+    const result = validateEmail(value, { required: true })
+    setNewsletterErrors((prev) => ({ ...prev, email: result.isValid ? undefined : t(result.errorKey) }))
   }
 
   const validateNewsletterForm = () => {
@@ -34,8 +52,11 @@ function Footer() {
 
     if (!newsletterForm.email.trim()) {
       nextErrors.email = t('requiredError')
-    } else if (!/^\S+@\S+\.\S+$/.test(newsletterForm.email.trim())) {
-      nextErrors.email = t('invalidEmailError')
+    } else {
+      const result = validateEmail(newsletterForm.email, { required: true })
+      if (!result.isValid) {
+        nextErrors.email = t(result.errorKey)
+      }
     }
 
     if (!newsletterForm.consent) {
@@ -115,6 +136,7 @@ function Footer() {
                 type="email"
                 value={newsletterForm.email}
                 onChange={handleNewsletterChange}
+                onBlur={handleNewsletterBlur}
                 placeholder={t('footerNewsletterEmailPlaceholder')}
                 className="w-full rounded-lg border border-secondary-700 bg-primary-900 px-3 py-2 text-sm text-white placeholder:text-primary-400 focus:border-secondary-500 focus:outline-none"
               />

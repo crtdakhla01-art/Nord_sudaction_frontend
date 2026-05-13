@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import DeleteConfirmModal from '../../components/admin/DeleteConfirmModal'
 import ErrorState from '../../components/ErrorState'
 import InputField from '../../components/InputField'
 import LoadingState from '../../components/LoadingState'
@@ -99,6 +100,7 @@ function AdminEventsPage() {
   const [values, setValues] = useState(createInitialValues)
   const [editingId, setEditingId] = useState(null)
   const { eventsQuery, createMutation, updateMutation, deleteMutation } = useEventsCRUD()
+  const [deletePending, setDeletePending] = useState(null) // { id, title }
 
   const saveMutation = editingId ? updateMutation : createMutation
   const isEventMissingError = updateMutation.error?.response?.status === 404
@@ -387,7 +389,7 @@ function AdminEventsPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => deleteMutation.mutate(eventItem.id)}
+                  onClick={() => setDeletePending({ id: eventItem.id, title: eventItem.title })}
                   disabled={deleteMutation.isPending}
                   className="rounded-lg bg-secondary-500 px-4 py-2 text-xs font-semibold text-white transition hover:bg-secondary-600"
                 >
@@ -404,6 +406,16 @@ function AdminEventsPage() {
           ) : null}
         </div>
       ) : null}
+
+      <DeleteConfirmModal
+        isOpen={!!deletePending}
+        onCancel={() => setDeletePending(null)}
+        onConfirm={async () => { await deleteMutation.mutateAsync(deletePending.id); setDeletePending(null) }}
+        isPending={deleteMutation.isPending}
+        title="Supprimer cet événement ?"
+        itemName={deletePending?.title}
+        description="Cet événement sera supprimé définitivement avec toutes ses photos et données. Cette action est irréversible."
+      />
     </section>
   )
 }

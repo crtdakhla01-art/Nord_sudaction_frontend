@@ -120,9 +120,6 @@ function ParticipantDetailsModal({ participant, onClose }) {
               <span className="font-semibold">Tarif:</span> {participant.participation_fee} DH
             </p>
             <p className="mt-1 text-sm text-primary-500">
-              <span className="font-semibold">Validation infos:</span> {participant.is_information_confirmed ? 'Oui' : 'Non'}
-            </p>
-            <p className="mt-1 text-sm text-primary-500">
               <span className="font-semibold">Conditions acceptées:</span> {participant.is_terms_accepted ? 'Oui' : 'Non'}
             </p>
           </div>

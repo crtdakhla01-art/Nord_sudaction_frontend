@@ -8,6 +8,7 @@ import SectionContainer from '../components/SectionContainer'
 import { useSubmitInscription } from '../hooks/useSubmitInscription'
 import usePreventDoubleSubmit from '../hooks/usePreventDoubleSubmit'
 import { fadeUp, staggerContainer } from '../utils/animations'
+import { normalizeEmail, normalizePhone, validateEmail, validatePhone } from '../utils/validation'
 
 const initialValues = {
   full_name: '',
@@ -22,7 +23,6 @@ const initialValues = {
   investment_sectors: [],
   investment_sector_other: '',
   confirmed_activities: [],
-  is_information_confirmed: false,
   is_terms_accepted: false,
 }
 
@@ -130,7 +130,29 @@ function InscriptionPage() {
   const progress = useMemo(() => (currentStep / steps.length) * 100, [currentStep, steps.length])
 
   const setField = (name, value) => {
-    setValues((prev) => ({ ...prev, [name]: value }))
+    const nextValue = name === 'email'
+      ? normalizeEmail(value)
+      : name === 'phone'
+        ? normalizePhone(value)
+        : value
+
+    setValues((prev) => ({ ...prev, [name]: nextValue }))
+    setErrors((prev) => ({ ...prev, [name]: undefined }))
+  }
+
+  const handleBlur = (event) => {
+    const { name, value } = event.target
+
+    if (name === 'email') {
+      const result = validateEmail(value, { required: true })
+      setErrors((prev) => ({ ...prev, email: result.isValid ? undefined : t(result.errorKey) }))
+      return
+    }
+
+    if (name === 'phone') {
+      const result = validatePhone(value, { required: true })
+      setErrors((prev) => ({ ...prev, phone: result.isValid ? undefined : t(result.errorKey) }))
+    }
   }
 
   const toggleArrayValue = (field, value) => {
@@ -150,12 +172,10 @@ function InscriptionPage() {
       if (!values.full_name.trim()) nextErrors.full_name = t('fullNameRequired')
       if (!values.birth_date) nextErrors.birth_date = t('birthDateRequired')
       if (!values.city.trim()) nextErrors.city = t('cityRequired')
-      if (!values.phone.trim()) nextErrors.phone = t('phoneRequired')
-      if (!values.email.trim()) {
-        nextErrors.email = t('emailRequired')
-      } else if (!/^\S+@\S+\.\S+$/.test(values.email)) {
-        nextErrors.email = t('emailInvalid')
-      }
+      const phoneResult = validatePhone(values.phone, { required: true })
+      if (!phoneResult.isValid) nextErrors.phone = t(phoneResult.errorKey)
+      const emailResult = validateEmail(values.email, { required: true })
+      if (!emailResult.isValid) nextErrors.email = t(emailResult.errorKey)
       if (!values.profession.trim()) nextErrors.profession = t('professionRequired')
       if (!values.organization.trim()) nextErrors.organization = t('organizationRequired')
     }
@@ -182,9 +202,6 @@ function InscriptionPage() {
     }
 
     if (stepNumber === 4) {
-      if (!values.is_information_confirmed) {
-        nextErrors.is_information_confirmed = t('informationConfirmRequired')
-      }
       if (!values.is_terms_accepted) {
         nextErrors.is_terms_accepted = t('termsAcceptRequired')
       }
@@ -288,6 +305,7 @@ function InscriptionPage() {
                 required
                 value={values.phone}
                 onChange={(event) => setField('phone', event.target.value)}
+                onBlur={handleBlur}
                 error={errors.phone}
               />
               <InputField
@@ -297,6 +315,7 @@ function InscriptionPage() {
                 required
                 value={values.email}
                 onChange={(event) => setField('email', event.target.value)}
+                onBlur={handleBlur}
                 error={errors.email}
               />
               <InputField
