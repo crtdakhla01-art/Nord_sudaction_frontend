@@ -1,9 +1,14 @@
 const normalizeMessage = (value) =>
-  String(value || '')
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .trim()
+  {
+    const text = String(value ?? '').toLowerCase()
+    const normalized = typeof text.normalize === 'function'
+      ? text.normalize('NFD')
+      : text
+
+    return normalized
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim()
+  }
 
 const getFirstValidationMessage = (errors) => {
   if (!errors || typeof errors !== 'object') {
@@ -11,11 +16,11 @@ const getFirstValidationMessage = (errors) => {
   }
 
   for (const value of Object.values(errors)) {
-    if (Array.isArray(value) && typeof value[0] === 'string' && value[0].trim()) {
+    if (Array.isArray(value) && typeof value[0] === 'string' && value[0].trim()){
       return value[0]
     }
 
-    if (typeof value === 'string' && value.trim()) {
+    if (typeof value === 'string' && value.trim()){
       return value
     }
   }
@@ -39,6 +44,7 @@ export const getFriendlyServerError = (error, options = {}) => {
   const t = options.t || ((key) => key)
   const response = error?.response
   const data = response?.data || {}
+  const requestUrl = String(error?.config?.url || '').toLowerCase()
   const apiKey =
     (typeof data?.error_key === 'string' && data.error_key.trim()) ||
     (typeof data?.message_key === 'string' && data.message_key.trim()) ||
@@ -92,6 +98,23 @@ export const getFriendlyServerError = (error, options = {}) => {
     normalized.includes('invalid credentials') ||
     normalized.includes('email or password') ||
     normalized.includes('incorrect password')
+  ) {
+    return t('friendlyInvalidCredentials')
+  }
+
+  // Some environments may return 500 for auth failures.
+  // If this is a login request and the payload/message hints at invalid auth,
+  // prefer the credential message over a generic server error text.
+  if (
+    requestUrl.includes('/login') &&
+    status === 500 &&
+    (
+      normalized.includes('unauthorized') ||
+      normalized.includes('invalid') ||
+      normalized.includes('credential') ||
+      normalized.includes('password') ||
+      normalized.includes('email')
+    )
   ) {
     return t('friendlyInvalidCredentials')
   }
