@@ -160,18 +160,6 @@ export const setupAxiosErrorInterceptor = (axiosInstance) => {
   axiosInstance.interceptors.response.use(
     (response) => response,
     (error) => {
-      // Log parsed error for debugging (in development only)
-      if (process.env.NODE_ENV === 'development') {
-        const parsed = parseApiError(error)
-        if (parsed) {
-          console.warn('API Error:', {
-            key: parsed.key,
-            message: parsed.message,
-            statusCode: parsed.statusCode,
-          })
-        }
-      }
-
       // Re-throw error so components can handle it
       return Promise.reject(error)
     }

@@ -15,9 +15,6 @@ function usePreventDoubleSubmit() {
 
   const wrap = useCallback((asyncFn) => async (...args) => {
     if (inFlightRef.current) {
-      if (import.meta.env.DEV) {
-        console.warn('[usePreventDoubleSubmit] Duplicate submission prevented.')
-      }
       return
     }
 

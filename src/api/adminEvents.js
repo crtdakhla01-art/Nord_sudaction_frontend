@@ -3,7 +3,15 @@ import { appendGalleryItemsToFormData } from '../utils/eventGallery'
 
 export const fetchAdminEvents = async () => {
   const { data } = await adminApi.get('/admin/events')
-  return data
+
+  // Backward-compatible adapter:
+  // - legacy response: Event[]
+  // - paginated response: { data: Event[], ... }
+  if (Array.isArray(data)) {
+    return data
+  }
+
+  return Array.isArray(data?.data) ? data.data : []
 }
 
 export const createEvent = async (payload) => {

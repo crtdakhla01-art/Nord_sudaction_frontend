@@ -1,5 +1,4 @@
-const isDev = import.meta.env.DEV
-const isEnabled = isDev || String(import.meta.env.VITE_AUTH_DEBUG || '').toLowerCase() === 'true'
+const isEnabled = false
 
 function maskEmail(email) {
   if (typeof email !== 'string' || !email.includes('@')) {
@@ -19,42 +18,15 @@ function maskToken(token) {
 }
 
 function log(prefix, message, data) {
-  if (!isEnabled) {
-    return
-  }
-
-  if (data === undefined) {
-    console.info(`${prefix} ${message}`)
-    return
-  }
-
-  console.info(`${prefix} ${message}`, data)
+  return isEnabled && prefix && message && data
 }
 
 function warn(prefix, message, data) {
-  if (!isEnabled) {
-    return
-  }
-
-  if (data === undefined) {
-    console.warn(`${prefix} ${message}`)
-    return
-  }
-
-  console.warn(`${prefix} ${message}`, data)
+  return isEnabled && prefix && message && data
 }
 
 function error(prefix, message, data) {
-  if (!isEnabled) {
-    return
-  }
-
-  if (data === undefined) {
-    console.error(`${prefix} ${message}`)
-    return
-  }
-
-  console.error(`${prefix} ${message}`, data)
+  return isEnabled && prefix && message && data
 }
 
 export const authDebug = {

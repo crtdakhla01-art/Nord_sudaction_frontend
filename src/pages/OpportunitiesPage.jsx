@@ -101,8 +101,8 @@ function OpportunitiesPage() {
   const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage))
   const paginatedOpportunities = filteredOpportunities.slice((page - 1) * itemsPerPage, page * itemsPerPage)
 
-  const MAX_IMAGE_SIZE_MB = 20
-  const MAX_IMAGE_COUNT = 10
+  const MAX_IMAGE_SIZE_MB = 5
+  const MAX_IMAGE_COUNT = 3
 
   const validate = () => {
     const errors = {}
@@ -125,11 +125,11 @@ function OpportunitiesPage() {
     }
 
     if (formValues.images.length > MAX_IMAGE_COUNT) {
-      errors.images = t('imageCountError')
+      errors.images = t('imageMaxCountBackendError')
     } else {
       const oversized = formValues.images.find((f) => f.size > MAX_IMAGE_SIZE_MB * 1024 * 1024)
       if (oversized) {
-        errors.images = t('imageSizeError', { name: oversized.name })
+        errors.images = t('imageFileTooLarge', { name: oversized.name })
       }
     }
 
@@ -145,8 +145,23 @@ function OpportunitiesPage() {
       const messages = Object.entries(errors).flatMap(([field, msgs]) => {
         const raw = Array.isArray(msgs) ? msgs[0] : msgs
         if (field === 'images' || field.startsWith('images.')) {
-          if (/size|kilobytes|megabytes|taille/i.test(raw)) return [t('imageGenericError')]
-          if (/count|max|nombre/i.test(raw)) return [t('imageCountError')]
+          // Check for max count error (3 images limit from backend)
+          if (/max.*3|max.*count|beyond|exceeds|trop.*images/i.test(raw)) {
+            return [t('imageMaxCountBackendError')]
+          }
+          // Check for file size error (5MB per file)
+          if (/size|kilobytes|megabytes|taille|5120|5 ?mb|ko|mb/i.test(raw) && /max|exceeds|trop/i.test(raw)) {
+            return [t('imageFileTooLarge')]
+          }
+          // Check for invalid format/MIME type error
+          if (/mime|format|type|extension|jpg|jpeg|png|webp/i.test(raw) && /invalid|not allowed|invalide/i.test(raw)) {
+            return [t('imageInvalidFormat')]
+          }
+          // Check for total size error
+          if (/total|combined|all files|tous.*fichiers/i.test(raw)) {
+            return [t('imageTotalSizeTooLarge')]
+          }
+          // Default to generic error
           return [t('imageGenericError')]
         }
         return [raw]
