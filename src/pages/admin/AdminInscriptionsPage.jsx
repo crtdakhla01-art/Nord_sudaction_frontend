@@ -122,6 +122,21 @@ function ParticipantDetailsModal({ participant, onClose }) {
             <p className="mt-1 text-sm text-primary-500">
               <span className="font-semibold">Conditions acceptées:</span> {participant.is_terms_accepted ? 'Oui' : 'Non'}
             </p>
+            <p className="mt-1 text-sm text-primary-500">
+              <span className="font-semibold">Justificatif:</span>{' '}
+              {participant.payment_proof_url ? (
+                <a
+                  href={participant.payment_proof_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-semibold text-secondary-600 underline underline-offset-2"
+                >
+                  Voir le justificatif
+                </a>
+              ) : (
+                '-'
+              )}
+            </p>
           </div>
         </div>
       </div>

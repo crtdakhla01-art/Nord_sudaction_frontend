@@ -23,6 +23,7 @@ const initialValues = {
   investment_sectors: [],
   investment_sector_other: '',
   confirmed_activities: [],
+  payment_proof: null,
   is_terms_accepted: false,
 }
 
@@ -202,6 +203,9 @@ function InscriptionPage() {
     }
 
     if (stepNumber === 4) {
+      if (!values.payment_proof) {
+        nextErrors.payment_proof = t('paymentProofRequired')
+      }
       if (!values.is_terms_accepted) {
         nextErrors.is_terms_accepted = t('termsAcceptRequired')
       }
@@ -416,6 +420,25 @@ function InscriptionPage() {
                   <li>{t('activitiesAndDesertExcursion')}</li>
                 </ul>
               </div>
+
+              <div className="rounded-xl border border-primary-100 bg-white px-4 py-3 text-sm text-primary-500">
+                <label htmlFor="payment_proof" className="block font-semibold text-primary-500">
+                  {t('paymentProofLabel')}
+                </label>
+                <p className="mt-1 text-xs text-primary-400">{t('paymentProofHint')}</p>
+                <input
+                  id="payment_proof"
+                  name="payment_proof"
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png,.webp"
+                  onChange={(event) => setField('payment_proof', event.target.files?.[0] ?? null)}
+                  className="mt-3 block w-full cursor-pointer rounded-lg border border-primary-200 bg-white px-3 py-2 text-sm text-primary-500 file:mr-4 file:cursor-pointer file:rounded-md file:border-0 file:bg-primary-100 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-primary-600 hover:file:bg-primary-200"
+                />
+                {errors.payment_proof ? (
+                  <p className="mt-2 text-sm font-medium text-secondary-600">{errors.payment_proof}</p>
+                ) : null}
+              </div>
+
               <label className="flex items-start gap-3 rounded-xl border border-primary-100 bg-primary-50 px-4 py-3 text-sm text-primary-500">
                 <input
                   type="checkbox"
