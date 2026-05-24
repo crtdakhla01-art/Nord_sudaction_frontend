@@ -11,6 +11,8 @@ import { fadeUp, staggerContainer } from '../utils/animations'
 import { normalizeEmail, normalizePhone, validateEmail, validatePhone } from '../utils/validation'
 
 const initialValues = {
+  first_name: '',
+  last_name: '',
   full_name: '',
   birth_date: '',
   city: '',
@@ -24,6 +26,7 @@ const initialValues = {
   investment_sector_other: '',
   confirmed_activities: [],
   payment_proof: null,
+  is_payment_confirmed: false,
   is_terms_accepted: false,
 }
 
@@ -104,7 +107,6 @@ function InscriptionPage() {
     () => [
       { value: 'conferences_networking', label: t('conferencesNetworkingLabel') },
       { value: 'excursion_desert', label: t('desertExcursionLabel') },
-      { value: 'soiree_bivouac', label: t('bivouacEveningLabel') },
       { value: 'observation_astronomique', label: t('astronomicalObservationLabel') },
     ],
     [t]
@@ -124,6 +126,12 @@ function InscriptionPage() {
   const [values, setValues] = useState(initialValues)
   const [errors, setErrors] = useState({})
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+  const [isRibCopied, setIsRibCopied] = useState(false)
+
+  const ribNumber = '011.530.0000.02.200.00.05376.51'
+  const ribDisplayValue = `Bank Of Africa : ${ribNumber}`
+
+  const buildFullName = (firstName, lastName) => `${firstName} ${lastName}`.trim()
 
   const submitMutation = useSubmitInscription()
   const { wrap } = usePreventDoubleSubmit()
@@ -170,7 +178,8 @@ function InscriptionPage() {
     const nextErrors = {}
 
     if (stepNumber === 1) {
-      if (!values.full_name.trim()) nextErrors.full_name = t('fullNameRequired')
+      if (!values.first_name.trim()) nextErrors.first_name = t('firstNameRequired')
+      if (!values.last_name.trim()) nextErrors.last_name = t('lastNameRequired')
       if (!values.birth_date) nextErrors.birth_date = t('birthDateRequired')
       if (!values.city.trim()) nextErrors.city = t('cityRequired')
       const phoneResult = validatePhone(values.phone, { required: true })
@@ -206,6 +215,9 @@ function InscriptionPage() {
       if (!values.payment_proof) {
         nextErrors.payment_proof = t('paymentProofRequired')
       }
+      if (!values.is_payment_confirmed) {
+        nextErrors.is_payment_confirmed = t('paymentConfirmRequired')
+      }
       if (!values.is_terms_accepted) {
         nextErrors.is_terms_accepted = t('termsAcceptRequired')
       }
@@ -239,6 +251,26 @@ function InscriptionPage() {
   const closeSuccessModal = () => {
     setIsSuccessModalOpen(false)
     submitMutation.reset()
+  }
+
+  const handleCopyRib = async () => {
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(ribNumber)
+      } else {
+        const textArea = document.createElement('textarea')
+        textArea.value = ribNumber
+        document.body.appendChild(textArea)
+        textArea.select()
+        document.execCommand('copy')
+        document.body.removeChild(textArea)
+      }
+
+      setIsRibCopied(true)
+      window.setTimeout(() => setIsRibCopied(false), 1800)
+    } catch {
+      setIsRibCopied(false)
+    }
   }
 
   return (
@@ -278,12 +310,30 @@ function InscriptionPage() {
           {currentStep === 1 ? (
             <div className="grid gap-4 md:grid-cols-2">
               <InputField
-                label={t('fullName')}
-                name="full_name"
+                label={t('formLastName')}
+                name="last_name"
                 required
-                value={values.full_name}
-                onChange={(event) => setField('full_name', event.target.value)}
-                error={errors.full_name}
+                value={values.last_name}
+                onChange={(event) => {
+                  const nextLastName = event.target.value
+                  const nextFullName = buildFullName(values.first_name, nextLastName)
+                  setField('last_name', nextLastName)
+                  setField('full_name', nextFullName)
+                }}
+                error={errors.last_name}
+              />
+              <InputField
+                label={t('formFirstName')}
+                name="first_name"
+                required
+                value={values.first_name}
+                onChange={(event) => {
+                  const nextFirstName = event.target.value
+                  const nextFullName = buildFullName(nextFirstName, values.last_name)
+                  setField('first_name', nextFirstName)
+                  setField('full_name', nextFullName)
+                }}
+                error={errors.first_name}
               />
               <InputField
                 label={t('birthDate')}
@@ -330,16 +380,14 @@ function InscriptionPage() {
                 onChange={(event) => setField('profession', event.target.value)}
                 error={errors.profession}
               />
-              <div className="md:col-span-2">
-                <InputField
-                  label={t('organization')}
-                  name="organization"
-                  required
-                  value={values.organization}
-                  onChange={(event) => setField('organization', event.target.value)}
-                  error={errors.organization}
-                />
-              </div>
+              <InputField
+                label={t('organization')}
+                name="organization"
+                required
+                value={values.organization}
+                onChange={(event) => setField('organization', event.target.value)}
+                error={errors.organization}
+              />
             </div>
           ) : null}
 
@@ -419,6 +467,24 @@ function InscriptionPage() {
                   <li>{t('conferenceAccess')}</li>
                   <li>{t('activitiesAndDesertExcursion')}</li>
                 </ul>
+
+                <div className="mt-4 rounded-xl border border-primary-200 bg-white/80 p-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-sm font-semibold text-primary-600">RIB : {ribDisplayValue}</p>
+                    <button
+                      type="button"
+                      onClick={handleCopyRib}
+                      className="inline-flex items-center gap-2 rounded-lg border border-primary-200 px-3 py-1.5 text-xs font-semibold text-primary-600 transition hover:border-secondary-300 hover:text-secondary-600"
+                      aria-label={t('copyRib')}
+                    >
+                      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden="true">
+                        <rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" strokeWidth="1.8" />
+                        <rect x="5" y="5" width="10" height="10" rx="2" stroke="currentColor" strokeWidth="1.8" />
+                      </svg>
+                      {isRibCopied ? t('copied') : t('copyRib')}
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <div className="rounded-xl border border-primary-100 bg-white px-4 py-3 text-sm text-primary-500">
@@ -438,6 +504,21 @@ function InscriptionPage() {
                   <p className="mt-2 text-sm font-medium text-secondary-600">{errors.payment_proof}</p>
                 ) : null}
               </div>
+
+              <label className="flex items-start gap-3 rounded-xl border border-primary-100 bg-primary-50 px-4 py-3 text-sm text-primary-500">
+                <input
+                  type="checkbox"
+                  checked={values.is_payment_confirmed}
+                  onChange={(event) => setField('is_payment_confirmed', event.target.checked)}
+                  className="mt-0.5 h-4 w-4 rounded border-primary-300 text-secondary-500 focus:ring-secondary-500"
+                />
+                <span>
+                  {t('paymentConfirmLabelPre')}<strong className="font-black text-primary-600">{t('paymentConfirmAmount')}</strong>{t('paymentConfirmLabelMid')}<strong className="font-black text-primary-600">{t('paymentConfirmAssoc')}</strong>{' \u2013 '}<strong className="font-black text-primary-600">{t('paymentConfirmBank')}</strong>{' RIB\u00a0: '}<strong className="font-black text-primary-600">{t('paymentConfirmRib')}</strong>
+                </span>
+              </label>
+              {errors.is_payment_confirmed ? (
+                <p className="text-sm font-medium text-secondary-600">{errors.is_payment_confirmed}</p>
+              ) : null}
 
               <label className="flex items-start gap-3 rounded-xl border border-primary-100 bg-primary-50 px-4 py-3 text-sm text-primary-500">
                 <input
