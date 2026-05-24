@@ -128,6 +128,7 @@ function InscriptionPage() {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
   const [isRibCopied, setIsRibCopied] = useState(false)
 
+  const ribCopyValue = '011530000002200000537651'
   const ribNumber = '011.530.0000.02.200.00.05376.51'
   const ribDisplayValue = `Bank Of Africa : ${ribNumber}`
 
@@ -256,10 +257,10 @@ function InscriptionPage() {
   const handleCopyRib = async () => {
     try {
       if (navigator?.clipboard?.writeText) {
-        await navigator.clipboard.writeText(ribNumber)
+        await navigator.clipboard.writeText(ribCopyValue)
       } else {
         const textArea = document.createElement('textarea')
-        textArea.value = ribNumber
+        textArea.value = ribCopyValue
         document.body.appendChild(textArea)
         textArea.select()
         document.execCommand('copy')
@@ -459,6 +460,7 @@ function InscriptionPage() {
               <div className="rounded-2xl border border-secondary-100 bg-secondary-50/50 p-5 text-sm text-primary-500">
                 <h2 className="text-base font-black text-primary-500">{t('financialParticipation')}</h2>
                 <p className="mt-2 font-bold text-secondary-600">{t('rate')}</p>
+                <p className="mt-3 font-semibold text-primary-500">{t('includesLabel')}</p>
                 <ul className="mt-3 list-disc space-y-1 pl-5 text-primary-400">
                   <li>{t('roundTripFlightCasablanca')}</li>
                   <li>{t('accommodation')}</li>
