@@ -30,6 +30,7 @@ const OpportunitiesPage = lazy(() => import('./pages/OpportunitiesPage'))
 const OpportunityDetailPage = lazy(() => import('./pages/OpportunityDetailPage'))
 const GalleryPage = lazy(() => import('./pages/GalleryPage'))
 const PostDetailPage = lazy(() => import('./pages/PostDetailPage'))
+const ParticipationConditionsPage = lazy(() => import('./pages/ParticipationConditionsPage'))
 const AdminInscriptionsPage = lazy(() => import('./pages/admin/AdminInscriptionsPage'))
 const PopupBanner = lazy(() => import('./components/PopupBanner'))
 
@@ -113,6 +114,7 @@ function App() {
             <Route path="/galerie" element={<GalleryPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/inscription" element={<InscriptionPage />} />
+            <Route path="/conditions-participation" element={<ParticipationConditionsPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

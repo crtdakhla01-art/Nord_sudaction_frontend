@@ -137,6 +137,10 @@ function InscriptionPage() {
   const submitMutation = useSubmitInscription()
   const { wrap } = usePreventDoubleSubmit()
 
+  const acceptTermsText = t('acceptTerms')
+  const termsLinkText = t('termsOrganizationLinkText')
+  const acceptTermsParts = acceptTermsText.split(termsLinkText)
+
   const progress = useMemo(() => (currentStep / steps.length) * 100, [currentStep, steps.length])
 
   const setField = (name, value) => {
@@ -458,8 +462,10 @@ function InscriptionPage() {
           {currentStep === 4 ? (
             <div className="space-y-5">
               <div className="rounded-2xl border border-secondary-100 bg-secondary-50/50 p-5 text-sm text-primary-500">
-                <h2 className="text-base font-black text-primary-500">{t('financialParticipation')}</h2>
-                <p className="mt-2 font-bold text-secondary-600">{t('rate')}</p>
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <h2 className="text-base font-black text-primary-500">{t('financialParticipation')}</h2>
+                  <p className="font-bold text-secondary-600">{t('rate')}</p>
+                </div>
                 <p className="mt-3 font-semibold text-primary-500">{t('includesLabel')}</p>
                 <ul className="mt-3 list-disc space-y-1 pl-5 text-primary-400">
                   <li>{t('roundTripFlightCasablanca')}</li>
@@ -529,7 +535,35 @@ function InscriptionPage() {
                   onChange={(event) => setField('is_terms_accepted', event.target.checked)}
                   className="mt-0.5 h-4 w-4 rounded border-primary-300 text-secondary-500 focus:ring-secondary-500"
                 />
-                <span>{t('acceptTerms')}</span>
+                <span>
+                  {acceptTermsParts.length === 2 ? (
+                    <>
+                      {acceptTermsParts[0]}
+                      <a
+                        href="/conditions-participation"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold underline decoration-primary-400 underline-offset-2 hover:text-secondary-600"
+                        onClick={(event) => event.stopPropagation()}
+                        onMouseDown={(event) => event.stopPropagation()}
+                      >
+                        {termsLinkText}
+                      </a>
+                      {acceptTermsParts[1]}
+                    </>
+                  ) : (
+                    <a
+                      href="/conditions-participation"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold underline decoration-primary-400 underline-offset-2 hover:text-secondary-600"
+                      onClick={(event) => event.stopPropagation()}
+                      onMouseDown={(event) => event.stopPropagation()}
+                    >
+                      {acceptTermsText}
+                    </a>
+                  )}
+                </span>
               </label>
               {errors.is_terms_accepted ? (
                 <p className="text-sm font-medium text-secondary-600">{errors.is_terms_accepted}</p>
