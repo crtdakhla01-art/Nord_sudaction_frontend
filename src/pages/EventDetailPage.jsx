@@ -11,6 +11,72 @@ import { formatDateLabel } from '../utils/date'
 import { normalizeGalleryLink } from '../utils/eventGallery'
 import { fadeLeft, fadeUp, inViewViewport, staggerContainer } from '../utils/animations'
 
+const descriptionLinkPattern = /((?:https?:\/\/|www\.)[^\s]+|(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}(?:\/[^\s]*)?)/gi
+
+const splitTrailingPunctuation = (value) => {
+  let normalizedValue = value
+  let trailing = ''
+
+  while (normalizedValue && /[),.!?;:'"]$/.test(normalizedValue)) {
+    trailing = normalizedValue.slice(-1) + trailing
+    normalizedValue = normalizedValue.slice(0, -1)
+  }
+
+  return { normalizedValue, trailing }
+}
+
+const getHrefFromDescriptionLink = (value) => {
+  if (/^https?:\/\//i.test(value)) {
+    return value
+  }
+
+  return `https://${value.replace(/^\/+/, '')}`
+}
+
+const isEmailDomainMatch = (text, offset) => offset > 0 && text[offset - 1] === '@'
+
+const linkifyDescriptionText = (description) => {
+  const text = typeof description === 'string' ? description : ''
+
+  if (!text) {
+    return []
+  }
+
+  const parts = []
+  let currentIndex = 0
+
+  text.replace(descriptionLinkPattern, (match, _capture, offset) => {
+    if (offset > currentIndex) {
+      parts.push({ type: 'text', value: text.slice(currentIndex, offset) })
+    }
+
+    if (isEmailDomainMatch(text, offset)) {
+      parts.push({ type: 'text', value: match })
+      currentIndex = offset + match.length
+      return match
+    }
+
+    const { normalizedValue, trailing } = splitTrailingPunctuation(match)
+
+    if (normalizedValue) {
+      parts.push({ type: 'link', value: normalizedValue, href: getHrefFromDescriptionLink(normalizedValue) })
+    }
+
+    if (trailing) {
+      parts.push({ type: 'text', value: trailing })
+    }
+
+    currentIndex = offset + match.length
+    return match
+  })
+
+  if (currentIndex < text.length) {
+    parts.push({ type: 'text', value: text.slice(currentIndex) })
+  }
+
+  return parts
+}
+
 function MediaThumb({ item, isActive, onSelect }) {
   const { t } = useTranslation()
 
@@ -198,6 +264,7 @@ function EventDetailPage() {
   const links = gallery.filter((item) => item?.link)
   const activeImage = images[activeIndex] || null
   const hasPreviewableMedia = Boolean(activeImage?.image)
+  const descriptionParts = linkifyDescriptionText(event.description)
 
   const selectPrev = () => {
     setActiveIndex((current) => (current === 0 ? images.length - 1 : current - 1))
@@ -277,7 +344,23 @@ function EventDetailPage() {
                   <p className="text-xs font-bold uppercase tracking-[0.24em] text-secondary-500">{t('formDescription')}</p>
                   <h2 className="mt-2 text-xl font-bold text-primary-500">{t('descriptionHeading')}</h2>
                   <div className="mt-5 rounded-2xl bg-primary-50 p-5 sm:p-6">
-                    <p className="whitespace-pre-line text-base leading-8 text-primary-400">{event.description}</p>
+                    <p className="whitespace-pre-line text-base leading-8 text-primary-400">
+                      {descriptionParts.map((part, index) => (
+                        part.type === 'link' ? (
+                          <a
+                            key={`description-link-${index}`}
+                            href={part.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="break-all font-semibold text-secondary-600 underline decoration-secondary-300 underline-offset-2 transition hover:text-secondary-700"
+                          >
+                            {part.value}
+                          </a>
+                        ) : (
+                          <span key={`description-text-${index}`}>{part.value}</span>
+                        )
+                      ))}
+                    </p>
                   </div>
                 </MotionSection>
               ) : null}

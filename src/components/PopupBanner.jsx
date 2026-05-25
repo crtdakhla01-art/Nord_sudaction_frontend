@@ -7,10 +7,11 @@ import { useLocation } from 'react-router-dom'
 export default function PopupBanner() {
   const { pathname } = useLocation()
   const [isOpen, setIsOpen] = useState(false)
+  const isHomeRoute = pathname === '/'
   const isAdminRoute = pathname.startsWith('/admin')
 
   useEffect(() => {
-    if (isAdminRoute) {
+    if (isAdminRoute || !isHomeRoute) {
       return
     }
 
@@ -20,7 +21,7 @@ export default function PopupBanner() {
     }, 500)
 
     return () => clearTimeout(timer)
-  }, [isAdminRoute])
+  }, [isAdminRoute, isHomeRoute])
 
   const handleNavigate = () => {
     window.open('https://www.linkedin.com/company/association-nord-sud-action/', '_blank')
@@ -28,7 +29,7 @@ export default function PopupBanner() {
 
   return (
     <AnimatePresence>
-      {!isAdminRoute && isOpen && (
+      {isHomeRoute && !isAdminRoute && isOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 p-4 pointer-events-none">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -44,7 +45,7 @@ export default function PopupBanner() {
               whileHover={{ scale: 1.02 }}
             >
               <img
-                src="/popup.jpeg"
+                src="/popup2.jpeg"
                 alt="Nord Sud Action - LinkedIn"
                 className="w-full h-auto object-cover"
                 loading="eager"

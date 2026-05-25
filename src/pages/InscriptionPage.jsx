@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import Button from '../components/Button'
@@ -28,6 +28,58 @@ const initialValues = {
   payment_proof: null,
   is_payment_confirmed: false,
   is_terms_accepted: false,
+}
+
+const INSCRIPTION_DRAFT_STORAGE_KEY = 'inscription-draft-v1'
+
+const toPersistedValues = (formValues) => ({
+  ...formValues,
+  // File objects cannot be restored from localStorage.
+  payment_proof: null,
+})
+
+const getDraftFromStorage = () => {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  try {
+    const raw = window.localStorage.getItem(INSCRIPTION_DRAFT_STORAGE_KEY)
+
+    if (!raw) {
+      return null
+    }
+
+    const parsed = JSON.parse(raw)
+
+    if (!parsed || typeof parsed !== 'object') {
+      return null
+    }
+
+    const draftValues = {
+      ...initialValues,
+      ...(parsed.values || {}),
+      payment_proof: null,
+    }
+
+    const parsedStep = Number(parsed.currentStep)
+    const draftStep = Number.isFinite(parsedStep) ? parsedStep : 1
+
+    return {
+      values: draftValues,
+      currentStep: Math.min(4, Math.max(1, draftStep)),
+    }
+  } catch {
+    return null
+  }
+}
+
+const clearInscriptionDraft = () => {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  window.localStorage.removeItem(INSCRIPTION_DRAFT_STORAGE_KEY)
 }
 
 function StepBadge({ active, done, number, title }) {
@@ -122,11 +174,26 @@ function InscriptionPage() {
     [t]
   )
 
-  const [currentStep, setCurrentStep] = useState(1)
-  const [values, setValues] = useState(initialValues)
+  const initialDraft = useMemo(() => getDraftFromStorage(), [])
+  const [currentStep, setCurrentStep] = useState(() => initialDraft?.currentStep ?? 1)
+  const [values, setValues] = useState(() => initialDraft?.values ?? initialValues)
   const [errors, setErrors] = useState({})
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
   const [isRibCopied, setIsRibCopied] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    window.localStorage.setItem(
+      INSCRIPTION_DRAFT_STORAGE_KEY,
+      JSON.stringify({
+        values: toPersistedValues(values),
+        currentStep,
+      }),
+    )
+  }, [values, currentStep])
 
   const ribCopyValue = '011530000002200000537651'
   const ribNumber = '011.530.0000.02.200.00.05376.51'
@@ -250,6 +317,7 @@ function InscriptionPage() {
     setValues(initialValues)
     setErrors({})
     setCurrentStep(1)
+    clearInscriptionDraft()
     setIsSuccessModalOpen(true)
   })
 
@@ -541,8 +609,6 @@ function InscriptionPage() {
                       {acceptTermsParts[0]}
                       <a
                         href="/conditions-participation"
-                        target="_blank"
-                        rel="noopener noreferrer"
                         className="font-semibold underline decoration-primary-400 underline-offset-2 hover:text-secondary-600"
                         onClick={(event) => event.stopPropagation()}
                         onMouseDown={(event) => event.stopPropagation()}
@@ -554,8 +620,6 @@ function InscriptionPage() {
                   ) : (
                     <a
                       href="/conditions-participation"
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className="font-semibold underline decoration-primary-400 underline-offset-2 hover:text-secondary-600"
                       onClick={(event) => event.stopPropagation()}
                       onMouseDown={(event) => event.stopPropagation()}
