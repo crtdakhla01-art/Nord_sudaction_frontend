@@ -169,7 +169,9 @@ html[dir="rtl"] svg {
   bottom: 14px;
   z-index: 9999;
   display: flex;
+  max-width: calc(100vw - 28px);
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.35rem;
   padding: 0.45rem 0.7rem;
   border: 1px solid rgba(239, 27, 43, 0.22);
@@ -181,14 +183,17 @@ html[dir="rtl"] svg {
   color: #3c3c3c;
   font-size: 0.72rem;
   line-height: 1;
+  overflow-wrap: anywhere;
 }
 
 .visitor-counter__label {
+  min-width: 0;
   font-weight: 700;
   color: #3c3c3c;
 }
 
 .visitor-counter__count {
+  min-width: 0;
   font-weight: 800;
   color: #ef1b2b;
   font-variant-numeric: tabular-nums;

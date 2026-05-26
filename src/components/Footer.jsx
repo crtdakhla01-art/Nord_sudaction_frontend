@@ -88,13 +88,13 @@ function Footer() {
   }
 
   return (
-    <footer className="mt-8 bg-primary-800 text-white">
-      <div className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-2 lg:grid-cols-4">
-        <div>
+    <footer className="mt-8 overflow-x-hidden bg-primary-800 text-white">
+      <div className="mx-auto grid w-full max-w-full gap-8 overflow-hidden px-4 py-10 sm:px-6 lg:max-w-6xl lg:px-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="min-w-0">
           <img src={logo} alt="Nord Sud Action" className="h-14 w-auto rounded-lg" loading="lazy" decoding="async" />
-          <p className="mt-2 max-w-sm text-sm leading-6 text-primary-300">{t('footerText')}</p>
+          <p className="mt-2 max-w-sm break-words text-sm leading-6 text-primary-300">{t('footerText')}</p>
         </div>
-        <div>
+        <div className="min-w-0">
           <p className="text-sm font-semibold text-white">{t('footerPages')}</p>
           <div className="mt-2 flex flex-col gap-2">
             <Link to="/" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navHome')}</Link>
@@ -105,10 +105,10 @@ function Footer() {
             <Link to="/contact" className="animated-underline text-sm text-primary-300 transition-colors duration-300 hover:text-secondary-500">{t('navContact')}</Link>
           </div>
         </div>
-        <div>
+        <div className="min-w-0">
           <p className="text-sm font-semibold text-white">{t('footerContact')}</p>
-          <p className="mt-2 text-sm text-primary-300">contact@nordsudaction.org</p>
-          <p className="text-sm text-primary-300">
+          <p className="mt-2 break-all text-sm text-primary-300">contact@nordsudaction.org</p>
+          <p className="break-words text-sm text-primary-300">
             <span dir="ltr">{contactPhone}</span>
           </p>
 
@@ -116,7 +116,7 @@ function Footer() {
             <p className="text-sm font-semibold text-white">{t('footerNewsletterTitle')}</p>
             <p className="mt-1 text-xs text-primary-300">{t('footerNewsletterDescription')}</p>
 
-            <form className="mt-3 space-y-2" onSubmit={handleNewsletterSubmit} noValidate>
+            <form className="mt-3 w-full max-w-full space-y-2" onSubmit={handleNewsletterSubmit} noValidate>
               <label className="sr-only" htmlFor="newsletter-name">{t('formName')}</label>
               <input
                 id="newsletter-name"
@@ -125,7 +125,7 @@ function Footer() {
                 value={newsletterForm.name}
                 onChange={handleNewsletterChange}
                 placeholder={t('footerNewsletterNamePlaceholder')}
-                className="w-full rounded-lg border border-secondary-700 bg-primary-900 px-3 py-2 text-sm text-white placeholder:text-primary-400 focus:border-secondary-500 focus:outline-none"
+                className="w-full max-w-full rounded-lg border border-secondary-700 bg-primary-900 px-3 py-2 text-sm text-white placeholder:text-primary-400 focus:border-secondary-500 focus:outline-none"
               />
               {newsletterErrors.name ? <p className="text-xs text-red-300">{newsletterErrors.name}</p> : null}
 
@@ -138,11 +138,11 @@ function Footer() {
                 onChange={handleNewsletterChange}
                 onBlur={handleNewsletterBlur}
                 placeholder={t('footerNewsletterEmailPlaceholder')}
-                className="w-full rounded-lg border border-secondary-700 bg-primary-900 px-3 py-2 text-sm text-white placeholder:text-primary-400 focus:border-secondary-500 focus:outline-none"
+                className="w-full max-w-full rounded-lg border border-secondary-700 bg-primary-900 px-3 py-2 text-sm text-white placeholder:text-primary-400 focus:border-secondary-500 focus:outline-none"
               />
               {newsletterErrors.email ? <p className="text-xs text-red-300">{newsletterErrors.email}</p> : null}
 
-              <label className="mt-1 flex items-start gap-2 text-xs text-primary-200" htmlFor="newsletter-consent">
+              <label className="mt-1 flex max-w-full items-start gap-2 text-xs text-primary-200" htmlFor="newsletter-consent">
                 <input
                   id="newsletter-consent"
                   name="consent"
@@ -151,7 +151,7 @@ function Footer() {
                   onChange={handleNewsletterChange}
                   className="mt-0.5 h-4 w-4 rounded border-secondary-600 bg-primary-900 text-secondary-500 focus:ring-secondary-500"
                 />
-                <span>{t('footerNewsletterConsentLabel')}</span>
+                <span className="min-w-0 break-words whitespace-normal">{t('footerNewsletterConsentLabel')}</span>
               </label>
               {newsletterErrors.consent ? <p className="text-xs text-red-300">{newsletterErrors.consent}</p> : null}
 
@@ -172,7 +172,7 @@ function Footer() {
             ) : null}
           </div>
         </div>
-        <div>
+        <div className="min-w-0">
           <p className="text-sm font-semibold text-white">{t('footerSocial')}</p>
           <div className="mt-3 flex items-center gap-3 text-primary-300">
             <a

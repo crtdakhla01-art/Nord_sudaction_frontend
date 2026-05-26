@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import Button from '../components/Button'
@@ -33,6 +33,7 @@ const initialValues = {
 
 const INSCRIPTION_DRAFT_STORAGE_KEY = 'inscription-draft-v1'
 const MAX_UPLOAD_BYTES = 5 * 1024 * 1024
+const INSCRIPTION_DRAFT_STALE_MS = 15 * 60 * 1000
 
 const toPersistedValues = (formValues) => ({
   ...formValues,
@@ -40,6 +41,23 @@ const toPersistedValues = (formValues) => ({
   payment_proof: null,
   cin_copy: null,
 })
+
+const hasMeaningfulDraftValues = (formValues) =>
+  Object.entries(toPersistedValues(formValues)).some(([field, value]) => {
+    if (field === 'full_name') {
+      return false
+    }
+
+    if (Array.isArray(value)) {
+      return value.length > 0
+    }
+
+    if (typeof value === 'boolean') {
+      return value
+    }
+
+    return String(value || '').trim().length > 0
+  })
 
 const getDraftFromStorage = () => {
   if (typeof window === 'undefined') {
@@ -68,10 +86,16 @@ const getDraftFromStorage = () => {
 
     const parsedStep = Number(parsed.currentStep)
     const draftStep = Number.isFinite(parsedStep) ? parsedStep : 1
+    const currentStep = Math.min(4, Math.max(1, draftStep))
+    const updatedAt = Number(parsed.updatedAt)
+    const hasProgress = currentStep > 1 || hasMeaningfulDraftValues(draftValues)
+    const isStale = Number.isFinite(updatedAt) && Date.now() - updatedAt > INSCRIPTION_DRAFT_STALE_MS
 
     return {
       values: draftValues,
-      currentStep: Math.min(4, Math.max(1, draftStep)),
+      currentStep,
+      resumeStep: currentStep,
+      shouldPromptResume: hasProgress && currentStep > 1 && isStale,
     }
   } catch {
     return null
@@ -107,15 +131,15 @@ function CheckboxGroup({ options, values, onToggle }) {
       {options.map((option) => (
         <label
           key={option.value}
-          className="flex items-center gap-3 rounded-xl border border-primary-100 bg-white px-4 py-3 text-sm font-medium text-primary-500"
+          className="flex max-w-full items-start gap-3 overflow-hidden rounded-xl border border-primary-100 bg-white px-4 py-3 text-sm font-medium text-primary-500"
         >
           <input
             type="checkbox"
             checked={values.includes(option.value)}
             onChange={() => onToggle(option.value)}
-            className="h-4 w-4 rounded border-primary-300 text-secondary-500 focus:ring-secondary-500"
+            className="mt-0.5 h-4 w-4 shrink-0 rounded border-primary-300 text-secondary-500 focus:ring-secondary-500"
           />
-          <span>{option.label}</span>
+          <span className="min-w-0 break-words whitespace-normal">{option.label}</span>
         </label>
       ))}
     </div>
@@ -126,6 +150,7 @@ function InscriptionPage() {
   const MotionDiv = motion.div
   const MotionForm = motion.form
   const { t, i18n } = useTranslation()
+  const stepTopRef = useRef(null)
 
   const todayISO = useMemo(() => {
     const today = new Date()
@@ -179,11 +204,13 @@ function InscriptionPage() {
   )
 
   const initialDraft = useMemo(() => getDraftFromStorage(), [])
-  const [currentStep, setCurrentStep] = useState(() => initialDraft?.currentStep ?? 1)
+  const [currentStep, setCurrentStep] = useState(() => (initialDraft?.shouldPromptResume ? 1 : initialDraft?.currentStep ?? 1))
   const [values, setValues] = useState(() => initialDraft?.values ?? initialValues)
   const [errors, setErrors] = useState({})
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
   const [isRibCopied, setIsRibCopied] = useState(false)
+  const [resumeStep, setResumeStep] = useState(() => initialDraft?.resumeStep ?? null)
+  const [showResumePrompt, setShowResumePrompt] = useState(() => Boolean(initialDraft?.shouldPromptResume))
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -195,9 +222,39 @@ function InscriptionPage() {
       JSON.stringify({
         values: toPersistedValues(values),
         currentStep,
+        updatedAt: Date.now(),
       }),
     )
   }, [values, currentStep])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const animationFrame = window.requestAnimationFrame(() => {
+      stepTopRef.current?.scrollIntoView({ block: 'start', behavior: 'auto' })
+    })
+
+    return () => window.cancelAnimationFrame(animationFrame)
+  }, [currentStep])
+
+  useEffect(() => {
+    if (typeof document === 'undefined') {
+      return
+    }
+
+    const previousHtmlOverflowX = document.documentElement.style.overflowX
+    const previousBodyOverflowX = document.body.style.overflowX
+
+    document.documentElement.style.overflowX = 'hidden'
+    document.body.style.overflowX = 'hidden'
+
+    return () => {
+      document.documentElement.style.overflowX = previousHtmlOverflowX
+      document.body.style.overflowX = previousBodyOverflowX
+    }
+  }, [])
 
   const ribCopyValue = '011530000002200000537651'
   const ribNumber = '011.530.0000.02.200.00.05376.51'
@@ -226,6 +283,28 @@ function InscriptionPage() {
   }
 
   const progress = useMemo(() => (currentStep / steps.length) * 100, [currentStep, steps.length])
+
+  const handleResumeDraft = () => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
+
+    setCurrentStep(Math.min(resumeStep ?? 1, steps.length))
+    setShowResumePrompt(false)
+  }
+
+  const handleStartOver = () => {
+    clearInscriptionDraft()
+    setValues(initialValues)
+    setErrors({})
+    setCurrentStep(1)
+    setResumeStep(null)
+    setShowResumePrompt(false)
+
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
+  }
 
   const setField = (name, value) => {
     const nextValue = name === 'email'
@@ -392,14 +471,15 @@ function InscriptionPage() {
   }
 
   return (
-    <SectionContainer>
+    <SectionContainer className="overflow-x-hidden px-4 sm:px-6 lg:px-8">
       <MotionDiv
-        className="mx-auto w-full max-w-5xl space-y-6"
+        ref={stepTopRef}
+        className="mx-auto w-full max-w-full space-y-6 overflow-x-hidden lg:max-w-5xl"
         variants={staggerContainer}
         initial="hidden"
         animate="visible"
       >
-        <MotionDiv variants={fadeUp} className="rounded-3xl border border-secondary-100 bg-gradient-to-r from-primary-50 via-white to-secondary-50 p-6 shadow-md">
+        <MotionDiv variants={fadeUp} className="max-w-full overflow-hidden rounded-3xl border border-secondary-100 bg-gradient-to-r from-primary-50 via-white to-secondary-50 p-4 shadow-md sm:p-6">
           <p className="text-sm font-bold uppercase tracking-wide text-secondary-500">{t('inscriptionPageTitle')}</p>
           <h1 className="mt-2 text-3xl font-black text-primary-500 md:text-4xl">{t('forumSmaraInvest')}</h1>
           <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-primary-100">
@@ -407,7 +487,7 @@ function InscriptionPage() {
           </div>
         </MotionDiv>
 
-        <MotionDiv variants={fadeUp} className="grid gap-3 rounded-2xl border border-primary-100 bg-white p-5 shadow-sm md:grid-cols-4">
+        <MotionDiv variants={fadeUp} className="grid max-w-full gap-3 overflow-hidden rounded-2xl border border-primary-100 bg-white p-4 shadow-sm sm:p-5 md:grid-cols-4">
           {steps.map((step) => (
             <StepBadge
               key={step.id}
@@ -419,11 +499,34 @@ function InscriptionPage() {
           ))}
         </MotionDiv>
 
+        {showResumePrompt ? (
+          <MotionDiv variants={fadeUp} className="max-w-full overflow-hidden rounded-2xl border border-secondary-100 bg-secondary-50 p-4 shadow-sm sm:p-5">
+            <p className="text-sm font-semibold text-primary-600">{t('inscriptionResumeDraftTitle')}</p>
+            <p className="mt-2 text-sm leading-6 text-primary-400">{t('inscriptionResumeDraftMessage', { step: resumeStep ?? 1 })}</p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={handleResumeDraft}
+                className="rounded-xl bg-secondary-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-secondary-600"
+              >
+                {t('inscriptionResumeDraftButton')}
+              </button>
+              <button
+                type="button"
+                onClick={handleStartOver}
+                className="rounded-xl border border-primary-200 px-4 py-2 text-sm font-semibold text-primary-500 transition hover:border-secondary-300 hover:text-secondary-500"
+              >
+                {t('inscriptionStartOverButton')}
+              </button>
+            </div>
+          </MotionDiv>
+        ) : null}
+
         <MotionForm
           onSubmit={handleSubmit}
           noValidate
           variants={fadeUp}
-          className="space-y-6 rounded-2xl border border-primary-100 bg-white p-6 shadow-md"
+          className="max-w-full space-y-6 overflow-hidden rounded-2xl border border-primary-100 bg-white p-4 shadow-md sm:p-6"
         >
           {currentStep === 1 ? (
             <div className="grid gap-4 md:grid-cols-2">
@@ -655,14 +758,14 @@ function InscriptionPage() {
                 </div>
               </div>
 
-              <label className="flex items-start gap-3 rounded-xl border border-primary-100 bg-primary-50 px-4 py-3 text-sm text-primary-500">
+              <label className="flex max-w-full items-start gap-3 overflow-hidden rounded-xl border border-primary-100 bg-primary-50 px-4 py-3 text-sm text-primary-500">
                 <input
                   type="checkbox"
                   checked={values.is_payment_confirmed}
                   onChange={(event) => setField('is_payment_confirmed', event.target.checked)}
                   className="mt-0.5 h-4 w-4 rounded border-primary-300 text-secondary-500 focus:ring-secondary-500"
                 />
-                <span>
+                <span className="min-w-0 break-words whitespace-normal">
                   {t('paymentConfirmLabelPre')}
                   <strong className="font-black text-primary-600">
                     {isArabic ? renderAmount(t('paymentConfirmAmount')) : <bdi dir="ltr">{t('paymentConfirmAmount')}</bdi>}
@@ -677,14 +780,14 @@ function InscriptionPage() {
                 <p className="text-sm font-medium text-secondary-600">{errors.is_payment_confirmed}</p>
               ) : null}
 
-              <label className="flex items-start gap-3 rounded-xl border border-primary-100 bg-primary-50 px-4 py-3 text-sm text-primary-500">
+              <label className="flex max-w-full items-start gap-3 overflow-hidden rounded-xl border border-primary-100 bg-primary-50 px-4 py-3 text-sm text-primary-500">
                 <input
                   type="checkbox"
                   checked={values.is_terms_accepted}
                   onChange={(event) => setField('is_terms_accepted', event.target.checked)}
                   className="mt-0.5 h-4 w-4 rounded border-primary-300 text-secondary-500 focus:ring-secondary-500"
                 />
-                <span>
+                <span className="min-w-0 break-words whitespace-normal">
                   {acceptTermsParts.length === 2 ? (
                     <>
                       {acceptTermsParts[0]}
@@ -735,7 +838,7 @@ function InscriptionPage() {
               <button
                 type="button"
                 onClick={handleNext}
-                className="rounded-xl bg-secondary-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-secondary-600"
+                className="w-full max-w-full rounded-xl bg-secondary-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-secondary-600 sm:w-auto"
               >
                 {t('nextStep')}
               </button>

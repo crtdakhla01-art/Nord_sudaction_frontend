@@ -1,12 +1,12 @@
 function InputField({ label, error, className = '', ...props }) {
   return (
-    <label className={`block text-sm font-medium text-primary-500 ${className}`}>
+    <label className={`block max-w-full min-w-0 text-sm font-medium text-primary-500 ${className}`}>
       <span>
         {label}
         {props.required ? <span className="ml-0.5 text-red-500">*</span> : null}
       </span>
       <input
-        className="mt-2 block min-h-12 w-full rounded-xl border border-secondary-100 bg-primary-50 px-4 py-3 text-sm text-primary-500 shadow-sm outline-none transition-all duration-300 focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20 sm:text-base"
+        className="mt-2 block min-h-12 w-full max-w-full min-w-0 rounded-xl border border-secondary-100 bg-primary-50 px-4 py-3 text-sm text-primary-500 shadow-sm outline-none transition-all duration-300 focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20 sm:text-base"
         {...props}
       />
       {error ? <span className="mt-1 block text-xs text-secondary-600">{error}</span> : null}
