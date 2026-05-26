@@ -337,10 +337,19 @@ function InscriptionPage() {
 
   const handleNext = () => {
     if (!validateStep(currentStep)) return
+
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
+
     setCurrentStep((step) => Math.min(step + 1, steps.length))
   }
 
   const handlePrev = () => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
+
     setCurrentStep((step) => Math.max(step - 1, 1))
   }
 

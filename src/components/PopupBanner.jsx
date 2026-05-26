@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react'
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function PopupBanner() {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
   const isHomeRoute = pathname === '/'
   const isAdminRoute = pathname.startsWith('/admin')
-  const isEnabled = false
+  const isEnabled = true
 
   useEffect(() => {
     if (!isEnabled || isAdminRoute || !isHomeRoute) {
@@ -25,7 +26,8 @@ export default function PopupBanner() {
   }, [isAdminRoute, isHomeRoute, isEnabled])
 
   const handleNavigate = () => {
-    window.open('https://www.linkedin.com/company/association-nord-sud-action/', '_blank')
+    setIsOpen(false)
+    navigate('/programme')
   }
 
   if (!isEnabled) {

@@ -26,6 +26,8 @@ function ParticipationConditionsPage() {
     t('conditionsGeneralItem6'),
   ]
 
+  const officialProgramLinkText = t('conditionsOfficialProgramLinkText')
+
   const responsibilityItems = [
     t('conditionsResponsibilityItem1'),
     t('conditionsResponsibilityItem2'),
@@ -61,9 +63,26 @@ function ParticipationConditionsPage() {
         <section className="space-y-3">
           <h2 className="text-lg font-semibold text-primary-600">{t('conditionsGeneralTitle')}</h2>
           <ul className="list-disc space-y-1 pl-5 text-sm leading-7 text-primary-500">
-            {generalConditionsItems.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
+            {generalConditionsItems.map((item, index) => {
+              if (index !== 3 || !item.includes(officialProgramLinkText)) {
+                return <li key={item}>{item}</li>
+              }
+
+              const [before, after] = item.split(officialProgramLinkText)
+
+              return (
+                <li key={item}>
+                  {before}
+                  <Link
+                    to="/programme"
+                    className="font-semibold text-secondary-600 underline underline-offset-2 hover:text-secondary-700"
+                  >
+                    {officialProgramLinkText}
+                  </Link>
+                  {after}
+                </li>
+              )
+            })}
           </ul>
         </section>
 
