@@ -137,6 +137,21 @@ function ParticipantDetailsModal({ participant, onClose }) {
                 '-'
               )}
             </p>
+            <p className="mt-1 text-sm text-primary-500">
+              <span className="font-semibold">Copie CIN:</span>{' '}
+              {participant.cin_copy_url ? (
+                <a
+                  href={participant.cin_copy_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-semibold text-secondary-600 underline underline-offset-2"
+                >
+                  Voir la copie CIN
+                </a>
+              ) : (
+                '-'
+              )}
+            </p>
           </div>
         </div>
       </div>

@@ -26,16 +26,19 @@ const initialValues = {
   investment_sector_other: '',
   confirmed_activities: [],
   payment_proof: null,
+  cin_copy: null,
   is_payment_confirmed: false,
   is_terms_accepted: false,
 }
 
 const INSCRIPTION_DRAFT_STORAGE_KEY = 'inscription-draft-v1'
+const MAX_UPLOAD_BYTES = 5 * 1024 * 1024
 
 const toPersistedValues = (formValues) => ({
   ...formValues,
   // File objects cannot be restored from localStorage.
   payment_proof: null,
+  cin_copy: null,
 })
 
 const getDraftFromStorage = () => {
@@ -60,6 +63,7 @@ const getDraftFromStorage = () => {
       ...initialValues,
       ...(parsed.values || {}),
       payment_proof: null,
+      cin_copy: null,
     }
 
     const parsedStep = Number(parsed.currentStep)
@@ -121,7 +125,7 @@ function CheckboxGroup({ options, values, onToggle }) {
 function InscriptionPage() {
   const MotionDiv = motion.div
   const MotionForm = motion.form
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const todayISO = useMemo(() => {
     const today = new Date()
@@ -197,7 +201,7 @@ function InscriptionPage() {
 
   const ribCopyValue = '011530000002200000537651'
   const ribNumber = '011.530.0000.02.200.00.05376.51'
-  const ribDisplayValue = `Bank Of Africa : ${ribNumber}`
+  const ribDisplayValue = `Bank Of Africa : ${ribNumber.replace(/\./g, '')}`
 
   const buildFullName = (firstName, lastName) => `${firstName} ${lastName}`.trim()
 
@@ -207,6 +211,19 @@ function InscriptionPage() {
   const acceptTermsText = t('acceptTerms')
   const termsLinkText = t('termsOrganizationLinkText')
   const acceptTermsParts = acceptTermsText.split(termsLinkText)
+  const isArabic = i18n.language === 'ar'
+
+  const renderAmount = (value) => {
+    const [amount = '', ...currencyParts] = String(value || '').trim().split(/\s+/)
+    const currency = currencyParts.join(' ')
+
+    return (
+      <span dir="ltr" className="inline-flex items-baseline gap-1 whitespace-nowrap">
+        <span>{amount}</span>
+        <span>{currency}</span>
+      </span>
+    )
+  }
 
   const progress = useMemo(() => (currentStep / steps.length) * 100, [currentStep, steps.length])
 
@@ -218,6 +235,17 @@ function InscriptionPage() {
         : value
 
     setValues((prev) => ({ ...prev, [name]: nextValue }))
+    setErrors((prev) => ({ ...prev, [name]: undefined }))
+  }
+
+  const handleUploadChange = (name, file) => {
+    setValues((prev) => ({ ...prev, [name]: file ?? null }))
+
+    if (file && file.size > MAX_UPLOAD_BYTES) {
+      setErrors((prev) => ({ ...prev, [name]: t('api.error_file_too_large') }))
+      return
+    }
+
     setErrors((prev) => ({ ...prev, [name]: undefined }))
   }
 
@@ -284,8 +312,16 @@ function InscriptionPage() {
     }
 
     if (stepNumber === 4) {
-      if (!values.payment_proof) {
+      if (values.payment_proof && values.payment_proof.size > MAX_UPLOAD_BYTES) {
+        nextErrors.payment_proof = t('api.error_file_too_large')
+      } else if (!values.payment_proof) {
         nextErrors.payment_proof = t('paymentProofRequired')
+      }
+
+      if (values.cin_copy && values.cin_copy.size > MAX_UPLOAD_BYTES) {
+        nextErrors.cin_copy = t('api.error_file_too_large')
+      } else if (!values.cin_copy) {
+        nextErrors.cin_copy = t('cinCopyRequired')
       }
       if (!values.is_payment_confirmed) {
         nextErrors.is_payment_confirmed = t('paymentConfirmRequired')
@@ -532,7 +568,16 @@ function InscriptionPage() {
               <div className="rounded-2xl border border-secondary-100 bg-secondary-50/50 p-5 text-sm text-primary-500">
                 <div className="flex flex-wrap items-baseline gap-2">
                   <h2 className="text-base font-black text-primary-500">{t('financialParticipation')}</h2>
-                  <p className="font-bold text-secondary-600">{t('rate')}</p>
+                  <p className="font-bold text-secondary-600">
+                    {isArabic ? (
+                      <>
+                        <span dir="ltr">: </span>
+                        {renderAmount(t('rate').replace(/^:\s*/, ''))}
+                      </>
+                    ) : (
+                      <bdi dir="ltr">{t('rate')}</bdi>
+                    )}
+                  </p>
                 </div>
                 <p className="mt-3 font-semibold text-primary-500">{t('includesLabel')}</p>
                 <ul className="mt-3 list-disc space-y-1 pl-5 text-primary-400">
@@ -563,22 +608,42 @@ function InscriptionPage() {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-primary-100 bg-white px-4 py-3 text-sm text-primary-500">
-                <label htmlFor="payment_proof" className="block font-semibold text-primary-500">
-                  {t('paymentProofLabel')}
-                </label>
-                <p className="mt-1 text-xs text-primary-400">{t('paymentProofHint')}</p>
-                <input
-                  id="payment_proof"
-                  name="payment_proof"
-                  type="file"
-                  accept=".pdf,.jpg,.jpeg,.png,.webp"
-                  onChange={(event) => setField('payment_proof', event.target.files?.[0] ?? null)}
-                  className="mt-3 block w-full cursor-pointer rounded-lg border border-primary-200 bg-white px-3 py-2 text-sm text-primary-500 file:mr-4 file:cursor-pointer file:rounded-md file:border-0 file:bg-primary-100 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-primary-600 hover:file:bg-primary-200"
-                />
-                {errors.payment_proof ? (
-                  <p className="mt-2 text-sm font-medium text-secondary-600">{errors.payment_proof}</p>
-                ) : null}
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="rounded-xl border border-primary-100 bg-white px-4 py-3 text-sm text-primary-500">
+                  <label htmlFor="payment_proof" className="block font-semibold text-primary-500">
+                    {t('paymentProofLabel')}
+                  </label>
+                  <p className="mt-1 text-xs text-primary-400">{t('paymentProofHint')}</p>
+                  <input
+                    id="payment_proof"
+                    name="payment_proof"
+                    type="file"
+                    accept=".pdf,.jpg,.jpeg,.png,.webp"
+                    onChange={(event) => handleUploadChange('payment_proof', event.target.files?.[0] ?? null)}
+                    className="mt-3 block w-full cursor-pointer rounded-lg border border-primary-200 bg-white px-3 py-2 text-sm text-primary-500 file:mr-4 file:cursor-pointer file:rounded-md file:border-0 file:bg-primary-100 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-primary-600 hover:file:bg-primary-200"
+                  />
+                  {errors.payment_proof ? (
+                    <p className="mt-2 text-sm font-medium text-secondary-600">{errors.payment_proof}</p>
+                  ) : null}
+                </div>
+
+                <div className="rounded-xl border border-primary-100 bg-white px-4 py-3 text-sm text-primary-500">
+                  <label htmlFor="cin_copy" className="block font-semibold text-primary-500">
+                    {t('cinCopyLabel')}
+                  </label>
+                  <p className="mt-1 text-xs text-primary-400">{t('cinCopyHint')}</p>
+                  <input
+                    id="cin_copy"
+                    name="cin_copy"
+                    type="file"
+                    accept=".jpg,.jpeg,.png,.webp"
+                    onChange={(event) => handleUploadChange('cin_copy', event.target.files?.[0] ?? null)}
+                    className="mt-3 block w-full cursor-pointer rounded-lg border border-primary-200 bg-white px-3 py-2 text-sm text-primary-500 file:mr-4 file:cursor-pointer file:rounded-md file:border-0 file:bg-primary-100 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-primary-600 hover:file:bg-primary-200"
+                  />
+                  {errors.cin_copy ? (
+                    <p className="mt-2 text-sm font-medium text-secondary-600">{errors.cin_copy}</p>
+                  ) : null}
+                </div>
               </div>
 
               <label className="flex items-start gap-3 rounded-xl border border-primary-100 bg-primary-50 px-4 py-3 text-sm text-primary-500">
@@ -589,7 +654,14 @@ function InscriptionPage() {
                   className="mt-0.5 h-4 w-4 rounded border-primary-300 text-secondary-500 focus:ring-secondary-500"
                 />
                 <span>
-                  {t('paymentConfirmLabelPre')}<strong className="font-black text-primary-600">{t('paymentConfirmAmount')}</strong>{t('paymentConfirmLabelMid')}<strong className="font-black text-primary-600">{t('paymentConfirmAssoc')}</strong>{' \u2013 '}<strong className="font-black text-primary-600">{t('paymentConfirmBank')}</strong>{' RIB\u00a0: '}<strong className="font-black text-primary-600">{t('paymentConfirmRib')}</strong>
+                  {t('paymentConfirmLabelPre')}
+                  <strong className="font-black text-primary-600">
+                    {isArabic ? renderAmount(t('paymentConfirmAmount')) : <bdi dir="ltr">{t('paymentConfirmAmount')}</bdi>}
+                  </strong>
+                  {t('paymentConfirmLabelMid')}
+                  <strong className="font-black text-primary-600">{t('paymentConfirmAssoc')}</strong>{' \u2013 '}
+                  <strong className="font-black text-primary-600">{t('paymentConfirmBank')}</strong>{' RIB\u00a0: '}
+                  <strong className="font-black text-primary-600"><bdi dir="ltr">{t('paymentConfirmRib')}</bdi></strong>
                 </span>
               </label>
               {errors.is_payment_confirmed ? (

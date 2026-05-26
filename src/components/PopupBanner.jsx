@@ -9,9 +9,10 @@ export default function PopupBanner() {
   const [isOpen, setIsOpen] = useState(false)
   const isHomeRoute = pathname === '/'
   const isAdminRoute = pathname.startsWith('/admin')
+  const isEnabled = false
 
   useEffect(() => {
-    if (isAdminRoute || !isHomeRoute) {
+    if (!isEnabled || isAdminRoute || !isHomeRoute) {
       return
     }
 
@@ -21,10 +22,14 @@ export default function PopupBanner() {
     }, 500)
 
     return () => clearTimeout(timer)
-  }, [isAdminRoute, isHomeRoute])
+  }, [isAdminRoute, isHomeRoute, isEnabled])
 
   const handleNavigate = () => {
     window.open('https://www.linkedin.com/company/association-nord-sud-action/', '_blank')
+  }
+
+  if (!isEnabled) {
+    return null
   }
 
   return (

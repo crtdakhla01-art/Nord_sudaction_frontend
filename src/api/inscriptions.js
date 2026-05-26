@@ -24,6 +24,10 @@ export const submitInscription = async (payload) => {
     formData.append('payment_proof', payload.payment_proof)
   }
 
+  if (payload.cin_copy) {
+    formData.append('cin_copy', payload.cin_copy)
+  }
+
   formData.append('is_payment_confirmed', payload.is_payment_confirmed ? '1' : '0')
   formData.append('is_terms_accepted', payload.is_terms_accepted ? '1' : '0')
 
