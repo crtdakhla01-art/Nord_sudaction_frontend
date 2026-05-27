@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import SectionContainer from '../components/SectionContainer'
-import programmePdf from '../assets/programme.pdf'
 
 function OfficialProgramPage() {
   const { t } = useTranslation()
@@ -16,39 +15,6 @@ function OfficialProgramPage() {
     t('officialProgramFeature7'),
     t('officialProgramFeature8'),
   ]
-
-  const handleDownloadProgram = async () => {
-    try {
-      const response = await fetch(programmePdf, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/pdf',
-        },
-      })
-
-      if (!response.ok) {
-        throw new Error('Program file unavailable')
-      }
-
-      const contentType = response.headers.get('content-type') || ''
-
-      if (!contentType.toLowerCase().includes('application/pdf')) {
-        throw new Error('Invalid program file type')
-      }
-
-      const blob = await response.blob()
-      const downloadUrl = window.URL.createObjectURL(blob)
-      const anchor = document.createElement('a')
-      anchor.href = downloadUrl
-      anchor.download = 'programme.pdf'
-      document.body.appendChild(anchor)
-      anchor.click()
-      anchor.remove()
-      window.URL.revokeObjectURL(downloadUrl)
-    } catch {
-      window.alert(t('officialProgramDownloadMissing'))
-    }
-  }
 
   return (
     <SectionContainer>
@@ -105,24 +71,20 @@ function OfficialProgramPage() {
 
         <div className="rounded-xl border border-secondary-100 bg-secondary-50 p-4">
           <p className="text-sm text-primary-500">{t('officialProgramDownloadHint')}</p>
-          <button
-            type="button"
-            onClick={handleDownloadProgram}
+          <Link
+            to="/programme-details"
             className="mt-3 inline-flex cursor-pointer items-center rounded-lg bg-secondary-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-secondary-600"
           >
             {t('officialProgramDownloadButton')}
-          </button>
+          </Link>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <Link to="/conditions-participation" className="text-sm font-medium text-primary-600 underline underline-offset-2 hover:text-primary-700">
-            {t('officialProgramBackToConditions')}
-          </Link>
           <Link
             to="/inscription"
             className="inline-flex cursor-pointer items-center rounded-lg bg-secondary-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-secondary-600"
           >
-            {t('conditionsContinueButton')}
+            {t('officialProgramInscriptionButton')}
           </Link>
         </div>
       </div>

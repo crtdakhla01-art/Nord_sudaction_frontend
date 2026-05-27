@@ -44,6 +44,14 @@ body {
   color: #3c3c3c;
 }
 
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 /* RTL Support - Ensure direction is applied globally */
 html[dir="rtl"],
 html[dir="rtl"] * {
