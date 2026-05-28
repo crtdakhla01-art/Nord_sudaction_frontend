@@ -92,50 +92,50 @@ function AdminPostsPage() {
     <section className="w-full space-y-6">
       <form className="w-full space-y-6 rounded-2xl border border-primary-100 bg-white p-8 shadow-md" onSubmit={onSubmit}>
         <div className="flex items-center justify-between gap-3">
-          <h2 className="text-2xl font-black text-primary-500">News Management</h2>
+          <h2 className="text-2xl font-black text-primary-500">Gestion des actualités</h2>
           {editingId ? (
             <button
               type="button"
               onClick={resetForm}
               className="cursor-pointer rounded-xl border border-primary-200 px-4 py-2 text-xs font-semibold text-primary-500 transition hover:border-secondary-300 hover:text-secondary-500"
             >
-              Cancel edit
+              Annuler la modification
             </button>
           ) : null}
         </div>
 
-        <InputField label="Title" name="title" value={values.title} onChange={onChange} required />
+        <InputField label="Titre" name="title" value={values.title} onChange={onChange} required />
         <TextareaField label="Description" name="description" rows={3} value={values.description} onChange={onChange} />
-        <RichTextEditor label="Content" value={values.content} onChange={(content) => setValues((prev) => ({ ...prev, content }))} />
+        <RichTextEditor label="Contenu" value={values.content} onChange={(content) => setValues((prev) => ({ ...prev, content }))} />
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <label className="block text-sm font-medium text-primary-500">
-            <span>Status</span>
+            <span>Statut</span>
             <select
               className="mt-2 block w-full rounded-xl border border-primary-200 bg-white px-4 py-2.5 text-primary-500 shadow-sm outline-none transition focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20"
               name="status"
               value={values.status}
               onChange={onChange}
             >
-              <option value="draft">Draft</option>
-              <option value="published">Published</option>
+              <option value="draft">Brouillon</option>
+              <option value="published">Publié</option>
             </select>
           </label>
         </div>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <InputField
-            label="External link"
+            label="Lien externe"
             name="external_link"
             value={values.external_link}
             onChange={onChange}
           />
-          <InputField label="Publish date" type="date" name="published_at" value={values.published_at} onChange={onChange} />
+          <InputField label="Date de publication" type="date" name="published_at" value={values.published_at} onChange={onChange} />
         </div>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <label className="block text-sm font-medium text-primary-500">
-            <span>Media</span>
+            <span>Média</span>
             <input
               className="mt-2 block min-h-12 w-full cursor-pointer rounded-xl border border-primary-200 bg-white px-4 py-3 text-sm text-primary-500 shadow-sm outline-none transition-all duration-300 file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-secondary-500 file:px-3 file:py-2 file:text-xs file:font-semibold file:text-white focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20"
               type="file"
@@ -144,7 +144,7 @@ function AdminPostsPage() {
               onChange={onChange}
             />
             {values.media ? (
-              <span className="mt-2 block text-xs text-primary-400">Selected file: {values.media.name}</span>
+              <span className="mt-2 block text-xs text-primary-400">Fichier sélectionné : {values.media.name}</span>
             ) : null}
           </label>
 
@@ -156,7 +156,7 @@ function AdminPostsPage() {
               onChange={onChange}
               className="h-4 w-4 rounded border-primary-300 text-secondary-500 focus:ring-secondary-500"
             />
-            Featured post
+            Mettre à la une
           </label>
         </div>
 
@@ -169,24 +169,24 @@ function AdminPostsPage() {
           disabled={saveMutation.isPending}
           className="cursor-pointer rounded-xl bg-secondary-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-secondary-600"
         >
-          {saveMutation.isPending ? 'Saving...' : editingId ? 'Update post' : 'Create post'}
+          {saveMutation.isPending ? 'Enregistrement...' : editingId ? 'Mettre à jour l\'article' : 'Créer un article'}
         </button>
       </form>
 
       <div className="w-full rounded-2xl border border-primary-100 bg-white p-6 shadow-md">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <InputField label="Search" name="search" value={search} onChange={(event) => { setSearch(event.target.value); setPage(1) }} />
+          <InputField label="Rechercher" name="search" value={search} onChange={(event) => { setSearch(event.target.value); setPage(1) }} />
 
           <label className="block text-sm font-medium text-primary-500">
-            <span>Status filter</span>
+            <span>Filtrer par statut</span>
             <select
               className="mt-2 block w-full rounded-xl border border-primary-200 bg-white px-4 py-2.5 text-primary-500 shadow-sm outline-none"
               value={statusFilter}
               onChange={(event) => { setStatusFilter(event.target.value); setPage(1) }}
             >
-              <option value="all">All</option>
-              <option value="draft">Draft</option>
-              <option value="published">Published</option>
+              <option value="all">Tous</option>
+              <option value="draft">Brouillon</option>
+              <option value="published">Publié</option>
             </select>
           </label>
         </div>
@@ -199,7 +199,7 @@ function AdminPostsPage() {
         <div className="space-y-4">
           {list.length === 0 ? (
             <p className="rounded-2xl border border-primary-100 bg-white px-4 py-5 text-sm text-primary-400 shadow-md">
-              No posts found.
+              Aucune actualité trouvée.
             </p>
           ) : null}
 
@@ -233,14 +233,14 @@ function AdminPostsPage() {
                   rel="noreferrer"
                   className="cursor-pointer rounded-lg border border-primary-200 px-4 py-2 text-xs font-semibold text-primary-500 transition hover:border-secondary-300 hover:text-secondary-500"
                 >
-                  Preview
+                  Prévisualiser
                 </Link>
                 <button
                   type="button"
                   onClick={() => onEdit(item)}
                   className="cursor-pointer rounded-lg border border-primary-200 px-4 py-2 text-xs font-semibold text-primary-500 transition hover:border-secondary-300 hover:text-secondary-500"
                 >
-                  Edit
+                  Modifier
                 </button>
                 <button
                   type="button"
@@ -248,7 +248,7 @@ function AdminPostsPage() {
                   disabled={deleteMutation.isPending}
                   className="cursor-pointer rounded-lg bg-secondary-500 px-4 py-2 text-xs font-semibold text-white transition hover:bg-secondary-600"
                 >
-                  Delete
+                  Supprimer
                 </button>
               </div>
             </article>
@@ -261,7 +261,7 @@ function AdminPostsPage() {
               disabled={currentPage <= 1}
               className="cursor-pointer rounded-lg border border-primary-200 px-3 py-1.5 text-xs font-semibold text-primary-500 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Prev
+              Précédent
             </button>
             <span className="text-xs font-semibold text-primary-400">{currentPage} / {lastPage}</span>
             <button
@@ -270,7 +270,7 @@ function AdminPostsPage() {
               disabled={currentPage >= lastPage}
               className="cursor-pointer rounded-lg border border-primary-200 px-3 py-1.5 text-xs font-semibold text-primary-500 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Next
+              Suivant
             </button>
           </div>
         </div>

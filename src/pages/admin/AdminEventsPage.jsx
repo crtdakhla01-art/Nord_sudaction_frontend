@@ -22,10 +22,10 @@ const createInitialValues = () => ({
 
 const galleryFieldLabels = {
   image: 'Image',
-  video: 'Video',
+  video: 'Vidéo',
   link: 'Lien',
   existing_image: 'Image existante',
-  existing_video: 'Video existante',
+  existing_video: 'Vidéo existante',
 }
 
 const baseFieldLabels = {
@@ -33,7 +33,7 @@ const baseFieldLabels = {
   description: 'Description',
   date: 'Date',
   location: 'Localisation',
-  is_it_passed: 'Statut evenement passe',
+  is_it_passed: 'Statut de l\'événement passé',
 }
 
 const getFriendlyFieldLabel = (field) => {
@@ -42,7 +42,7 @@ const getFriendlyFieldLabel = (field) => {
   if (galleryMatch) {
     const itemNumber = Number(galleryMatch[1]) + 1
     const mediaField = galleryFieldLabels[galleryMatch[2]] || galleryMatch[2]
-    return `${mediaField} du media #${itemNumber}`
+    return `${mediaField} du média n°${itemNumber}`
   }
 
   return baseFieldLabels[field] || field
@@ -53,7 +53,7 @@ const buildFriendlyValidationMessage = (field, rawMessage) => {
   const message = String(rawMessage || '').toLowerCase()
 
   if (message.includes('valid url') || message.includes('url')) {
-    return `${label}: veuillez saisir un lien complet qui commence par http:// ou https://.`
+    return `${label} : veuillez saisir un lien complet commençant par http:// ou https://.`
   }
 
   if (message.includes('required')) {
@@ -61,15 +61,15 @@ const buildFriendlyValidationMessage = (field, rawMessage) => {
   }
 
   if (message.includes('must be a file')) {
-    return `${label}: le fichier envoye est invalide.`
+    return `${label} : le fichier envoyé est invalide.`
   }
 
   if (message.includes('mimes') || message.includes('mimetypes')) {
-    return `${label}: format de fichier non supporte.`
+    return `${label} : format de fichier non pris en charge.`
   }
 
   if (message.includes('may not be greater') || message.includes('max')) {
-    return `${label}: la valeur depasse la limite autorisee.`
+    return `${label} : la valeur dépasse la limite autorisée.`
   }
 
   return `${label}: ${rawMessage}`
@@ -92,7 +92,7 @@ const getFriendlyMutationError = (error, isNotFoundMessage = null) => {
     return [...new Set(friendlyMessages)].join(' ')
   }
 
-  return data?.message || error?.message || 'Une erreur est survenue. Verifiez les champs puis reessayez.'
+  return data?.message || error?.message || 'Une erreur est survenue. Vérifiez les champs puis réessayez.'
 }
 
 function AdminEventsPage() {
@@ -106,7 +106,7 @@ function AdminEventsPage() {
   const isEventMissingError = updateMutation.error?.response?.status === 404
   const submitErrorMessage = getFriendlyMutationError(
     saveMutation.error,
-    isEventMissingError ? 'Cet evenement n\'existe plus dans la base de donnees. Veuillez rafraichir la page.' : null,
+    isEventMissingError ? 'Cet événement n\'existe plus dans la base de données. Veuillez actualiser la page.' : null,
   )
 
   const sortedEvents = useMemo(() => eventsQuery.data || [], [eventsQuery.data])

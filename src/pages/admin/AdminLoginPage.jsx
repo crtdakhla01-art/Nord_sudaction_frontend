@@ -82,7 +82,7 @@ function AdminLoginPage() {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-primary-500">Email</label>
+          <label className="text-sm font-semibold text-primary-500">E-mail</label>
           <input
             className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none transition focus:ring-2 focus:ring-secondary-500"
             name="email"
@@ -96,7 +96,7 @@ function AdminLoginPage() {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-primary-500">Password</label>
+          <label className="text-sm font-semibold text-primary-500">Mot de passe</label>
           <input
             className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none transition focus:ring-2 focus:ring-secondary-500"
             name="password"

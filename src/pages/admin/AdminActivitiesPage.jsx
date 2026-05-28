@@ -102,14 +102,14 @@ function AdminActivitiesPage() {
 
   const validate = () => {
     const errs = {}
-    if (!formValues.title.trim()) errs.title = 'Ce champ est requis.'
+    if (!formValues.title.trim()) errs.title = 'Ce champ est obligatoire.'
     if (!formValues.link.trim()) {
-      errs.link = 'Ce champ est requis.'
+      errs.link = 'Ce champ est obligatoire.'
     } else {
       try {
         new URL(formValues.link)
       } catch {
-        errs.link = 'Veuillez entrer une URL valide.'
+        errs.link = 'Veuillez saisir une URL valide.'
       }
     }
     setFormErrors(errs)

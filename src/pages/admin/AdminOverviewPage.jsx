@@ -24,7 +24,7 @@ function AdminOverviewPage() {
         <p className="mt-2 text-sm text-primary-400">{t('adminOverviewSubtitle')}</p>
         {stats?.generated_at ? (
           <p className="mt-3 text-xs text-primary-300">
-            Updated: {new Date(stats.generated_at).toLocaleString()}
+            Mis à jour : {new Date(stats.generated_at).toLocaleString()}
           </p>
         ) : null}
       </div>
@@ -35,11 +35,11 @@ function AdminOverviewPage() {
       {!isLoading && !isError ? (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           <article className="w-full rounded-2xl border border-primary-100 bg-white p-6 shadow-md">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-primary-400">Users</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-primary-400">Utilisateurs</h3>
             <p className="mt-3 text-2xl font-black text-primary-500">{stats?.users?.total ?? 0}</p>
             <div className="mt-3 space-y-1">
-              <StatLine label="Admins" value={stats?.users?.admins ?? 0} />
-              <StatLine label="Managers" value={stats?.users?.managers ?? 0} />
+              <StatLine label="Administrateurs" value={stats?.users?.admins ?? 0} />
+              <StatLine label="Gestionnaires" value={stats?.users?.managers ?? 0} />
             </div>
           </article>
 
@@ -66,10 +66,10 @@ function AdminOverviewPage() {
             <h3 className="text-sm font-semibold uppercase tracking-wide text-primary-400">Actualités</h3>
             <p className="mt-3 text-2xl font-black text-primary-500">{stats?.posts?.total ?? 0}</p>
             <div className="mt-3 space-y-1">
-              <StatLine label="Published" value={stats?.posts?.published ?? 0} />
-              <StatLine label="Draft" value={stats?.posts?.draft ?? 0} />
-              <StatLine label="Featured" value={stats?.posts?.featured ?? 0} />
-              <StatLine label="Views" value={stats?.posts?.total_views ?? 0} />
+              <StatLine label="Publiées" value={stats?.posts?.published ?? 0} />
+              <StatLine label="Brouillons" value={stats?.posts?.draft ?? 0} />
+              <StatLine label="À la une" value={stats?.posts?.featured ?? 0} />
+              <StatLine label="Vues" value={stats?.posts?.total_views ?? 0} />
             </div>
           </article>
 
@@ -77,7 +77,7 @@ function AdminOverviewPage() {
             <h3 className="text-sm font-semibold uppercase tracking-wide text-primary-400">{t('navContact')}</h3>
             <p className="mt-3 text-2xl font-black text-primary-500">{stats?.contacts?.total ?? 0}</p>
             <div className="mt-3 space-y-1">
-              <StatLine label="Last 7 days" value={stats?.contacts?.last_7_days ?? 0} />
+              <StatLine label="7 derniers jours" value={stats?.contacts?.last_7_days ?? 0} />
             </div>
           </article>
 
@@ -85,8 +85,8 @@ function AdminOverviewPage() {
             <h3 className="text-sm font-semibold uppercase tracking-wide text-primary-400">Inscriptions</h3>
             <p className="mt-3 text-2xl font-black text-primary-500">{stats?.inscriptions?.total ?? 0}</p>
             <div className="mt-3 space-y-1">
-              <StatLine label="Payes" value={stats?.inscriptions?.paid ?? 0} />
-              <StatLine label="Non payes" value={stats?.inscriptions?.unpaid ?? 0} />
+              <StatLine label="Payées" value={stats?.inscriptions?.paid ?? 0} />
+              <StatLine label="Non payées" value={stats?.inscriptions?.unpaid ?? 0} />
             </div>
           </article>
         </div>

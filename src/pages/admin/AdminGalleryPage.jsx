@@ -44,7 +44,7 @@ function AdminGalleryPage() {
     const files = Array.from(e.target.files || [])
     if (files.length === 0) return
     if (!selectedCategoryId) {
-      window.alert('Choisissez une categorie avant l\'upload.')
+      window.alert('Choisissez une catégorie avant le téléversement.')
       return
     }
 
@@ -105,14 +105,14 @@ function AdminGalleryPage() {
       </div>
 
       <div className="mb-6 rounded-2xl border border-primary-100 bg-white p-4 shadow-sm">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-primary-400">Upload</p>
+        <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-primary-400">Téléversement</p>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <select
             value={selectedCategoryId}
             onChange={(e) => setSelectedCategoryId(e.target.value)}
             className="min-w-[220px] rounded-xl border border-primary-200 px-3 py-2 text-sm text-primary-500"
           >
-            <option value="">Choisir une categorie</option>
+            <option value="">Choisir une catégorie</option>
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
@@ -152,12 +152,12 @@ function AdminGalleryPage() {
       </div>
 
       <div className="mb-6 rounded-2xl border border-primary-100 bg-white p-4 shadow-sm">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-primary-400">Categories</p>
+        <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-primary-400">Catégories</p>
         <form onSubmit={handleCreateCategory} className="mb-3 flex flex-col gap-2 sm:flex-row">
           <input
             value={newCategoryName}
             onChange={(e) => setNewCategoryName(e.target.value)}
-            placeholder="Nouvelle categorie"
+            placeholder="Nouvelle catégorie"
             className="rounded-xl border border-primary-200 px-3 py-2 text-sm text-primary-500"
           />
           <button
@@ -186,7 +186,7 @@ function AdminGalleryPage() {
 
       {uploadMutation.isError && (
         <div className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-600">
-          {uploadMutation.error?.message || 'Erreur lors de l\'upload.'}
+          {uploadMutation.error?.message || 'Erreur lors du téléversement.'}
         </div>
       )}
 
@@ -195,7 +195,7 @@ function AdminGalleryPage() {
           {createCategoryMutation.error?.message ||
             deleteCategoryMutation.error?.message ||
             updateCategoryMutation.error?.message ||
-            'Erreur avec les categories.'}
+            'Erreur avec les catégories.'}
         </div>
       )}
 
@@ -240,7 +240,7 @@ function AdminGalleryPage() {
                         disabled={updateCategoryMutation.isPending}
                         className="w-full rounded-lg border border-primary-200 px-2 py-1 text-xs text-primary-500"
                       >
-                        <option value="" disabled>Choisir une categorie</option>
+                        <option value="" disabled>Choisir une catégorie</option>
                         {categories.map((category) => (
                           <option key={category.id} value={category.id}>
                             {category.name}

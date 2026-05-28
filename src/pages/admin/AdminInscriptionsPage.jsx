@@ -26,8 +26,8 @@ const sectorLabels = {
 }
 
 const activityLabels = {
-  conferences_networking: 'Conférences & networking',
-  excursion_desert: 'Excursion désert',
+  conferences_networking: 'Conférences et réseautage',
+  excursion_desert: 'Excursion dans le désert',
   soiree_bivouac: 'Soirée bivouac',
   observation_astronomique: 'Observation astronomique',
 }
@@ -97,7 +97,7 @@ function ParticipantDetailsModal({ participant, onClose }) {
             <p className="mt-1 text-sm text-primary-500"><span className="font-semibold">Date de naissance:</span> {formatBirthDate(participant.birth_date)}</p>
             <p className="mt-1 text-sm text-primary-500"><span className="font-semibold">Ville:</span> {participant.city || '-'}</p>
             <p className="mt-1 text-sm text-primary-500"><span className="font-semibold">Téléphone:</span> {participant.phone || '-'}</p>
-            <p className="mt-1 text-sm text-primary-500"><span className="font-semibold">Email:</span> {participant.email || '-'}</p>
+            <p className="mt-1 text-sm text-primary-500"><span className="font-semibold">E-mail :</span> {participant.email || '-'}</p>
             <p className="mt-1 text-sm text-primary-500"><span className="font-semibold">Profession:</span> {participant.profession || '-'}</p>
             <p className="mt-1 text-sm text-primary-500"><span className="font-semibold">Organisation:</span> {participant.organization || '-'}</p>
           </div>
@@ -114,10 +114,10 @@ function ParticipantDetailsModal({ participant, onClose }) {
               <span className="font-semibold">Activités:</span> {normalizeActivities(participant.confirmed_activities)}
             </p>
             <p className="mt-3 text-sm text-primary-500">
-              <span className="font-semibold">Paiement:</span> {participant.is_paid ? 'Payé' : 'Non payé'}
+              <span className="font-semibold">Paiement :</span> {participant.is_paid ? 'Payé' : 'Non payé'}
             </p>
             <p className="mt-1 text-sm text-primary-500">
-              <span className="font-semibold">Tarif:</span> {participant.participation_fee} DH
+              <span className="font-semibold">Tarif :</span> {participant.participation_fee} DH
             </p>
             <p className="mt-1 text-sm text-primary-500">
               <span className="font-semibold">Conditions acceptées:</span> {participant.is_terms_accepted ? 'Oui' : 'Non'}
@@ -242,7 +242,7 @@ function AdminInscriptionsPage() {
             type="text"
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
-            placeholder="Rechercher par nom, email ou téléphone"
+            placeholder="Rechercher par nom, e-mail ou téléphone"
             className="w-full rounded-xl border border-primary-200 bg-white px-4 py-2.5 text-sm text-primary-500 shadow-sm outline-none transition focus:border-secondary-400 focus:ring-2 focus:ring-secondary-500/20 md:max-w-md"
           />
         </div>
@@ -295,7 +295,7 @@ function AdminInscriptionsPage() {
                         <span className="rounded-full bg-secondary-100 px-3 py-1 text-xs font-semibold uppercase text-secondary-700">Non payé</span>
                       )}
                       <p className="mt-2 text-xs text-primary-400">
-                        Tarif: {item.participation_fee} DH
+                        Tarif : {item.participation_fee} DH
                       </p>
                     </td>
                     <td className="px-4 py-4">
@@ -309,7 +309,7 @@ function AdminInscriptionsPage() {
                             : 'cursor-pointer bg-primary-500 hover:bg-primary-600'
                         }`}
                       >
-                        {item.is_paid ? 'Marquer non payé' : 'Marquer payé'}
+                        {item.is_paid ? 'Déjà payé' : 'Marquer comme payé'}
                       </button>
                     </td>
                   </tr>
