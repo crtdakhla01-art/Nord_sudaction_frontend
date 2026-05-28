@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import LanguageSwitcher from './LanguageSwitcher'
@@ -7,13 +7,41 @@ import DakhlaWeather from './DakhlaWeather'
 import logo from '../assets/logo.jpeg'
 import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
+const NAVBAR_BANNER_BY_ROUTE = {
+  '/': '/banner_1.png',
+  '/inscription': '/banner_sahara.png',
+  '/conditions-participation': '/banner_sahara.png',
+  '/programme': '/banner_sahara.png',
+  '/programme-officiel': '/banner_sahara.png',
+  '/programme-details': '/banner_sahara.png',
+}
+
+const getNavbarBannerSrc = (pathname) => {
+  if (NAVBAR_BANNER_BY_ROUTE[pathname]) {
+    return NAVBAR_BANNER_BY_ROUTE[pathname]
+  }
+
+  // Prefix rules for detail pages.
+  if (pathname.startsWith('/events/')) {
+    return '/banner_1.png'
+  }
+
+  if (pathname.startsWith('/opportunities/')) {
+    return '/banner_1.png'
+  }
+
+  return '/banner_1.png'
+}
+
 function Navbar() {
   const { t } = useTranslation()
+  const { pathname } = useLocation()
   const [isOpen, setIsOpen] = useState(false)
   const MotionHeader = motion.header
   const MotionDiv = motion.div
   const MotionNav = motion.nav
   const MotionLink = motion.div
+  const navbarBannerSrc = getNavbarBannerSrc(pathname)
 
   const navClassName = ({ isActive }) =>
     `rounded-lg px-4 py-3 text-sm font-medium transition-all duration-300 md:px-4 md:py-2 ${
@@ -89,15 +117,9 @@ function Navbar() {
                 transition={{ duration: 0.25, ease: 'easeOut' }}
               >
                 <motion.img
-                  src="/mobile.png"
+                  src={navbarBannerSrc}
                   alt="Advertisement"
-                  className="h-auto w-full rounded-lg border border-primary-100 object-contain shadow-sm lg:hidden"
-                  variants={fadeUp}
-                />
-                <motion.img
-                  src="/banner_1.png"
-                  alt="Advertisement"
-                  className="hidden h-auto w-full rounded-lg border border-primary-100 object-contain shadow-sm lg:block"
+                  className="h-auto w-full rounded-lg border border-primary-100 object-contain shadow-sm"
                   variants={fadeUp}
                 />
               </motion.a>
