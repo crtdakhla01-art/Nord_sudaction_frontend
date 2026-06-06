@@ -20,6 +20,8 @@
     }
   ],
   "rewrites": [
+    { "source": "/unsubscribe/:token", "destination": "https://api.nordsudaction.ma/unsubscribe/:token" },
+    { "source": "/newsletter/unsubscribe/:token", "destination": "https://api.nordsudaction.ma/unsubscribe/:token" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

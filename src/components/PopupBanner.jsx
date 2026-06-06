@@ -1,42 +1,26 @@
 import { useState, useEffect } from 'react'
-// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
-import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function PopupBanner() {
-  const { pathname } = useLocation()
-  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
-  const isHomeRoute = pathname === '/'
-  const isAdminRoute = pathname.startsWith('/admin')
-  const isEnabled = true
 
   useEffect(() => {
-    if (!isEnabled || isAdminRoute || !isHomeRoute) {
-      return
-    }
-
     // Show popup after a short delay when component mounts
     const timer = setTimeout(() => {
       setIsOpen(true)
     }, 500)
 
     return () => clearTimeout(timer)
-  }, [isAdminRoute, isHomeRoute, isEnabled])
+  }, [])
 
   const handleNavigate = () => {
-    setIsOpen(false)
-    navigate('/programme')
-  }
-
-  if (!isEnabled) {
-    return null
+    window.open('https://www.linkedin.com/company/association-nord-sud-action/', '_blank')
   }
 
   return (
     <AnimatePresence>
-      {isHomeRoute && !isAdminRoute && isOpen && (
+      {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 p-4 pointer-events-none">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -52,13 +36,9 @@ export default function PopupBanner() {
               whileHover={{ scale: 1.02 }}
             >
               <img
-                src="/popup2.jpeg"
+                src="/popup.jpeg"
                 alt="Nord Sud Action - LinkedIn"
                 className="w-full h-auto object-cover"
-                loading="eager"
-                decoding="async"
-                width="960"
-                height="960"
               />
               {/* Close Button */}
               <button
