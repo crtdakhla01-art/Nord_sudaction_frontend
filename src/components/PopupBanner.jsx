@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion as Motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 
 export default function PopupBanner() {
@@ -15,14 +15,14 @@ export default function PopupBanner() {
   }, [])
 
   const handleNavigate = () => {
-    window.open('https://www.linkedin.com/company/association-nord-sud-action/', '_blank')
+    window.open('https://www.nordsudaction.ma/programme', '_blank')
   }
 
   return (
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 p-4 pointer-events-none">
-          <motion.div
+          <Motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
@@ -30,14 +30,14 @@ export default function PopupBanner() {
             className="relative max-w-md w-full pointer-events-auto"
           >
             {/* Popup Image - Clickable */}
-            <motion.div
+            <Motion.div
               onClick={handleNavigate}
               className="relative cursor-pointer rounded-lg overflow-hidden shadow-2xl hover:shadow-3xl transition-shadow"
               whileHover={{ scale: 1.02 }}
             >
               <img
-                src="/popup.jpeg"
-                alt="Nord Sud Action - LinkedIn"
+                src="/popup2.jpeg"
+                alt="Nord Sud Action -"
                 className="w-full h-auto object-cover"
               />
               {/* Close Button */}
@@ -48,8 +48,8 @@ export default function PopupBanner() {
               >
                 <X size={20} />
               </button>
-            </motion.div>
-          </motion.div>
+            </Motion.div>
+          </Motion.div>
         </div>
       )}
     </AnimatePresence>

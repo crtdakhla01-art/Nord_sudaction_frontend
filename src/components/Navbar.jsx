@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
@@ -8,7 +8,7 @@ import logo from '../assets/logo.jpeg'
 import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
 const NAVBAR_BANNER_BY_ROUTE = {
-  '/': '/banner_1.png',
+  '/': ['/banner_1.png', '/banner_sahara.png'],
   '/inscription': '/banner_sahara.png',
   '/conditions-participation': '/banner_sahara.png',
   '/programme': '/banner_sahara.png',
@@ -16,32 +16,62 @@ const NAVBAR_BANNER_BY_ROUTE = {
   '/programme-details': '/banner_sahara.png',
 }
 
-const getNavbarBannerSrc = (pathname) => {
-  if (NAVBAR_BANNER_BY_ROUTE[pathname]) {
-    return NAVBAR_BANNER_BY_ROUTE[pathname]
+const getNavbarBannerList = (pathname) => {
+  const mappedBanner = NAVBAR_BANNER_BY_ROUTE[pathname]
+  if (mappedBanner) {
+    return Array.isArray(mappedBanner) ? mappedBanner : [mappedBanner]
   }
 
   // Prefix rules for detail pages.
   if (pathname.startsWith('/events/')) {
-    return '/banner_1.png'
+    return ['/banner_1.png']
   }
 
   if (pathname.startsWith('/opportunities/')) {
-    return '/banner_1.png'
+    return ['/banner_1.png']
   }
 
-  return '/banner_1.png'
+  return ['/banner_1.png']
+}
+
+const getNavbarBannerHref = (bannerSrc) => {
+  if (bannerSrc === '/banner_1.png') {
+    return 'https://visitdakhla.ma/'
+  }
+
+  if (bannerSrc === '/banner_sahara.png') {
+    return '/programme'
+  }
+
+  return '/programme'
 }
 
 function Navbar() {
   const { t } = useTranslation()
   const { pathname } = useLocation()
   const [isOpen, setIsOpen] = useState(false)
+  const [activeBannerIndex, setActiveBannerIndex] = useState(0)
   const MotionHeader = motion.header
   const MotionDiv = motion.div
   const MotionNav = motion.nav
   const MotionLink = motion.div
-  const navbarBannerSrc = getNavbarBannerSrc(pathname)
+  const navbarBannerList = getNavbarBannerList(pathname)
+  const safeBannerIndex = navbarBannerList.length > 0 ? activeBannerIndex % navbarBannerList.length : 0
+  const activeBannerSrc = navbarBannerList[safeBannerIndex] ?? navbarBannerList[0]
+  const activeBannerHref = getNavbarBannerHref(activeBannerSrc)
+  const isExternalBannerHref = activeBannerHref.startsWith('http://') || activeBannerHref.startsWith('https://')
+
+  useEffect(() => {
+    if (pathname !== '/' || navbarBannerList.length < 2) {
+      return undefined
+    }
+
+    const interval = setInterval(() => {
+      setActiveBannerIndex((prev) => (prev + 1) % navbarBannerList.length)
+    }, 3500)
+
+    return () => clearInterval(interval)
+  }, [pathname, navbarBannerList.length])
 
   const navClassName = ({ isActive }) =>
     `rounded-lg px-4 py-3 text-sm font-medium transition-all duration-300 md:px-4 md:py-2 ${
@@ -108,20 +138,43 @@ function Navbar() {
               </div>
 
               <motion.a
-                href="https://visitdakhla.ma"
-                target="_blank"
-                rel="noreferrer"
+                href={activeBannerHref}
+                target={isExternalBannerHref ? '_blank' : '_self'}
+                rel={isExternalBannerHref ? 'noreferrer noopener' : undefined}
                 className="block w-full lg:w-[80%] flex-shrink-0 lg:ml-auto rtl:lg:ml-0"
                 variants={fadeUp}
                 whileHover={{ scale: 1.01 }}
                 transition={{ duration: 0.25, ease: 'easeOut' }}
               >
                 <motion.img
-                  src={navbarBannerSrc}
+                  key={activeBannerSrc}
+                  src={activeBannerSrc}
                   alt="Advertisement"
                   className="h-auto w-full rounded-lg border border-primary-100 object-contain shadow-sm"
                   variants={fadeUp}
+                  initial={{ opacity: 0.4 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.35 }}
                 />
+
+                {pathname === '/' && navbarBannerList.length > 1 && (
+                  <div className="mt-2 flex items-center justify-center gap-1.5">
+                    {navbarBannerList.map((bannerSrc, index) => (
+                      <button
+                        key={bannerSrc}
+                        type="button"
+                        className={`h-1.5 rounded-full transition-all ${
+                          index === safeBannerIndex ? 'w-5 bg-secondary-500' : 'w-2 bg-gray-300 hover:bg-gray-400'
+                        }`}
+                        onClick={(event) => {
+                          event.preventDefault()
+                          setActiveBannerIndex(index)
+                        }}
+                        aria-label={`Show banner ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                )}
               </motion.a>
             </div>
           </MotionDiv>

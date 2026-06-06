@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { useUser } from './hooks/useUser'
 import ProtectedAdminRoute from './components/admin/ProtectedAdminRoute'
 import ScrollToTopOnRouteChange from './components/ScrollToTopOnRouteChange'
@@ -55,6 +55,8 @@ function AdminHomeRedirect() {
 }
 
 function App() {
+  const location = useLocation()
+
   // Handle global auth state changes (e.g., 401 responses triggering logout).
   useEffect(() => {
     const handleUnauthorized = () => {
@@ -75,9 +77,11 @@ function App() {
     <>
       <ScrollToTopOnRouteChange />
       <VisitorCounter />
-      <Suspense fallback={null}>
-        <PopupBanner />
-      </Suspense>
+      {location.pathname === '/' && (
+        <Suspense fallback={null}>
+          <PopupBanner />
+        </Suspense>
+      )}
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           <Route path="/admin/login" element={<AdminLoginPage />} />

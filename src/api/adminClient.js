@@ -8,6 +8,14 @@ const defaultApiBaseUrl =
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || defaultApiBaseUrl
 
+const generateSendTraceId = () => {
+  const randomPart = typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+    ? crypto.randomUUID()
+    : Math.random().toString(36).slice(2)
+
+  return `fe-${Date.now()}-${randomPart}`
+}
+
 // Storage keys for OTP context only (not for tokens/users which use secure cookies)
 export const ADMIN_OTP_CONTEXT_KEY = 'admin_otp_context'
 
@@ -44,6 +52,27 @@ export const adminApi = axios.create({
 
 adminApi.interceptors.request.use(
   (config) => {
+    const method = String(config.method || 'get').toLowerCase()
+    const isMutatingRequest = ['post', 'put', 'patch', 'delete'].includes(method)
+
+    if (isMutatingRequest) {
+      const existingTraceId = config.headers?.['X-Send-Trace-Id']
+      const sendTraceId = typeof existingTraceId === 'string' && existingTraceId.trim() !== ''
+        ? existingTraceId
+        : generateSendTraceId()
+
+      config.headers = {
+        ...config.headers,
+        'X-Send-Trace-Id': sendTraceId,
+      }
+
+      authDebug.log('[TRACE]', 'Mutating request assigned send_trace_id', {
+        send_trace_id: sendTraceId,
+        method: method.toUpperCase(),
+        url: config.url,
+      })
+    }
+
     authDebug.log('[AXIOS]', 'Request', {
       method: String(config.method || 'GET').toUpperCase(),
       url: config.url,

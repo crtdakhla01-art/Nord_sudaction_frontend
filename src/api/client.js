@@ -14,6 +14,41 @@ export const publicApi = axios.create({
   },
 })
 
+const generateSendTraceId = () => {
+  const randomPart = typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+    ? crypto.randomUUID()
+    : Math.random().toString(36).slice(2)
+
+  return `fe-${Date.now()}-${randomPart}`
+}
+
+publicApi.interceptors.request.use((config) => {
+  const method = String(config.method || 'get').toLowerCase()
+  const isMutatingRequest = ['post', 'put', 'patch', 'delete'].includes(method)
+
+  if (isMutatingRequest) {
+    const existingTraceId = config.headers?.['X-Send-Trace-Id']
+    const sendTraceId = typeof existingTraceId === 'string' && existingTraceId.trim() !== ''
+      ? existingTraceId
+      : generateSendTraceId()
+
+    config.headers = {
+      ...config.headers,
+      'X-Send-Trace-Id': sendTraceId,
+    }
+
+    if (typeof window !== 'undefined') {
+      console.info('[send_trace_id] public request', {
+        send_trace_id: sendTraceId,
+        method: method.toUpperCase(),
+        url: config.url,
+      })
+    }
+  }
+
+  return config
+})
+
 publicApi.interceptors.response.use(
   (response) => response,
   (error) => Promise.reject(error),
