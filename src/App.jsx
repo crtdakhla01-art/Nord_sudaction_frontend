@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react'
+import { lazy, Suspense, useEffect, useRef } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { useUser } from './hooks/useUser'
 import ProtectedAdminRoute from './components/admin/ProtectedAdminRoute'
@@ -8,6 +8,7 @@ import AdminLayout from './layouts/AdminLayout'
 import MainLayout from './layouts/MainLayout'
 import { ADMIN_ROLE, MANAGER_ROLE } from './constants/roles'
 import { authDebug } from './utils/authDebug'
+import { trackMetaPageView } from './utils/metaPixel'
 
 const AdminEventsPage = lazy(() => import('./pages/admin/AdminEventsPage'))
 const AdminGalleryPage = lazy(() => import('./pages/admin/AdminGalleryPage'))
@@ -56,6 +57,7 @@ function AdminHomeRedirect() {
 
 function App() {
   const location = useLocation()
+  const hasSkippedInitialPageView = useRef(false)
 
   // Handle global auth state changes (e.g., 401 responses triggering logout).
   useEffect(() => {
@@ -72,6 +74,16 @@ function App() {
 
     return () => window.removeEventListener('auth:unauthorized', handleUnauthorized)
   }, [])
+
+  useEffect(() => {
+    // Base pixel code already sends PageView for the initial page load.
+    if (!hasSkippedInitialPageView.current) {
+      hasSkippedInitialPageView.current = true
+      return
+    }
+
+    trackMetaPageView()
+  }, [location.key])
 
   return (
     <>

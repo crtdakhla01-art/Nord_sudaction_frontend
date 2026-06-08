@@ -7,6 +7,7 @@ import InputField from '../components/InputField'
 import SectionContainer from '../components/SectionContainer'
 import { useSubmitInscription } from '../hooks/useSubmitInscription'
 import usePreventDoubleSubmit from '../hooks/usePreventDoubleSubmit'
+import { trackMetaCustomEventOnce, trackMetaEventOnce } from '../utils/metaPixel'
 import { fadeUp, staggerContainer } from '../utils/animations'
 import { normalizeEmail, normalizePhone, validateEmail, validatePhone } from '../utils/validation'
 
@@ -211,6 +212,29 @@ function InscriptionPage() {
   const [isRibCopied, setIsRibCopied] = useState(false)
   const [resumeStep, setResumeStep] = useState(() => initialDraft?.resumeStep ?? null)
   const [showResumePrompt, setShowResumePrompt] = useState(() => Boolean(initialDraft?.shouldPromptResume))
+
+  useEffect(() => {
+    trackMetaEventOnce('inscription:view-content', 'ViewContent', {
+      content_name: 'Inscription Funnel',
+    })
+  }, [])
+
+  useEffect(() => {
+    const stepEventMap = {
+      1: 'InscriptionStep1',
+      2: 'InscriptionStep2',
+      3: 'InscriptionStep3',
+      4: 'InscriptionStep4',
+    }
+
+    const eventName = stepEventMap[currentStep]
+
+    if (!eventName) {
+      return
+    }
+
+    trackMetaCustomEventOnce(`inscription:step:${currentStep}`, eventName)
+  }, [currentStep])
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -438,6 +462,9 @@ function InscriptionPage() {
     if (!validateStep(4)) return
 
     await submitMutation.mutateAsync(values)
+    trackMetaEventOnce('inscription:lead', 'Lead', {
+      content_name: 'Inscription Completed',
+    })
     setValues(initialValues)
     setErrors({})
     setCurrentStep(1)
