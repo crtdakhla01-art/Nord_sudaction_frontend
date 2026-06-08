@@ -7,7 +7,7 @@ import InputField from '../components/InputField'
 import SectionContainer from '../components/SectionContainer'
 import { useSubmitInscription } from '../hooks/useSubmitInscription'
 import usePreventDoubleSubmit from '../hooks/usePreventDoubleSubmit'
-import { trackMetaCustomEventOnce, trackMetaEventOnce } from '../utils/metaPixel'
+import { trackMetaCustomEvent, trackMetaCustomEventOnce, trackMetaEventOnce } from '../utils/metaPixel'
 import { fadeUp, staggerContainer } from '../utils/animations'
 import { normalizeEmail, normalizePhone, validateEmail, validatePhone } from '../utils/validation'
 
@@ -35,6 +35,39 @@ const initialValues = {
 const INSCRIPTION_DRAFT_STORAGE_KEY = 'inscription-draft-v1'
 const MAX_UPLOAD_BYTES = 5 * 1024 * 1024
 const INSCRIPTION_DRAFT_STALE_MS = 15 * 60 * 1000
+
+const validationFieldMap = {
+  payment_proof: 'document_upload',
+  cin_copy: 'cin',
+}
+
+const getValidationFieldName = (fieldKey) => validationFieldMap[fieldKey] || fieldKey
+
+const getSubmitFailureReason = (error) => {
+  const errorCode = String(error?.code || '').toUpperCase()
+
+  if (errorCode === 'ECONNABORTED') {
+    return 'timeout'
+  }
+
+  const hasResponse = Boolean(error?.response)
+
+  if (!hasResponse) {
+    return 'network_error'
+  }
+
+  const status = Number(error?.response?.status)
+
+  if (status === 422 || (status >= 400 && status < 500)) {
+    return 'server_validation'
+  }
+
+  if (status >= 500) {
+    return 'server_error'
+  }
+
+  return 'unknown_error'
+}
 
 const toPersistedValues = (formValues) => ({
   ...formValues,
@@ -434,8 +467,25 @@ function InscriptionPage() {
       }
     }
 
+    const invalidFieldKeys = Object.keys(nextErrors)
+
+    if (invalidFieldKeys.length > 0) {
+      invalidFieldKeys.forEach((fieldKey) => {
+        const fieldName = getValidationFieldName(fieldKey)
+
+        trackMetaCustomEventOnce(
+          `inscription:validation-error:${fieldName}`,
+          'InscriptionValidationError',
+          {
+            step: stepNumber,
+            field: fieldName,
+          },
+        )
+      })
+    }
+
     setErrors(nextErrors)
-    return Object.keys(nextErrors).length === 0
+    return invalidFieldKeys.length === 0
   }
 
   const handleNext = () => {
@@ -461,15 +511,21 @@ function InscriptionPage() {
 
     if (!validateStep(4)) return
 
-    await submitMutation.mutateAsync(values)
-    trackMetaEventOnce('inscription:lead', 'Lead', {
-      content_name: 'Inscription Completed',
-    })
-    setValues(initialValues)
-    setErrors({})
-    setCurrentStep(1)
-    clearInscriptionDraft()
-    setIsSuccessModalOpen(true)
+    try {
+      await submitMutation.mutateAsync(values)
+      trackMetaEventOnce('inscription:lead', 'Lead', {
+        content_name: 'Inscription Completed',
+      })
+      setValues(initialValues)
+      setErrors({})
+      setCurrentStep(1)
+      clearInscriptionDraft()
+      setIsSuccessModalOpen(true)
+    } catch (error) {
+      trackMetaCustomEvent('InscriptionSubmitFailed', {
+        reason: getSubmitFailureReason(error),
+      })
+    }
   })
 
   const closeSuccessModal = () => {
