@@ -9,11 +9,11 @@ import { fadeLeft, fadeUp, staggerContainer } from '../utils/animations'
 
 const NAVBAR_BANNER_BY_ROUTE = {
   '/': ['/banner_1.png', '/banner_sahara.png'],
-  '/inscription': '/banner_sahara.png',
+  // '/inscription': '/banner_sahara.png',
   '/conditions-participation': '/banner_sahara.png',
-  '/programme': '/banner_sahara.png',
-  '/programme-officiel': '/banner_sahara.png',
-  '/programme-details': '/banner_sahara.png',
+  // '/programme': '/banner_sahara.png',
+  // '/programme-officiel': '/banner_sahara.png',
+  // '/programme-details': '/banner_sahara.png',
 }
 
 const getNavbarBannerList = (pathname) => {
@@ -40,10 +40,10 @@ const getNavbarBannerHref = (bannerSrc) => {
   }
 
   if (bannerSrc === '/banner_sahara.png') {
-    return '/programme'
+    return '/'
   }
 
-  return '/programme'
+  return '/'
 }
 
 function Navbar() {

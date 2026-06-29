@@ -14,10 +14,6 @@ export default function PopupBanner() {
     return () => clearTimeout(timer)
   }, [])
 
-  const handleNavigate = () => {
-    window.open('https://www.nordsudaction.ma/programme', '_blank')
-  }
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -29,20 +25,16 @@ export default function PopupBanner() {
             transition={{ duration: 0.3 }}
             className="relative max-w-md w-full pointer-events-auto"
           >
-            {/* Popup Image - Clickable */}
             <Motion.div
-              onClick={handleNavigate}
-              className="relative cursor-pointer rounded-lg overflow-hidden shadow-2xl hover:shadow-3xl transition-shadow"
-              whileHover={{ scale: 1.02 }}
+              className="relative rounded-lg overflow-hidden shadow-2xl"
             >
               <img
                 src="/popup2.jpeg"
                 alt="Nord Sud Action -"
                 className="w-full h-auto object-cover"
               />
-              {/* Close Button */}
               <button
-                onClick={(e) => { e.stopPropagation(); setIsOpen(false) }}
+                onClick={() => setIsOpen(false)}
                 className="absolute top-2 right-2 bg-black/50 hover:bg-black/70 text-white rounded-full p-1 transition-colors z-10"
                 aria-label="Close popup"
               >

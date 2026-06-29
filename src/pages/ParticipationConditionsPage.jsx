@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import SectionContainer from '../components/SectionContainer'
 
@@ -73,12 +72,13 @@ function ParticipationConditionsPage() {
               return (
                 <li key={item}>
                   {before}
-                  <Link
+                  {/* <Link
                     to="/programme"
                     className="font-semibold text-secondary-600 underline underline-offset-2 hover:text-secondary-700"
                   >
                     {officialProgramLinkText}
-                  </Link>
+                  </Link> */}
+                  <span className="font-semibold text-secondary-600">{officialProgramLinkText}</span>
                   {after}
                 </li>
               )
@@ -105,14 +105,14 @@ function ParticipationConditionsPage() {
 
         <div className="rounded-xl border border-secondary-100 bg-secondary-50 p-4">
           <p className="text-sm text-primary-500">{t('conditionsContinueHint')}</p>
-          <div className="mt-3">
+          {/* <div className="mt-3">
             <Link
               to="/inscription"
               className="inline-flex items-center rounded-lg bg-secondary-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-secondary-600"
             >
               {t('conditionsContinueButton')}
             </Link>
-          </div>
+          </div> */}
         </div>
 
       </div>
