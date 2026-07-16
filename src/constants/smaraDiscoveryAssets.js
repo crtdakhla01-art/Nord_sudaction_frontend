@@ -9,6 +9,9 @@ import tourImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-discovery-expe
 import standingStoneImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-discovery-experience-standing-stone-group-tourism.jpeg'
 import wildlifeAddaxImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-discovery-experience-sahara-wildlife-addax-tourism.jpeg'
 import trekkingImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-discovery-experience-desert-dune-trekking-expedition.jpeg'
+import astrotourismImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-discovery-experience-astrotourism-telescope-night-sky.jpeg'
+import bivouacImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-discovery-experience-bivouac-traditional-tent-reception.jpeg'
+import archaeologicalSiteImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-discovery-experience-archaeological-rock-art-site.jpeg'
 
 /** Hero background — keep as the primary landscape shot. */
 export const smaraDiscoveryHeroImage = heroImage
@@ -36,10 +39,10 @@ export const smaraDiscoveryGalleryImages = [
 
 /** Activity cards — one distinct image per activity (no repeats in this section). */
 export const smaraDiscoveryActivityImages = {
-  astrotourism: dunesGroupImage,
-  bivouac: trekkingImage,
+  astrotourism: astrotourismImage,
+  bivouac: bivouacImage,
   hiking: hikingImage,
-  archaeological_sites: archaeologyImage,
+  archaeological_sites: archaeologicalSiteImage,
   hassani_culture: tourImage,
   wildlife_observation: wildlifeAddaxImage,
   photography: convoyImage,

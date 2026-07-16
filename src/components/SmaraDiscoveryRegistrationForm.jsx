@@ -17,6 +17,7 @@ const ACTIVITY_OPTIONS = [
   { value: 'archaeological_sites', labelKey: 'smaraDiscoveryActivityArchaeology' },
   { value: 'hassani_culture', labelKey: 'smaraDiscoveryActivityHassani' },
   { value: 'wildlife_observation', labelKey: 'smaraDiscoveryActivityWildlife' },
+  { value: 'quad_outing', labelKey: 'smaraDiscoveryActivityQuad' },
   { value: 'photography', labelKey: 'smaraDiscoveryActivityPhotography' },
 ]
 
@@ -30,8 +31,6 @@ const initialForm = {
   interest_level: '',
   participants_count: '',
   preferred_duration: '',
-  departure_city: '',
-  budget: '',
   preferred_activities: [],
   notify_first_date: '',
 }
@@ -134,8 +133,6 @@ export default function SmaraDiscoveryRegistrationForm() {
     if (!formValues.interest_level) errors.interest_level = t('requiredError')
     if (!formValues.participants_count) errors.participants_count = t('requiredError')
     if (!formValues.preferred_duration) errors.preferred_duration = t('requiredError')
-    if (!formValues.departure_city.trim()) errors.departure_city = t('requiredError')
-    if (!formValues.budget.trim()) errors.budget = t('requiredError')
     if (!formValues.preferred_activities.length) errors.preferred_activities = t('smaraDiscoveryActivitiesRequired')
     if (!formValues.notify_first_date) errors.notify_first_date = t('requiredError')
 
@@ -288,25 +285,6 @@ export default function SmaraDiscoveryRegistrationForm() {
             { value: '4_days_plus', label: t('smaraDiscoveryDuration4Plus') },
           ]}
           error={formErrors.preferred_duration}
-        />
-      </div>
-
-      <div className="grid gap-5 md:grid-cols-2">
-        <InputField
-          label={t('smaraDiscoveryDepartureCity')}
-          name="departure_city"
-          required
-          value={formValues.departure_city}
-          onChange={handleChange}
-          error={formErrors.departure_city}
-        />
-        <InputField
-          label={t('smaraDiscoveryBudget')}
-          name="budget"
-          required
-          value={formValues.budget}
-          onChange={handleChange}
-          error={formErrors.budget}
         />
       </div>
 

@@ -41,6 +41,7 @@ const activityLabels = {
   archaeological_sites: 'smaraDiscoveryActivityArchaeology',
   hassani_culture: 'smaraDiscoveryActivityHassani',
   wildlife_observation: 'smaraDiscoveryActivityWildlife',
+  quad_outing: 'smaraDiscoveryActivityQuad',
   photography: 'smaraDiscoveryActivityPhotography',
 }
 
@@ -284,8 +285,6 @@ function AdminSmaraDiscoveryRegistrationsPage() {
               <DetailRow label={t('smaraDiscoveryInterest')} value={formatInterest(selectedItem.interest_level)} />
               <DetailRow label={t('smaraDiscoveryParticipants')} value={formatParticipants(selectedItem.participants_count)} />
               <DetailRow label={t('smaraDiscoveryDuration')} value={formatDuration(selectedItem.preferred_duration)} />
-              <DetailRow label={t('smaraDiscoveryDepartureCity')} value={selectedItem.departure_city} />
-              <DetailRow label={t('smaraDiscoveryBudget')} value={selectedItem.budget} />
               <DetailRow
                 label={t('smaraDiscoveryNotify')}
                 value={selectedItem.notify_first_date ? t('smaraDiscoveryYes') : t('smaraDiscoveryNo')}
