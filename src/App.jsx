@@ -35,7 +35,8 @@ const ParticipationConditionsPage = lazy(() => import('./pages/ParticipationCond
 // const OfficialProgramPage = lazy(() => import('./pages/OfficialProgramPage'))
 // const ProgramDetailsPage = lazy(() => import('./pages/ProgramDetailsPage'))
 const AdminInscriptionsPage = lazy(() => import('./pages/admin/AdminInscriptionsPage'))
-const PopupBanner = lazy(() => import('./components/PopupBanner'))
+const AdminSmaraDiscoveryRegistrationsPage = lazy(() => import('./pages/admin/AdminSmaraDiscoveryRegistrationsPage'))
+const SmaraDiscoveryExperiencePage = lazy(() => import('./pages/SmaraDiscoveryExperiencePage'))
 
 function RouteFallback() {
   return <div className="min-h-[40vh] bg-white" />
@@ -89,11 +90,6 @@ function App() {
     <>
       <ScrollToTopOnRouteChange />
       <VisitorCounter />
-      {location.pathname === '/' && (
-        <Suspense fallback={null}>
-          <PopupBanner />
-        </Suspense>
-      )}
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           <Route path="/admin/login" element={<AdminLoginPage />} />
@@ -105,6 +101,7 @@ function App() {
               <Route path="opportunities" element={<AdminOpportunitiesPage />} />
               <Route path="opportunities/:id" element={<AdminOpportunityDetailPage />} />
               <Route path="inscriptions" element={<AdminInscriptionsPage />} />
+              <Route path="smara-discovery-registrations" element={<AdminSmaraDiscoveryRegistrationsPage />} />
 
               <Route element={<ProtectedAdminRoute allowedRoles={[ADMIN_ROLE]} />}>
                 <Route path="posts" element={<AdminPostsPage />} />
@@ -131,6 +128,7 @@ function App() {
             <Route path="/actualites/:slug" element={<PostDetailPage />} />
             <Route path="/galerie" element={<GalleryPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/smara-discovery-experience" element={<SmaraDiscoveryExperiencePage />} />
             {/* <Route path="/inscription" element={<InscriptionPage />} /> */}
             <Route path="/conditions-participation" element={<ParticipationConditionsPage />} />
             {/* <Route path="/programme" element={<OfficialProgramPage />} /> */}

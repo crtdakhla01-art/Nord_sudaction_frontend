@@ -1,5 +1,6 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+import { smaraDiscoveryAr, smaraDiscoveryEn, smaraDiscoveryEs, smaraDiscoveryFr } from './smaraDiscoveryTranslations'
 
 const resources = {
   fr: {
@@ -360,6 +361,7 @@ const resources = {
       postTypeCommunique: 'Communiqués',
       inscriptionPageTitle: 'Inscription',
       forumSmaraInvest: 'Smara Invest Experience',
+      ...smaraDiscoveryFr,
       inscriptionStep1: 'Informations personnelles',
       inscriptionStep2: 'Profil participant',
       inscriptionStep3: 'Intérêts et activités',
@@ -988,6 +990,7 @@ const resources = {
       postTypeCommunique: 'Press Releases',
       inscriptionPageTitle: 'Registration',
       forumSmaraInvest: 'Smara Invest Experience',
+      ...smaraDiscoveryEn,
       inscriptionStep1: 'Personal Information',
       inscriptionStep2: 'Participant Profile',
       inscriptionStep3: 'Interests and Activities',
@@ -1616,6 +1619,7 @@ const resources = {
       postTypeCommunique: 'Comunicados',
       inscriptionPageTitle: 'Registro',
       forumSmaraInvest: 'Smara Invest Experience',
+      ...smaraDiscoveryEs,
       inscriptionStep1: 'Información Personal',
       inscriptionStep2: 'Perfil del Participante',
       inscriptionStep3: 'Intereses y Actividades',
@@ -2214,6 +2218,7 @@ const resources = {
       postTypeCommunique: 'بلاغات صحفية',
       inscriptionPageTitle: 'التسجيل',
       forumSmaraInvest: 'تجربة سمارة للاستثمار',
+      ...smaraDiscoveryAr,
       inscriptionStep1: 'المعلومات الشخصية',
       inscriptionStep2: 'ملف المشارك',
       inscriptionStep3: 'الاهتمامات والأنشطة',

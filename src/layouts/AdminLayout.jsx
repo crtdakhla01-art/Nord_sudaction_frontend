@@ -33,6 +33,9 @@ function AdminLayout() {
           <NavLink to="/admin/inscriptions" className={navClass}>
             Inscriptions
           </NavLink>
+          <NavLink to="/admin/smara-discovery-registrations" className={navClass}>
+            Smara Discovery
+          </NavLink>
           {role === ADMIN_ROLE ? (
             <NavLink to="/admin/posts" className={navClass}>
               Actualités
