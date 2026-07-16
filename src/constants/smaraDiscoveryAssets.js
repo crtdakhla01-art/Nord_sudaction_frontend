@@ -10,21 +10,31 @@ import standingStoneImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-disco
 import wildlifeAddaxImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-discovery-experience-sahara-wildlife-addax-tourism.jpeg'
 import trekkingImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-discovery-experience-desert-dune-trekking-expedition.jpeg'
 
+/** Hero background — keep as the primary landscape shot. */
 export const smaraDiscoveryHeroImage = heroImage
 
+/** Single featured image for the About section. */
+export const smaraDiscoveryAboutImage = {
+  src: dunesGroupImage,
+  altKey: 'smaraDiscoveryGalleryAltDunesGroup',
+}
+
+/**
+ * Gallery only — each src is unique within this list.
+ * Near-duplicate scenes (second standing-stone / second antelope herd)
+ * are reserved for other sections instead of shown side by side here.
+ */
 export const smaraDiscoveryGalleryImages = [
   { src: wildlifeOryxImage, altKey: 'smaraDiscoveryGalleryAltWildlifeOryx' },
   { src: convoyImage, altKey: 'smaraDiscoveryGalleryAltConvoy' },
   { src: archaeologyImage, altKey: 'smaraDiscoveryGalleryAltArchaeology' },
   { src: conservationSignImage, altKey: 'smaraDiscoveryGalleryAltConservation' },
   { src: hikingImage, altKey: 'smaraDiscoveryGalleryAltHiking' },
-  { src: dunesGroupImage, altKey: 'smaraDiscoveryGalleryAltDunesGroup' },
   { src: tourImage, altKey: 'smaraDiscoveryGalleryAltTour' },
-  { src: standingStoneImage, altKey: 'smaraDiscoveryGalleryAltStandingStone' },
-  { src: wildlifeAddaxImage, altKey: 'smaraDiscoveryGalleryAltWildlifeAddax' },
   { src: trekkingImage, altKey: 'smaraDiscoveryGalleryAltTrekking' },
 ]
 
+/** Activity cards — one distinct image per activity (no repeats in this section). */
 export const smaraDiscoveryActivityImages = {
   astrotourism: dunesGroupImage,
   bivouac: trekkingImage,
@@ -35,8 +45,12 @@ export const smaraDiscoveryActivityImages = {
   photography: convoyImage,
 }
 
+/**
+ * Why visit collage — three visually different themes only.
+ * Do not reuse the same asset twice in this array.
+ */
 export const smaraDiscoveryWhyVisitImages = [
-  standingStoneImage,
-  wildlifeOryxImage,
-  heroImage,
+  { src: standingStoneImage, altKey: 'smaraDiscoveryGalleryAltStandingStone' },
+  { src: wildlifeAddaxImage, altKey: 'smaraDiscoveryGalleryAltWildlifeAddax' },
+  { src: conservationSignImage, altKey: 'smaraDiscoveryGalleryAltConservation' },
 ]

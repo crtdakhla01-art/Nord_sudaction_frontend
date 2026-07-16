@@ -4,6 +4,7 @@ import Button from '../components/Button'
 import SectionContainer from '../components/SectionContainer'
 import SmaraDiscoveryRegistrationForm from '../components/SmaraDiscoveryRegistrationForm'
 import {
+  smaraDiscoveryAboutImage,
   smaraDiscoveryActivityImages,
   smaraDiscoveryGalleryImages,
   smaraDiscoveryHeroImage,
@@ -73,7 +74,6 @@ function SmaraDiscoveryExperiencePage() {
   const MotionDiv = motion.div
   const MotionH1 = motion.h1
   const MotionH2 = motion.h2
-  const MotionH3 = motion.h3
 
   return (
     <div className="bg-primary-50">
@@ -145,8 +145,8 @@ function SmaraDiscoveryExperiencePage() {
             transition={{ duration: 0.35 }}
           >
             <img
-              src={smaraDiscoveryGalleryImages[0].src}
-              alt={t(smaraDiscoveryGalleryImages[0].altKey)}
+              src={smaraDiscoveryAboutImage.src}
+              alt={t(smaraDiscoveryAboutImage.altKey)}
               className="h-full min-h-[320px] w-full object-cover"
               loading="lazy"
             />
@@ -256,14 +256,19 @@ function SmaraDiscoveryExperiencePage() {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            {smaraDiscoveryWhyVisitImages.map((imageSrc, index) => (
+            {smaraDiscoveryWhyVisitImages.map((image, index) => (
               <div
-                key={imageSrc}
+                key={image.altKey}
                 className={`overflow-hidden rounded-2xl border border-white/20 shadow-lg ${
                   index === 0 ? 'col-span-2' : ''
                 }`}
               >
-                <img src={imageSrc} alt={t('smaraDiscoveryWhyImageAlt')} className="h-full min-h-[140px] w-full object-cover" loading="lazy" />
+                <img
+                  src={image.src}
+                  alt={t(image.altKey)}
+                  className="h-full min-h-[140px] w-full object-cover"
+                  loading="lazy"
+                />
               </div>
             ))}
           </div>

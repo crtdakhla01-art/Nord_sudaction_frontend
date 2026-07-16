@@ -89,7 +89,7 @@ function App() {
   return (
     <>
       <ScrollToTopOnRouteChange />
-      <VisitorCounter />
+      {!location.pathname.startsWith('/admin') ? <VisitorCounter /> : null}
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           <Route path="/admin/login" element={<AdminLoginPage />} />
