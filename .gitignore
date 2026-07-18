@@ -45,3 +45,5 @@ desktop.ini
 # ملفات Vite أو أدوات البناء الأخرى
 .vite/
 .eslintcache
+.vercel
+.env*
