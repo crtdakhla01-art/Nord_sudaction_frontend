@@ -1,4 +1,4 @@
-import heroImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-discovery-experience-sahara-desert-landscape-trees.jpeg'
+import heroImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-discovery-experience-es-smara-hero-map.png'
 import wildlifeOryxImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-discovery-experience-sahara-wildlife-oryx-herd.jpeg'
 import convoyImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-discovery-experience-desert-4x4-convoy-morocco.jpeg'
 import archaeologyImage from '../assets/SMARA DISCOVERY EXPERIENCE/smara-discovery-experience-archaeology-monument-group-tour.jpeg'

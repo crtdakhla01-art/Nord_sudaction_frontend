@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next'
 import { motion, useReducedMotion } from 'framer-motion'
-import Button from '../components/Button'
 import SectionContainer from '../components/SectionContainer'
 import SmaraDiscoveryRegistrationForm from '../components/SmaraDiscoveryRegistrationForm'
 import {
@@ -64,63 +63,22 @@ const WHY_ITEMS = [
   'smaraDiscoveryWhyItem4',
 ]
 
-function scrollToRegistration() {
-  document.getElementById('smara-discovery-registration')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
-
 function SmaraDiscoveryExperiencePage() {
   const { t } = useTranslation()
   const prefersReducedMotion = useReducedMotion()
   const MotionDiv = motion.div
-  const MotionH1 = motion.h1
   const MotionH2 = motion.h2
 
   return (
     <div className="bg-primary-50">
-      <section className="relative flex min-h-[92vh] items-center justify-center overflow-hidden">
+      <section className="relative w-full overflow-hidden bg-[#f7f4ef]">
         <img
           src={smaraDiscoveryHeroImage}
           alt={t('smaraDiscoveryHeroTitle')}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="block h-auto w-full object-contain object-top"
           fetchPriority="high"
           decoding="async"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-900/70 via-primary-900/50 to-primary-900/80" />
-
-        <div className="relative z-10 mx-auto max-w-5xl px-4 py-24 text-center text-white sm:px-6">
-          <MotionDiv
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="space-y-6"
-          >
-            <MotionDiv variants={fadeUp}>
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-secondary-200">
-                {t('smaraDiscoveryHeroEyebrow')}
-              </p>
-            </MotionDiv>
-            <MotionH1
-              variants={fadeUp}
-              className="text-4xl font-black leading-tight tracking-wide md:text-6xl lg:text-7xl"
-            >
-              {t('smaraDiscoveryHeroTitle')}
-            </MotionH1>
-            <MotionDiv variants={fadeUp}>
-              <p className="mx-auto max-w-3xl text-lg font-light leading-relaxed text-white/90 md:text-2xl">
-                {t('smaraDiscoveryHeroSubtitle')}
-              </p>
-            </MotionDiv>
-            <MotionDiv variants={fadeUp} className="pt-4">
-              <Button
-                type="button"
-                onClick={scrollToRegistration}
-                className="mx-auto bg-secondary-500 px-8 py-4 text-base shadow-2xl md:hover:scale-105"
-              >
-                {t('smaraDiscoveryHeroCta')}
-              </Button>
-            </MotionDiv>
-          </MotionDiv>
-        </div>
       </section>
 
       <SectionContainer className="bg-white">
